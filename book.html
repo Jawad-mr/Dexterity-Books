@@ -594,12 +594,42 @@ is_completed = False
             </linearGradient>
           </defs>
           <rect width="200" height="${isLandscape ? 120 : 200}" fill="url(#grad-${id}-${isLandscape})" rx="8"/>
-          <g opacity="0.12">
-            <circle cx="100" cy="${isLandscape ? 60 : 100}" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
-          </g>
+          
+          <!-- Tech grids for landscape courses -->
+          ${isLandscape ? `
+            <g opacity="0.06">
+              <line x1="20" y1="0" x2="20" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="40" y1="0" x2="40" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="60" y1="0" x2="60" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="80" y1="0" x2="80" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="100" y1="0" x2="100" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="120" y1="0" x2="120" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="140" y1="0" x2="140" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="160" y1="0" x2="160" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="180" y1="0" x2="180" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+            </g>
+          ` : `
+            <g opacity="0.12">
+              <circle cx="100" cy="100" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
+            </g>
+          `}
+          
           <g opacity="0.9">
             ${iconSVG}
           </g>
+          
+          <!-- Specialized course widgets -->
+          ${isLandscape ? `
+            <!-- Play circle icon overlay -->
+            <g transform="translate(100, 48) scale(0.9)" opacity="0.85">
+              <circle cx="0" cy="0" r="15" fill="rgba(0,0,0,0.4)" stroke="${accentColor}" stroke-width="2"/>
+              <polygon points="-4,-7 7,0 -4,7" fill="${accentColor}"/>
+            </g>
+            <!-- 15 Contexts badge -->
+            <rect x="135" y="10" width="55" height="15" rx="7.5" fill="rgba(0,0,0,0.5)" stroke="${accentColor}" stroke-width="0.8"/>
+            <text x="162.5" y="20" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="5.5" font-weight="900" text-anchor="middle" letter-spacing="0.3">15 LESSONS</text>
+          ` : ''}
+          
           <rect x="0" y="${overlayY}" width="200" height="${overlayHeight}" fill="rgba(5,29,22,0.85)" />
           <line x1="0" y1="${overlayY}" x2="200" y2="${overlayY}" stroke="${accentColor}" stroke-width="1.5" opacity="0.6"/>
           <text x="15" y="${overlayY + 12}" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="7.5" font-weight="800" letter-spacing="1.2" opacity="0.9">${subText}</text>

@@ -1110,12 +1110,42 @@ Value-Based Project Quote: ₹25,000</div>
             </linearGradient>
           </defs>
           <rect width="200" height="${isLandscape ? 120 : 200}" fill="url(#grad-${id}-${isLandscape})" rx="8"/>
-          <g opacity="0.12">
-            <circle cx="100" cy="${isLandscape ? 60 : 100}" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
-          </g>
+          
+          <!-- Tech grids for landscape courses -->
+          ${isLandscape ? `
+            <g opacity="0.06">
+              <line x1="20" y1="0" x2="20" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="40" y1="0" x2="40" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="60" y1="0" x2="60" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="80" y1="0" x2="80" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="100" y1="0" x2="100" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="120" y1="0" x2="120" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="140" y1="0" x2="140" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="160" y1="0" x2="160" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+              <line x1="180" y1="0" x2="180" y2="120" stroke="var(--cream)" stroke-width="0.8"/>
+            </g>
+          ` : `
+            <g opacity="0.12">
+              <circle cx="100" cy="100" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
+            </g>
+          `}
+          
           <g opacity="0.9">
             ${iconSVG}
           </g>
+          
+          <!-- Specialized course widgets -->
+          ${isLandscape ? `
+            <!-- Play circle icon overlay -->
+            <g transform="translate(100, 48) scale(0.9)" opacity="0.85">
+              <circle cx="0" cy="0" r="15" fill="rgba(0,0,0,0.4)" stroke="${accentColor}" stroke-width="2"/>
+              <polygon points="-4,-7 7,0 -4,7" fill="${accentColor}"/>
+            </g>
+            <!-- 15 Contexts badge -->
+            <rect x="135" y="10" width="55" height="15" rx="7.5" fill="rgba(0,0,0,0.5)" stroke="${accentColor}" stroke-width="0.8"/>
+            <text x="162.5" y="20" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="5.5" font-weight="900" text-anchor="middle" letter-spacing="0.3">15 LESSONS</text>
+          ` : ''}
+          
           <rect x="0" y="${overlayY}" width="200" height="${overlayHeight}" fill="rgba(5,29,22,0.85)" />
           <line x1="0" y1="${overlayY}" x2="200" y2="${overlayY}" stroke="${accentColor}" stroke-width="1.5" opacity="0.6"/>
           <text x="15" y="${overlayY + 12}" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="7.5" font-weight="800" letter-spacing="1.2" opacity="0.9">${subText}</text>
@@ -1132,6 +1162,772 @@ Value-Based Project Quote: ₹25,000</div>
     function fmtPrice(n){
       return "₹" + n;
     }
+
+    function getDetailedLessonHTML(courseId, lessonIndex, lessonTitle) {
+      // If static content is already written on the lesson object, return that first.
+      const course = COURSES.find(c => c.id === courseId);
+      if (course && course.syllabus[lessonIndex] && course.syllabus[lessonIndex].content) {
+        return course.syllabus[lessonIndex].content;
+      }
+
+      // Otherwise, construct dynamic rich text based on index
+      if (courseId === "crs-learn-ai") {
+        switch(lessonIndex) {
+          case 1:
+            return `
+              <p>Understanding the transition from traditional, rule-based systems to probabilistic machines is the first step in mastering artificial intelligence. Neural networks mimic human cognitive processing by layering nodes—weights, inputs, biases, and activation thresholds—to form dynamic networks capable of learning from representations.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Key Learning Targets</h4>
+              <ul>
+                <li><strong>Activation Functions:</strong> How mathematically scaled thresholds (like Sigmoid or ReLU) inject non-linearity into model predictions.</li>
+                <li><strong>Backpropagation:</strong> The optimization engine using calculus chain rules to distribute errors and adjust network weights dynamically.</li>
+                <li><strong>Loss Functions:</strong> The error calculation parameters (such as Mean Squared Error) that score model outputs against baseline truths.</li>
+              </ul>
+              <p>To use these concepts practically, start by checking open-source model sheets and inspecting how changing layer count affects network training speeds.</p>
+            `;
+          case 2:
+            return `
+              <p>The Attention Mechanism introduced in the landmark 2017 paper "Attention Is All You Need" revolutionized the field of natural language processing by removing sequential recurrent architectures (RNNs) in favor of parallel transformer pipelines.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">How Self-Attention Works</h4>
+              <p>Self-attention computes dynamic weights representing how much each word in a sentence relates to every other word in that same sentence. It processes inputs as Vectors of three roles:</p>
+              <ul>
+                <li><strong>Queries (Q):</strong> The target token looking for contextual matches.</li>
+                <li><strong>Keys (K):</strong> The reference tokens offering potential alignments.</li>
+                <li><strong>Values (V):</strong> The content tokens retrieved based on matching scores.</li>
+              </ul>
+              <p>By mapping queries against keys, the transformer extracts spatial relations instantly, giving generative models their powerful textual and logical reasoning capabilities.</p>
+            `;
+          case 3:
+            return `
+              <p>Prompt Engineering is the design science of structuring instructions to guide LLMs toward specific, high-fidelity responses. Generative models respond to statistical completions; therefore, prompt quality dictates outputs.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Core Prompt Frameworks</h4>
+              <p>Improve your agent outputs by utilizing these standard instruction schemas:</p>
+              <ul>
+                <li><strong>Chain-of-Thought (CoT):</strong> Forcing models to show their step-by-step reasoning steps before printing the final answer. This reduces mathematical and logical hallucination rates by over 60%.</li>
+                <li><strong>Few-Shot Prompting:</strong> Providing 2 to 3 target input-output pairs inside the prompt to establish clear structural and behavioral patterns.</li>
+                <li><strong>Role Play:</strong> Defining target personas (e.g. "Act as a Senior React Debugger") to limit model responses to specific libraries and vocabulary.</li>
+              </ul>
+              <p>Practice writing prompts that segregate raw user data from instructions using standard separators like XML tags or triple backticks.</p>
+            `;
+          case 4:
+            return `
+              <p>Understanding model deployment variants is critical for production software. Commercial models like OpenAI's GPT-4, Google's Gemini, and Anthropic's Claude each carry unique optimization trade-offs in context length and speed.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Comparing Architecture Strengths</h4>
+              <ul>
+                <li><strong>Claude (Anthropic):</strong> Exceptional reasoning and coding support, with high adherence to detailed formatting instructions and system constraints.</li>
+                <li><strong>Gemini (Google):</strong> Massive context windows (supporting up to 2 million tokens) suitable for analyzing full codebases or multiple video feeds in parallel.</li>
+                <li><strong>GPT-4o (OpenAI):</strong> Industry-standard general-purpose API, featuring very low latency and strong general multilingual capabilities.</li>
+              </ul>
+              <p>Always profile API token costs and performance metrics before locking down a primary model in your production pipeline.</p>
+            `;
+          case 5:
+            return `
+              <p>AI coding assistants like GitHub Copilot, Cursor, and Tabnine have fundamentally changed how software is engineered. Using local completions, they turn natural language comments into syntactically valid code blocks.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Maximizing Coding Assistant Outputs</h4>
+              <p>To write high-quality codebase scripts with AI assistance, follow these rules:</p>
+              <ul>
+                <li><strong>Inline Comments:</strong> Write clear, single-purpose docstrings describing inputs and return values before requesting auto-completions.</li>
+                <li><strong>Chat Contexts:</strong> Provide references to related interface files or type scripts to help the model resolve imports correctly.</li>
+                <li><strong>Unit Testing:</strong> Prompt the model to write validation scripts for its generated helper functions to capture edge cases immediately.</li>
+              </ul>
+              <p>Always inspect the generated lines before committing to prevent silent logical bugs from entering main branch runs.</p>
+            `;
+          case 6:
+            return `
+              <p>Vector databases (like Pinecone, Milvus, and Weaviate) are the memory banks of modern AI agents. They store text as numeric arrays (embeddings) representing semantic meaning rather than exact keywords.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">The RAG Pipeline Mechanics</h4>
+              <p>Retrieval-Augmented Generation (RAG) fetches private documents to guide the LLM's response:</p>
+              <ol>
+                <li><strong>Chunking:</strong> Large documents are split into small, readable chunks (e.g. 500 characters).</li>
+                <li><strong>Embedding:</strong> Each chunk is converted into a vector (e.g. 1536 float elements) and saved in the database.</li>
+                <li><strong>Search:</strong> When a user asks a question, the vector database finds the closest semantic matches using cosine similarity.</li>
+                <li><strong>Completion:</strong> The matches are fed into the model prompt as verified reference context.</li>
+              </ol>
+              <p>Using RAG eliminates the need to fine-tune models to learn new static facts, saving thousands in compute budgets.</p>
+            `;
+          case 7:
+            return `
+              <p>Fine-tuning is the process of adjusting the actual weights and biases of an existing base model (like Llama 3) on custom training files to alter its behavior or tone.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">LoRA & Parameter-Efficient Fine-Tuning (PEFT)</h4>
+              <p>Instead of retraining all parameters, modern workflows use Low-Rank Adaptation (LoRA) to insert small rank matrices into transformer layers. This reduces GPU memory overhead by over 90% while achieving identical training quality.</p>
+              <p>To fine-tune models, prepare high-quality JSONL files structured as system-user-assistant conversational pairs. Filter out low-quality repetitions to prevent model degradation.</p>
+            `;
+          case 8:
+            return `
+              <p>Diffusion models (such as Midjourney, Stable Diffusion, and Sora) generate media assets by starting with random pixel noise and iteratively removing it to reveal structured images based on prompt text.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Applying Diffusion in Production</h4>
+              <ul>
+                <li><strong>Negative Prompts:</strong> Specifying exact objects or attributes to exclude (e.g. "blurry text, low resolution").</li>
+                <li><strong>Image-to-Image:</strong> Using a base layout structure to guide image synthesis to preserve perspective constraints.</li>
+                <li><strong>Inpainting:</strong> Modifying a specific bounding box inside an existing image asset without altering the surrounding environment.</li>
+              </ul>
+              <p>Diffusion pipelines are widely used to automate user interface mockups and produce marketing banners for online shops.</p>
+            `;
+          case 9:
+            return `
+              <p>Custom AI Agents are autonomous programs that utilize LLMs as decision engines to call APIs, write local files, and run terminal commands to achieve user-defined targets.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Building an Agent Loop</h4>
+              <p>An agent operates on the ReAct (Reasoning and Acting) loop framework:</p>
+              <pre>Thought: What is my next step?
+Action: Search the local file system.
+Observation: File not found.
+Thought: Propose file creation.</pre>
+              <p>By connecting agents to tools (Python functions), you can automate complex, multi-step workflows like database migration verification.</p>
+            `;
+          case 10:
+            return `
+              <p>Developing multi-agent systems involves configuring multiple specialized agents to collaborate, review, and refine each other's outputs to complete complex projects.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">LangChain and CrewAI Frameworks</h4>
+              <ul>
+                <li><strong>Specialized Roles:</strong> Assigning one agent as "Writer" and another as "Code Reviewer" to establish quality gates.</li>
+                <li><strong>State Sharing:</strong> Sharing a common context pool to prevent memory drift as agents execute tasks.</li>
+                <li><strong>Human-in-the-Loop:</strong> Intercepting tool actions to request user validation before executing dangerous write operations.</li>
+              </ul>
+              <p>Multi-agent platforms excel at creating automated customer support departments and code translation pipelines.</p>
+            `;
+          case 11:
+            return `
+              <p>Building responsible AI applications requires establishing alignment filters to prevent models from generating toxic, biased, or copyrighted content.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Alignment Methods</h4>
+              <ul>
+                <li><strong>RLHF:</strong> Reinforcement Learning from Human Feedback uses human preferences to score model outputs and adjust weights.</li>
+                <li><strong>RLAIF:</strong> Reinforcement Learning from AI Feedback uses teacher models to align student models based on a written constitution.</li>
+                <li><strong>Guardrails:</strong> Intercepting queries and output streams using validation libraries (such as Guardrails AI) to enforce structural compliance.</li>
+              </ul>
+              <p>Always audit AI outputs to ensure safety and prevent security leaks.</p>
+            `;
+          case 12:
+            return `
+              <p>Deploying AI applications to production demands robust container and server architectures to manage latency and prevent API bottlenecks.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Production Hosting & Speedups</h4>
+              <ul>
+                <li><strong>vLLM:</strong> An open-source LLM inference library that speeds up token generation through efficient PagedAttention memory management.</li>
+                <li><strong>Quantization:</strong> Scaling down model weights (e.g. from 16-bit to 4-bit) to run large models on consumer-grade GPU instances.</li>
+                <li><strong>Streaming Responses:</strong> Delivering text tokens chunk-by-chunk to the user interface to reduce perceived latency.</li>
+              </ul>
+              <p>Track request counters to enforce rate limits and prevent API abuse.</p>
+            `;
+          case 13:
+            return `
+              <p>Building a viable business around AI requires managing API token structures. Models are priced per million prompt tokens and completion tokens, making prompt design a primary cost variable.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Token Economics & Scaling</h4>
+              <ul>
+                <li><strong>Semantic Caching:</strong> Saving previous query answers in vector databases to skip API calls for identical requests.</li>
+                <li><strong>Output Limits:</strong> Enforcing strict max token output variables to prevent infinite model loop runs.</li>
+                <li><strong>Model Caching:</strong> Routing simple tasks to lightweight models (e.g. GPT-4o-mini) and reserving reasoning models for hard tasks.</li>
+              </ul>
+              <p>A sound caching layer can cut monthly API costs by up to 50%.</p>
+            `;
+          case 14:
+            return `
+              <p>Welcome to the Capstone Project. In this final module, you will build and launch a custom SaaS application that utilizes the AI skills developed throughout this course.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Project Specifications</h4>
+              <ul>
+                <li><strong>Backend API:</strong> Express/FastAPI server routing prompts to OpenAI or Anthropic models.</li>
+                <li><strong>Retrieval Integration:</strong> A simple RAG pipeline using a vector store to fetch relevant documents.</li>
+                <li><strong>UI Layer:</strong> Clean dashboard displaying prompt inputs, streaming outputs, and request history.</li>
+              </ul>
+              <p>Once deployed, verify your rate limits, run end-to-end user tests, and submit your project to claim your official certificate.</p>
+            `;
+        }
+      } else if (courseId === "crs-python") {
+        switch(lessonIndex) {
+          case 1:
+            return `
+              <p>Variables in Python act as named tags pointing to objects in memory. Since Python is dynamically typed, you do not need to declare variable types explicitly before assignment.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">String Formatting & Math</h4>
+              <p>Python offers advanced string formatting using f-strings, allowing python code to run directly inside string literals:</p>
+              <pre># Python string formatting
+name = "World"
+print(f"Hello, {name}!")
+
+# Dynamic Math Operations
+count = 10
+price = 19.99
+total = count * price
+print(f"Total Amount: &amp;₹{total:.2f}")</pre>
+              <p>Python automatically handles calculations involving mixed types (integers and floats), converting outputs to float numbers to prevent any loss of decimal precision.</p>
+            `;
+          case 2:
+            return `
+              <p>Control flow structures allow programs to make decisions and execute specific code blocks depending on Boolean states.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Conditional Operations in Python</h4>
+              <p>Python uses indentations rather than brackets to group statements under <code>if</code>, <code>elif</code>, and <code>else</code> blocks:</p>
+              <pre>score = 85
+if score >= 90:
+    grade = "A"
+elif score >= 80:
+    grade = "B"
+else:
+    grade = "C"
+print(f"Grade: {grade}")</pre>
+              <p>You can combine conditions using logical operators: <code>and</code>, <code>or</code>, and <code>not</code>. Python evaluates these conditions using short-circuit logic, improving speed.</p>
+            `;
+          case 3:
+            return `
+              <p>Loops are used to repeat code blocks. Python supports two main loop types: <code>for</code> loops (for iterating over sequences) and <code>while</code> loops (for repeating actions as long as a condition remains true).</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Iterating Collections & Loop Control</h4>
+              <pre># Iterating using range()
+for i in range(1, 4):
+    print(f"Iteration {i}")
+
+# Using break and continue
+for num in range(1, 10):
+    if num == 5:
+        break # Exit loop completely
+    if num % 2 == 0:
+        continue # Skip to next loop iteration
+    print(f"Odd: {num}")</pre>
+              <p>Always ensure your <code>while</code> loops have a clear terminating condition to prevent infinite loop execution that freezes execution memory.</p>
+            `;
+          case 4:
+            return `
+              <p>Functions are self-contained, reusable blocks of code designed to perform specific operations. They keep code modular and readable.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Creating Modularity</h4>
+              <p>Define functions using the <code>def</code> keyword. Python supports positional arguments, default values, and dynamic arguments:</p>
+              <pre>def greet(name, message="Welcome"):
+    return f"{message}, {name}!"
+
+# Dynamic arguments
+def sum_all(*args):
+    return sum(args)
+
+print(greet("Alice"))
+print(sum_all(1, 2, 3, 4))</pre>
+              <p>Functions return <code>None</code> by default unless a return value is explicitly specified using the <code>return</code> keyword.</p>
+            `;
+          case 5:
+            return `
+              <p>Python features several built-in collection structures to manage related data collections effectively:</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Lists, Dicts, Tuples & Sets</h4>
+              <ul>
+                <li><strong>Lists (Mutable):</strong> Ordered collections of objects (e.g. <code>items = [1, 2, 3]</code>). Items can be added or removed.</li>
+                <li><strong>Dicts (Key-Value):</strong> Fast key-value maps (e.g. <code>user = {"id": 1, "name": "Bob"}</code>).</li>
+                <li><strong>Tuples (Immutable):</strong> Fixed sequences that cannot be changed after creation (e.g. <code>coords = (10, 20)</code>).</li>
+                <li><strong>Sets (Unique):</strong> Unordered collections of unique elements (e.g. <code>tags = {"py", "js", "py"}</code> evaluates to <code>{"py", "js"}</code>).</li>
+              </ul>
+              <p>Use lists for linear sequences and dictionaries when you need to retrieve items rapidly by key.</p>
+            `;
+          case 6:
+            return `
+              <p>Interacting with files on the local disk is a core skill for automation scripts. Python's built-in <code>open()</code> function handles these operations easily.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Safe File Handlers</h4>
+              <p>Always open files using the <code>with</code> statement, which ensures the file is closed automatically even if errors occur:</p>
+              <pre># Writing to a text file
+with open("output.txt", "w") as f:
+    f.write("Hello File System\\n")
+
+# Reading from a file
+with open("output.txt", "r") as f:
+    content = f.read()
+    print(content)</pre>
+              <p>Use mode <code>"w"</code> to overwrite files, <code>"a"</code> to append text, and <code>"r"</code> to read text.</p>
+            `;
+          case 7:
+            return `
+              <p>Exception handling allows scripts to catch and handle errors gracefully rather than crashing abruptly during execution.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Try, Except & Finally Blocks</h4>
+              <pre>try:
+    result = 10 / 0
+except ZeroDivisionError as e:
+    print("Error: division by zero is not allowed.")
+    result = 0
+finally:
+    print("Execution complete.")</pre>
+              <p>The <code>finally</code> block runs regardless of whether an exception occurred, making it the ideal place to close database connections or release file locks.</p>
+            `;
+          case 8:
+            return `
+              <p>Python's rich standard library includes highly optimized modules for working with data formats, time zones, and math operations.</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">JSON parsing and Date Management</h4>
+              <pre>import json
+from datetime import datetime
+
+# Parse JSON strings
+data_str = '{"name": "Alice", "role": "admin"}'
+user = json.loads(data_str)
+
+# Formatting current timestamp
+now = datetime.now()
+timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
+print(f"User {user['name']} logged in at {timestamp}")</pre>
+              <p>Leveraging these standard modules helps keep your code lightweight and reduces external dependencies.</p>
+            `;
+          case 9:
+            return `
+              <p>Object-Oriented Programming (OOP) allows you to model real-world concepts as code objects containing data (attributes) and behavior (methods).</p>
+              <h4 style="margin:20px 0 10px; color:var(--white);">Classes and Constructors</h4>
+              <pre>class Book:
+    def __init__(self, title, price):
+        self.title = title
+        self.price = price
+        
+    def get_details(self):
+        return f"{self.title} - ₹{self.price}"
+
+# Instantiate an object
+my_book = Book("Python 101", 249)
+print(my_book.get_details())</pre>
+          <p>The <code>__init__</code> constructor initializes the object's variables whenever a new instance is created.</p>
+        `;
+      case 10:
+        return `
+          <p>Managing dependencies and isolated project environments is essential for Python developers. Virtual environments prevent packages from conflicting across different projects.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Managing Virtual Environments</h4>
+          <ol>
+            <li><strong>Create Environment:</strong> Run <code>python -m venv myenv</code> to create a isolated Python environment in the project directory.</li>
+            <li><strong>Activate:</strong> On Windows, run <code>myenv\\Scripts\\activate</code> to route command line calls to this local sandbox.</li>
+            <li><strong>Install Packages:</strong> Use pip (e.g. <code>pip install requests</code>) to pull modules from the PyPI index.</li>
+            <li><strong>Export Dependencies:</strong> Run <code>pip freeze > requirements.txt</code> to save a list of dependencies for other developers.</li>
+          </ol>
+          <p>This ensures your project dependencies are reproducible and clean.</p>
+        `;
+      case 11:
+        return `
+          <p>Web scraping automates the process of extracting data from public websites. Python makes this easy using <code>requests</code> for network calls and <code>BeautifulSoup</code> for HTML parsing.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Fetching Web Data</h4>
+          <pre>import requests
+from bs4 import BeautifulSoup
+
+url = "https://example.com"
+response = requests.get(url)
+soup = BeautifulSoup(response.text, "html.parser")
+
+# Find elements by tag
+title_text = soup.find("h1").text
+print(f"Page Title: {title_text}")</pre>
+          <p>Always inspect target page layouts and check their robots.txt instructions before running automated scrapers.</p>
+        `;
+      case 12:
+        return `
+          <p>Building RESTful API servers allows you to share data and code logic with other applications. Python offers lightweight web frameworks like FastAPI and Flask to handle this easily.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">FastAPI API Server</h4>
+          <pre>from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"status": "Online", "platform": "Dexterity Learn"}
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int):
+    return {"id": item_id, "available": True}</pre>
+          <p>FastAPI automatically generates clean, interactive API documentation (Swagger UI) at the <code>/docs</code> path during server runs.</p>
+        `;
+      case 13:
+        return `
+          <p>Unit testing checks that individual code components run correctly. Writing tests catches bugs early and ensures updates do not break existing features.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Testing with Pytest</h4>
+          <pre># code.py
+def add(a, b):
+    return a + b
+
+# test_code.py
+from code import add
+
+def test_add():
+    assert add(2, 3) == 5
+    assert add(-1, 1) == 0</pre>
+          <p>Run <code>pytest</code> in your terminal to search for and execute all test scripts automatically.</p>
+        `;
+      case 14:
+        return `
+          <p>Welcome to the Capstone Project. In this final module, you will build an automated web scraper script that collects and saves data locally.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Project Specifications</h4>
+          <ul>
+            <li><strong>Web Scraper:</strong> Fetches pricing or data from a target mock page.</li>
+            <li><strong>Data Processor:</strong> Formats the fetched elements into clean dictionaries.</li>
+            <li><strong>File System:</strong> Saves the processed data to a local JSON file.</li>
+            <li><strong>Error Handling:</strong> Includes try/except wrappers to manage network issues.</li>
+          </ul>
+          <p>Once your project scripts are verified, submit your work to request your official certificate.</p>
+        `;
+    }
+  } else if (courseId === "crs-webdev") {
+    switch(lessonIndex) {
+      case 1:
+        return `
+          <p>CSS Grid and Flexbox are the layouts engines of modern web development. They organize page structures and handle alignment without float hacks.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Grid vs. Flexbox Layouts</h4>
+          <ul>
+            <li><strong>Flexbox (One-Dimensional):</strong> Best for linear layouts (such as navigation bars or simple rows of cards).</li>
+            <li><strong>Grid (Two-Dimensional):</strong> Best for complex layouts that control both rows and columns simultaneously.</li>
+          </ul>
+          <p>Using CSS Grid and Flexbox together makes it simple to build modern, responsive interfaces that adapt to any screen size.</p>
+        `;
+      case 2:
+        return `
+          <p>CSS variables (Custom Properties) make stylesheets easier to maintain by storing values like colors and fonts in reusable variables.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Creating Themes with CSS Variables</h4>
+          <pre>:root {
+  --primary-color: #053526;
+  --accent-color: #d4af37;
+}
+
+body {
+  background-color: var(--primary-color);
+  color: white;
+}</pre>
+          <p>You can dynamically change CSS variables using JavaScript, making it simple to implement features like dark/light mode toggles.</p>
+        `;
+      case 3:
+        return `
+          <p>JavaScript is the programming language that makes web pages interactive, allowing you to build dynamic experiences on top of static HTML.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Modern JS Essentials</h4>
+          <p>Variables should be declared using <code>const</code> (for read-only values) and <code>let</code> (for values that change). Avoid using legacy var declarations:</p>
+          <pre>const pi = 3.14159;
+let count = 0;
+count += 1;
+
+// Arrow Functions
+const greet = (name) => \`Hello, \${name}!\`;
+console.log(greet("User"));</pre>
+          <p>Arrow functions offer a concise syntax for writing JavaScript functions.</p>
+        `;
+      case 4:
+        return `
+          <p>The Document Object Model (DOM) is the browser's structured representation of the web page. JavaScript uses the DOM API to modify page content, styles, and layouts in response to user actions.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">DOM Queries and Listeners</h4>
+          <pre>const button = document.getElementById("action-btn");
+const header = document.querySelector(".title");
+
+button.addEventListener("click", () => {
+  header.textContent = "Title Updated!";
+  header.style.color = "gold";
+});</pre>
+          <p>Always wait for the DOM to load before running scripts by listening for the <code>DOMContentLoaded</code> event.</p>
+        `;
+      case 5:
+        return `
+          <p>JavaScript handles long-running tasks like fetching data asynchronously, preventing the user interface from freezing while waiting for a response.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Async JavaScript Patterns</h4>
+          <pre>// Fetching APIs using Async/Await
+async function fetchUserData(userId) {
+  try {
+    const response = await fetch(\`https://api.com/users/\${userId}\`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Fetch failed:", error);
+  }
+}
+
+fetchUserData(1).then(user => console.log(user));</pre>
+          <p>Using <code>async/await</code> simplifies async code, making it read like standard synchronous logic.</p>
+        `;
+      case 6:
+        return `
+          <p>Modern frontend development leverages build tools like NPM (Node Package Manager) and Webpack to manage external libraries and optimize code for production.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Project Bundling Workflows</h4>
+          <ul>
+            <li><strong>NPM:</strong> Installs and tracks external packages like React or Lodash in the <code>package.json</code> file.</li>
+            <li><strong>Webpack:</strong> Combines multiple source files, modules, and images into a single optimized bundle file for the browser.</li>
+          </ul>
+          <p>Using bundling tools keeps your codebase organized during development while delivering optimized files to users.</p>
+        `;
+      case 7:
+        return `
+          <p>React is a popular UI library that simplifies building complex interfaces by breaking pages down into self-contained, reusable components.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Component-Based Architecture</h4>
+          <p>React components are written in JSX, a syntax extension that combines HTML layout and JavaScript logic in a single file:</p>
+          <pre>function WelcomeCard({ name }) {
+  return (
+    &lt;div className="welcome-card"&gt;
+      &lt;h2&gt;Welcome, {name}!&lt;/h2&gt;
+      &lt;p&gt;Start learning today.&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+          <p>Using JSX keeps your component layout and logic close together, making components easier to maintain.</p>
+        `;
+      case 8:
+        return `
+          <p>React uses states to manage interactive data. When a component's state changes, React updates the UI automatically to match.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">React State Hooks</h4>
+          <pre>import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Clicks: {count}&lt;/p&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;Click Me&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</pre>
+          <p>State hooks make it simple to track and update dynamic data like input fields or shopping cart counts.</p>
+        `;
+      case 9:
+        return `
+          <p>React components can have side effects like fetching data, modifying the DOM directly, or setting up timers. These operations are managed using the <code>useEffect</code> hook.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">React Effect Hook</h4>
+          <pre>import React, { useState, useEffect } from 'react';
+
+function UserProfile({ userId }) {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    fetch(\`https://api.com/users/\${userId}\`)
+      .then(res => res.json())
+      .then(data => setUser(data));
+  }, [userId]); // Only runs when userId changes
+
+  if (!user) return &lt;p&gt;Loading...&lt;/p&gt;;
+  return &lt;h2&gt;{user.name}&lt;/h2&gt;;
+}</pre>
+          <p>Always specify a dependency array to control when your effect code runs and prevent infinite rendering loops.</p>
+        `;
+      case 10:
+        return `
+          <p>Node.js is a runtime environment that allows you to run JavaScript on the backend, making it simple to build full-stack applications using a single language.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Node.js Server Fundamentals</h4>
+          <pre>const http = require('http');
+
+const server = http.createServer((req, res) => {
+  res.writeHead(200, { 'Content-Type': 'application/json' });
+  res.end(JSON.stringify({ status: "Node Server Online" }));
+});
+
+server.listen(5000, () => {
+  console.log("Server listening on port 5000");
+});</pre>
+          <p>Using Node.js on the backend lets you share code and utility libraries between your frontend and backend seamlessly.</p>
+        `;
+      case 11:
+        return `
+          <p>Express is a popular, lightweight web framework for Node.js that simplifies building APIs and handling server routes.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Routing with Express</h4>
+          <pre>const express = require('express');
+const app = express();
+
+app.use(express.json()); // Middleware to parse JSON bodies
+
+app.get('/api/users', (req, res) => {
+  res.json([{ id: 1, name: "Alice" }]);
+});
+
+app.post('/api/users', (req, res) => {
+  const newUser = req.body;
+  res.status(201).json(newUser);
+});</pre>
+          <p>Express middleware functions can intercept and process requests before they reach your route handlers.</p>
+        `;
+      case 12:
+        return `
+          <p>Connecting your server to a database allows you to store user records, products, and platform data permanently.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Relational databases and SQL</h4>
+          <ul>
+            <li><strong>SQL Databases (PostgreSQL, SQLite):</strong> Store data in structured tables with defined relationships, ensuring data integrity.</li>
+            <li><strong>NoSQL Databases (MongoDB):</strong> Store data as flexible JSON documents, suitable for rapid prototyping and unstructured data.</li>
+          </ul>
+          <p>Using an ORM (like Prisma or Sequelize) simplifies database queries by letting you interact with tables using JavaScript objects.</p>
+        `;
+      case 13:
+        return `
+          <p>Securing your backend requires implementing robust authentication systems to verify user identities and protect private routes.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Token-Based Authentication (JWT)</h4>
+          <pre>const jwt = require('jsonwebtoken');
+
+// Generate Token
+const token = jwt.sign({ userId: 123 }, 'secret_key', { expiresIn: '1h' });
+
+// Verify Token Middleware
+function authenticate(req, res, next) {
+  const token = req.headers['authorization'];
+  try {
+    const payload = jwt.verify(token, 'secret_key');
+    req.user = payload;
+    next();
+  } catch (err) {
+    res.status(401).json({ error: "Invalid token" });
+  }
+}</pre>
+          <p>JSON Web Tokens (JWT) allow servers to authenticate requests securely without storing session state in memory.</p>
+        `;
+      case 14:
+        return `
+          <p>Welcome to the Capstone Project. In this final module, you will build and deploy a Full-Stack application using the skills developed throughout this course.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Project Specifications</h4>
+          <ul>
+            <li><strong>Frontend Layout:</strong> React dashboard displaying data from your API.</li>
+            <li><strong>Backend Server:</strong> Express API server connected to a database.</li>
+            <li><strong>Database Integration:</strong> Persistent table storage for user profiles or products.</li>
+            <li><strong>Authentication:</strong> Secure signup/login routes using JWT tokens.</li>
+          </ul>
+          <p>Once your project is deployed, run thorough verification tests, verify all inputs, and submit your work to get certified.</p>
+        `;
+    }
+  } else if (courseId === "crs-freelance") {
+    switch(lessonIndex) {
+      case 1:
+        return `
+          <p>Succeeding as a freelancer requires a shift from an employee mindset to an entrepreneurial one. You are no longer just a developer or designer; you are a business owner selling high-value solutions.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">The Entrepreneurial Shift</h4>
+          <ul>
+            <li><strong>Value Focus:</strong> Employees sell time; freelancers sell solutions that increase revenue or save time.</li>
+            <li><strong>Self-Direction:</strong> You are responsible for client acquisition, project delivery, and operations.</li>
+          </ul>
+          <p>Adopting this mindset helps you command premium rates and build sustainable client relationships.</p>
+        `;
+      case 2:
+        return `
+          <p>A premium portfolio website is your most powerful sales tool. It should demonstrate your skills, showcase successful projects, and make it simple for potential clients to contact you.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Portfolio Structure</h4>
+          <ul>
+            <li><strong>Hero Section:</strong> A clear headline describing your niche and the value you deliver.</li>
+            <li><strong>Case Studies:</strong> Highlighting the business results you achieved for past clients, not just the tools you used.</li>
+            <li><strong>Call to Action:</strong> A prominent button inviting prospects to schedule a consultation.</li>
+          </ul>
+          <p>Focusing your portfolio on client outcomes rather than technical details helps build trust and win high-paying projects.</p>
+        `;
+      case 3:
+        return `
+          <p>Value-based pricing is the practice of setting rates based on the business value of your service, rather than the hours it takes to complete.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Hourly Rates vs. Value-Based Pricing</h4>
+          <ul>
+            <li><strong>Hourly Billing:</strong> Punishes efficiency. The faster you work, the less you earn.</li>
+            <li><strong>Value Billing:</strong> Aligns your interests with the client. You earn more by delivering high-impact solutions quickly.</li>
+          </ul>
+          <p>Shifting from hourly billing to value-based pricing is the most effective way to scale your freelance income.</p>
+        `;
+      case 4:
+        return `
+          <p>Cold emailing is a highly effective way to win premium freelance clients. It involves sending personalized, value-focused messages to target businesses.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Cold Email Structure</h4>
+          <ol>
+            <li><strong>Subject Line:</strong> A concise, interest-piquing subject line (e.g. "Conversion question for Shopify Store").</li>
+            <li><strong>Opening Hook:</strong> Praising a specific aspect of the prospect's business.</li>
+            <li><strong>Value Pitch:</strong> Identifying a potential problem and proposing a solution.</li>
+            <li><strong>Call to Action:</strong> Inviting them to a brief call to discuss ideas.</li>
+          </ol>
+          <p>Focusing cold emails on the prospect's goals rather than your services leads to much higher response rates.</p>
+        `;
+      case 5:
+        return `
+          <p>Freelancer networks like Upwork and Fiverr can be valuable sources of clients if you optimize your profile to stand out from low-cost competition.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Profile Optimization Standards</h4>
+          <ul>
+            <li><strong>Clear Headline:</strong> Defining your niche and target audience (e.g. "WooCommerce Developer for Conversion Optimization").</li>
+            <li><strong>Proof:</strong> Showcasing client testimonials, case studies, and portfolios.</li>
+            <li><strong>Quick Response:</strong> Responding to client inquiries quickly to build trust.</li>
+          </ul>
+          <p>Positioning yourself as a specialist rather than a generalist lets you command high rates on freelancing platforms.</p>
+        `;
+      case 6:
+        return `
+          <p>A structured proposal outlines the scope, timeline, and pricing of a project, helping align expectations with the client before work begins.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Proposal Structure</h4>
+          <ul>
+            <li><strong>Client Goals:</strong> Restating the project goals in the client's own words.</li>
+            <li><strong>Proposed Solutions:</strong> Outlining your approach to achieving those goals.</li>
+            <li><strong>Pricing Options:</strong> Offering multiple pricing packages to increase conversion rates.</li>
+          </ul>
+          <p>Presenting clear pricing options helps shift the client's focus from "Should I hire you?" to "Which package fits my budget?"</p>
+        `;
+      case 7:
+        return `
+          <p>A Scope of Work (SOW) is a legal document that defines the exact deliverables, timelines, and payment terms of a project, protecting you from scope creep.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Scope of Work Essentials</h4>
+          <ul>
+            <li><strong>Deliverables:</strong> A detailed list of what is included in the project scope.</li>
+            <li><strong>Exclusions:</strong> Specifying tasks that are NOT included in the project scope.</li>
+            <li><strong>Payment Terms:</strong> Detailing invoice schedules and deposit requirements.</li>
+          </ul>
+          <p>Having a signed SOW in place before starting work prevents misunderstandings and ensures you get paid for extra work.</p>
+        `;
+      case 8:
+        return `
+          <p>Managing projects professionally requires clear, structured communication to keep clients informed and build long-term trust.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Communication Best Practices</h4>
+          <ul>
+            <li><strong>Weekly Updates:</strong> Sending brief updates detailing progress and next steps.</li>
+            <li><strong>Single Channel:</strong> Keeping all project communications in a single tool like Slack or email.</li>
+            <li><strong>Scope Control:</strong> Addressing scope creep immediately by suggesting separate quotes for new requests.</li>
+          </ul>
+          <p>Proactive communication prevents misunderstandings and makes clients feel supported throughout the project.</p>
+        `;
+      case 9:
+        return `
+          <p>Running a successful freelance business requires setting up robust accounting and invoicing systems to track income and manage cash flow.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Invoicing and Collections</h4>
+          <ul>
+            <li><strong>Invoicing Tools:</strong> Using tools like Stripe or Wave to generate professional invoices.</li>
+            <li><strong>Deposit Requirements:</strong> Collecting a 50% deposit before beginning work on any project.</li>
+            <li><strong>Late Payment Fees:</strong> Specifying clear terms for late payments in your contracts.</li>
+          </ul>
+          <p>Enforcing deposit requirements is the most effective way to secure payments and protect your business.</p>
+        `;
+      case 10:
+        return `
+          <p>Retainer agreements provide steady, predictable income by offering ongoing services to clients for a monthly fee.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Structuring Retainers</h4>
+          <ul>
+            <li><strong>Support Retainers:</strong> Offering maintenance, bug fixes, or minor updates for a fixed monthly rate.</li>
+            <li><strong>Growth Retainers:</strong> Offering monthly services (such as SEO or conversion optimization) designed to increase client sales.</li>
+          </ul>
+          <p>Transitioning clients to retainer agreements helps stabilize your monthly income and build long-term business value.</p>
+        `;
+      case 11:
+        return `
+          <p>Client case studies and testimonials are your most persuasive marketing assets, proving your ability to deliver results.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Requesting Testimonials</h4>
+          <p>Ask clients for feedback using a structured three-question survey:</p>
+          <ol>
+            <li>What was the primary goal or challenge you had before hiring me?</li>
+            <li>What business results did you achieve during our collaboration?</li>
+            <li>What did you like most about working together?</li>
+          </ol>
+          <p>Using these answers to write metrics-focused case studies helps convince high-paying prospects to work with you.</p>
+        `;
+      case 12:
+        return `
+          <p>Scope creep occurs when a project's requirements expand beyond the agreed scope without a corresponding increase in budget or timeline.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Handling Scope Creep</h4>
+          <p>When a client requests a task outside the project scope, address it immediately using a value-focused response:</p>
+          <pre>"I would love to help you build that feature. Since it is outside our initial project scope, I will draft a separate quote for it so we can keep the current launch timeline on track."</pre>
+          <p>This response acknowledges the client's request while protecting your time and budget.</p>
+        `;
+      case 13:
+        return `
+          <p>Scaling your freelance business involves transitioning from a solo developer to an agency owner by hiring contractors and delegating operations.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Agency Transition Steps</h4>
+          <ul>
+            <li><strong>Documentation:</strong> Writing clear standard operating procedures (SOPs) for all operations.</li>
+            <li><strong>Delegation:</strong> Hiring contractors to handle routine design or development tasks.</li>
+            <li><strong>Sales Focus:</strong> Shifting your focus to client acquisition, strategy, and business growth.</li>
+          </ul>
+          <p>Delegating labor tasks lets you focus on high-value business development and scale your agency's revenue.</p>
+        `;
+      case 14:
+        return `
+          <p>Welcome to the Capstone Project. In this final module, you will put your skills into action by closing a premium freelance project.</p>
+          <h4 style="margin:20px 0 10px; color:var(--white);">Project Specifications</h4>
+          <ul>
+            <li><strong>Niche Positioning:</strong> Defining a clear niche and target audience.</li>
+            <li><strong>Outreach Pipeline:</strong> Creating a targeted prospect list and sending cold outreach emails.</li>
+            <li><strong>Value Proposal:</strong> Drafting a value-based proposal with multiple pricing options.</li>
+            <li><strong>Scope Agreement:</strong> Creating a professional Scope of Work document ready for client signature.</li>
+          </ul>
+          <p>Once you complete these tasks and secure a client agreement, submit your documentation to claim your official certificate.</p>
+        `;
+    }
+  }
+
+  // Final fallback
+  return `
+    <p>Welcome to <strong>${lessonTitle}</strong> of our comprehensive training series.</p>
+    <p>This module expands upon foundational parameters. By applying these concepts to commercial tasks, you gain hands-on technical proficiency and experience standard production work setups.</p>
+    <h4 style="margin:20px 0 10px; color:var(--white);">Core Competency Targets</h4>
+    <p>Upon completing this chapter, students should verify they can perform the following items:</p>
+    <ul>
+      <li><strong>Constructive Abstractions:</strong> Structure modular scripts or workflows to fulfill custom design requirements.</li>
+      <li><strong>Practical Implementation:</strong> Set up locally running testbeds to inspect performance metrics and debug exceptions.</li>
+      <li><strong>Optimal Architectures:</strong> Write scalable layouts and logic compliant with web industry guidelines.</li>
+    </ul>
+    <p>Review the capstone instructions, deploy the code modules to test servers, and run execution audits to assert correctness.</p>
+  `;
+}
 
     /* ===================== READER MECHANICS ===================== */
     let activeCourseId = "";
@@ -1207,19 +2003,8 @@ Value-Based Project Quote: ₹25,000</div>
         // Show standard lesson details
         const lesson = course.syllabus[lessonIndex];
         
-        // Mock syllabus context descriptions
-        let bodyHTML = lesson.content || `
-          <p>Welcome to <strong>${lesson.title}</strong> of our comprehensive training series.</p>
-          <p>This module expands upon foundational parameters. By applying these concepts to commercial tasks, you gain hands-on technical proficiency and experience standard production work setups.</p>
-          <h4 style="margin:20px 0 10px; color:var(--white);">Core Competency Targets</h4>
-          <p>Upon completing this chapter, students should verify they can perform the following items:</p>
-          <ul>
-            <li><strong>Constructive Abstractions:</strong> Structure modular scripts or workflows to fulfill custom design requirements.</li>
-            <li><strong>Practical Implementation:</strong> Set up locally running testbeds to inspect performance metrics and debug exceptions.</li>
-            <li><strong>Optimal Architectures:</strong> Write scalable layouts and logic compliant with web industry guidelines.</li>
-          </ul>
-          <p>Review the capstone instructions, deploy the code modules to test servers, and run execution audits to assert correctness.</p>
-        `;
+        // Load rich specific dynamic contents
+        let bodyHTML = getDetailedLessonHTML(courseId, lessonIndex, lesson.title);
         
         contentArea.innerHTML = `
           <div class="reader-lesson-title">${lesson.title}</div>
