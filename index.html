@@ -805,15 +805,37 @@
     margin: 8px 0;
   }
   .cert-text {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     text-align: center;
-    max-width: 380px;
-    line-height: 1.55;
+    max-width: 440px;
+    line-height: 1.5;
     color: #475569;
+  }
+  .cert-serial-tag {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 0.52rem;
+    font-family: monospace;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: bold;
+  }
+  .cert-verify-link {
+    font-size: 0.52rem;
+    color: #94a3b8;
+    text-align: center;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 2px;
+    margin-bottom: 2px;
   }
   .cert-course-name {
     font-weight: 700;
     color: #0a3d2f;
+    margin-top: 2px;
   }
   .cert-footer-row {
     width: 100%;
@@ -835,16 +857,16 @@
     padding-top: 3px;
   }
   .cert-sig-name {
-    font-weight: 700;
-    color: #1e293b;
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-weight: 600;
+    color: #0a3d2f;
+    font-size: 0.78rem;
+    margin-bottom: 2px;
   }
   .cert-seal {
-    width: 52px; height: 52px;
-    background: radial-gradient(circle, #e0b46e 60%, #b8860b 100%);
-    border-radius: 50%;
+    width: 48px; height: 48px;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    border: 2px dashed rgba(255,255,255,0.4);
   }
   .cert-seal-star{
     color: white; font-size: 1.25rem; font-weight: bold;
@@ -864,98 +886,267 @@
     .cert-canvas { border: 15px double #c9974c !important; width: 640px !important; height: 450px !important; box-shadow: none !important; margin: 0 auto !important; }
   }
 
-  /* ---------- COURSE READER SYSTEM ---------- */
-  .reader-layout {
+  /* ---------- COURSE READER SYSTEM (W3Schools Style) ---------- */
+  #view-reader {
     display: flex;
     flex-direction: column;
-    height: 68vh;
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(253,243,225,0.08);
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    background: var(--green-deep);
   }
-  .reader-sidebar {
-    background: rgba(6,35,26,0.9);
-    border-bottom: 1px solid rgba(253,243,225,0.08);
+  .reader-header {
+    height: 60px;
     display: flex;
-    overflow-x: auto;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    background: rgba(5,29,22,0.95);
+    border-bottom: 1px solid rgba(253,243,225,0.08);
     flex-shrink: 0;
   }
-  .reader-sidebar::-webkit-scrollbar{display:none;}
-  .reader-nav-item {
-    padding: 14px 20px;
-    font-size: 0.8rem;
+  .reader-back-btn {
+    background: transparent;
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .reader-back-btn:hover {
+    color: var(--gold);
+  }
+  .reader-header-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
     font-weight: 700;
+    color: var(--gold-bright);
+    text-align: center;
+  }
+  .reader-layout {
+    display: flex;
+    flex: 1;
+    height: calc(100vh - 60px);
+    overflow: hidden;
+    flex-direction: row;
+  }
+  .reader-sidebar {
+    width: 260px;
+    background: rgba(4,22,17,0.98);
+    border-right: 1px solid rgba(253,243,225,0.08);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  .reader-nav-item {
+    width: 100%;
+    padding: 16px 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
     color: var(--cream-dim);
-    white-space: nowrap;
-    display:flex; align-items:center; gap:8px;
-    border-bottom: 2px solid transparent;
-    background:transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    background: transparent;
+    border-left: 3px solid transparent;
+    border-bottom: 1px solid rgba(253,243,225,0.03);
+    transition: all 0.2s;
+  }
+  .reader-nav-item:hover {
+    color: var(--white);
+    background: rgba(253,243,225,0.02);
   }
   .reader-nav-item.active {
     color: var(--gold-bright);
-    border-bottom-color: var(--gold);
-    background: rgba(253,243,225,0.03);
+    background: rgba(212,175,55,0.08);
+    border-left-color: var(--gold);
   }
-  .reader-nav-item svg { width: 14px; height: 14px; }
-  .reader-nav-item.locked { opacity: 0.6; }
+  .reader-nav-item svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+  .reader-nav-item.locked {
+    opacity: 0.6;
+  }
   
   .reader-content {
     flex: 1;
-    background: rgba(10,61,47,0.3);
-    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(10,61,47,0.15);
     overflow-y: auto;
     position: relative;
   }
+  .reader-inner-wrap {
+    flex: 1;
+    padding: 40px 48px;
+    max-width: 820px;
+    margin: 0 auto;
+    width: 100%;
+  }
   .reader-lesson-title {
-    font-size: 1.3rem;
-    font-weight: 700;
-    margin-bottom: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 20px;
     color: var(--white);
-    border-bottom: 1px solid rgba(253,243,225,0.06);
-    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(253,243,225,0.08);
+    padding-bottom: 12px;
   }
   .reader-text {
-    font-size: 0.92rem;
-    line-height: 1.65;
+    font-size: 0.98rem;
+    line-height: 1.75;
     color: var(--cream-dim);
   }
   .reader-text p {
-    margin-bottom: 14px;
+    margin-bottom: 18px;
   }
   .reader-text ul {
-    margin: 12px 0 16px 20px;
+    margin: 14px 0 20px 24px;
   }
   .reader-text li {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
+  }
+  .reader-text strong {
+    color: var(--white);
+  }
+  
+  /* W3Schools Try it Yourself Mock Compiler Box */
+  .try-code-box {
+    margin: 24px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(253,243,225,0.12);
+    background: #020f0b;
+    box-shadow: var(--shadow);
+  }
+  .try-code-header {
+    background: rgba(253,243,225,0.05);
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(253,243,225,0.08);
+  }
+  .try-code-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--cream-dim);
+  }
+  .try-code-btn {
+    background: var(--gold);
+    color: var(--green-deep);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .try-code-btn:hover {
+    background: var(--gold-bright);
+    transform: translateY(-1px);
+  }
+  .try-code-body {
+    padding: 16px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    color: #e0d0b0;
+    overflow-x: auto;
+    white-space: pre;
+    line-height: 1.5;
+  }
+  .try-code-result {
+    background: rgba(253,243,225,0.02);
+    border-top: 1px dashed rgba(253,243,225,0.08);
+    padding: 12px 16px;
+    font-family: monospace;
+    font-size: 0.82rem;
+    color: #8be9fd;
+  }
+
+  .reader-footer-nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 48px;
+    border-top: 1px solid rgba(253,243,225,0.08);
+    background: rgba(5,29,22,0.95);
+    max-width: 820px;
+    margin: 0 auto;
+    width: 100%;
+    margin-top: auto;
   }
   
   /* Locked Lesson state overlay */
   .reader-locked-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(5,29,22,0.85);
-    backdrop-filter: blur(8px);
+    background: rgba(4,22,17,0.9);
+    border: 1px solid rgba(253,243,225,0.08);
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px;
+    padding: 48px 30px;
     text-align: center;
+    margin: 40px auto;
+    max-width: 480px;
+    box-shadow: var(--shadow);
   }
   .reader-locked-icon {
-    width: 48px; height: 48px;
+    width: 54px; height: 54px;
     border-radius: 50%;
     background: rgba(212,175,55,0.1);
     border: 1px solid rgba(212,175,55,0.25);
     color: var(--gold);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
   }
   .reader-locked-overlay h4 {
-    font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: var(--cream);
+    font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; color: var(--cream);
   }
   .reader-locked-overlay p {
-    font-size: 0.85rem; color: var(--cream-dim); max-width: 320px; margin-bottom: 18px; line-height: 1.5;
+    font-size: 0.9rem; color: var(--cream-dim); max-width: 360px; margin-bottom: 24px; line-height: 1.6;
+  }
+
+  /* Responsive Reader */
+  @media (max-width: 759px) {
+    .reader-layout {
+      flex-direction: column;
+      height: calc(100vh - 60px);
+    }
+    .reader-sidebar {
+      width: 100%;
+      height: 52px;
+      flex-direction: row;
+      border-right: none;
+      border-bottom: 1px solid rgba(253,243,225,0.08);
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+    .reader-nav-item {
+      width: auto;
+      height: 100%;
+      padding: 0 16px;
+      border-left: none;
+      border-bottom: 3px solid transparent;
+      display: inline-flex;
+      align-items: center;
+    }
+    .reader-nav-item.active {
+      border-left-color: transparent;
+      border-bottom-color: var(--gold);
+    }
+    .reader-inner-wrap {
+      padding: 24px 20px;
+    }
+    .reader-footer-nav {
+      padding: 16px 20px;
+    }
   }
 
   /* ---------- RESPONSIVE / DESKTOP ---------- */
@@ -1154,8 +1345,8 @@
                 <svg viewBox="0 0 200 200" style="width:100%; height:100%; display:block;">
                   <defs>
                     <linearGradient id="grad-hero" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#0f4a38" />
-                      <stop offset="100%" stop-color="#051d16" />
+                      <stop offset="0%" stop-color="#1e1b4b" />
+                      <stop offset="100%" stop-color="#08051a" />
                     </linearGradient>
                   </defs>
                   <rect width="200" height="200" fill="url(#grad-hero)" />
@@ -1163,16 +1354,16 @@
                     <circle cx="100" cy="100" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
                   </g>
                   <g opacity="0.9">
-                    <circle cx="100" cy="100" r="8" fill="none" stroke="#22c55e" stroke-width="2"/>
-                    <circle cx="70" cy="80" r="6" fill="none" stroke="#22c55e" stroke-width="2"/>
-                    <circle cx="130" cy="80" r="6" fill="none" stroke="#22c55e" stroke-width="2"/>
-                    <line x1="100" y1="100" x2="70" y2="80" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3,3"/>
-                    <line x1="100" y1="100" x2="140" y2="80" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3,3"/>
-                    <circle cx="100" cy="100" r="3" fill="#22c55e"/>
+                    <circle cx="100" cy="100" r="8" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                    <circle cx="70" cy="80" r="6" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                    <circle cx="130" cy="80" r="6" fill="none" stroke="#38bdf8" stroke-width="2"/>
+                    <line x1="100" y1="100" x2="70" y2="80" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <line x1="100" y1="100" x2="140" y2="80" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <circle cx="100" cy="100" r="3" fill="#38bdf8"/>
                   </g>
                   <rect x="0" y="150" width="200" height="50" fill="rgba(5,29,22,0.85)" />
-                  <line x1="0" y1="150" x2="200" y2="150" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
-                  <text x="15" y="162" fill="#22c55e" font-family="'Outfit', sans-serif" font-size="7.5" font-weight="800" letter-spacing="1.2" opacity="0.9">AI</text>
+                  <line x1="0" y1="150" x2="200" y2="150" stroke="#38bdf8" stroke-width="1.5" opacity="0.6"/>
+                  <text x="15" y="162" fill="#38bdf8" font-family="'Outfit', sans-serif" font-size="7.5" font-weight="800" letter-spacing="1.2" opacity="0.9">AI</text>
                   <text x="15" y="174" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="9" font-weight="700" letter-spacing="0.2">Learn AI: A Beginner's</text>
                   <text x="15" y="186" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="9" font-weight="700" letter-spacing="0.2">Roadmap</text>
                 </svg>
@@ -1252,6 +1443,36 @@
         </div>
       </div>
       <div class="search-results" id="search-results"></div>
+    </section>
+
+    <!-- ================= COURSE READER VIEW (W3Schools Style) ================= -->
+    <section class="view" id="view-reader">
+      <div class="reader-header">
+        <button class="reader-back-btn" onclick="goTo('courses')">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Back to Courses
+        </button>
+        <div class="reader-header-title" id="reader-course-title-header">Course Reader</div>
+        <div class="reader-header-actions">
+          <button class="btn btn-gold btn-sm" id="reader-claim-cert-btn" style="display:none;" onclick="openCertFromReader()">Claim Certificate</button>
+        </div>
+      </div>
+      
+      <div class="reader-layout">
+        <div class="reader-sidebar" id="reader-lessons-nav">
+          <!-- W3Schools-style sidebar list of chapters -->
+        </div>
+        <div class="reader-content">
+          <div class="reader-inner-wrap" id="reader-lesson-content-area">
+            <!-- Dynamic lesson content renders here -->
+          </div>
+          <!-- W3Schools next/prev navigation bar -->
+          <div class="reader-footer-nav">
+            <button class="btn btn-outline btn-sm" id="reader-prev-btn" onclick="goToPrevLesson()">« Previous</button>
+            <button class="btn btn-gold btn-sm" id="reader-next-btn" onclick="goToNextLesson()">Next »</button>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
@@ -1344,6 +1565,9 @@
         </div>
         <div class="cert-canvas-container">
           <div class="cert-canvas" id="cert-print-area">
+            <!-- Dynamic Verification serial tag -->
+            <div class="cert-serial-tag" id="cert-serial-display">Verify ID: DL-PYT-827419</div>
+            
             <!-- Gold watermark SVG -->
             <svg class="cert-watermark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:180px; height:180px; opacity:0.045; pointer-events:none;">
               <path fill="#c9974c" fill-rule="evenodd" d="M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z"/>
@@ -1352,26 +1576,47 @@
               <rect x="28" y="52" width="44" height="6" fill="#c9974c"/>
               <rect x="28" y="62" width="44" height="6" fill="#c9974c"/>
             </svg>
-            <div class="cert-top-text">Certificate of Completion</div>
-            <div class="cert-title">Dexterity Learn</div>
-            <div class="cert-subtitle">by JSN Creative</div>
-            <div style="font-size:0.68rem; color:#64748b; text-transform:uppercase; margin-top:10px; font-weight:600; letter-spacing:0.05em;">This is proudly presented to</div>
+
+            <!-- Official brand logo -->
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: -2px; margin-top: 8px;">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:28px; height:28px; border-radius:5px; flex-shrink:0;">
+                <rect width="100" height="100" fill="#053526"/>
+                <path fill="#fdf3e1" fill-rule="evenodd" d="M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z"/>
+                <rect x="54" y="32" width="18" height="6" fill="#ffffff"/>
+                <rect x="54" y="42" width="18" height="6" fill="#ffffff"/>
+                <rect x="28" y="52" width="44" height="6" fill="#ffffff"/>
+                <rect x="28" y="62" width="44" height="6" fill="#ffffff"/>
+              </svg>
+              <div style="font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 900; text-transform: uppercase; color: #0a3d2f; letter-spacing: 0.05em;">Dexterity Learn</div>
+            </div>
+
+            <div class="cert-top-text">Certificate of Achievement</div>
+            <div style="font-size:0.58rem; color:#64748b; text-transform:uppercase; font-weight:700; letter-spacing:0.08em; margin-top: 6px;">This professional credential is officially awarded to</div>
             <div class="cert-recipient-name" id="cert-name-display">Your Name</div>
             <div class="cert-text">
-              for successfully completing the curriculum and proving competence in the area of
+              for successfully satisfying all instructional requirements, code challenges, and capstone review projects in the curriculum of
               <div class="cert-course-name" id="cert-course-display">Python Fundamentals</div>
             </div>
+            
+            <div class="cert-verify-link">Authenticity verification link: dexteritylearn.vercel.app/verify</div>
+
             <div class="cert-footer-row">
               <div class="cert-sig">
+                <div class="cert-sig-name" style="font-family:'Fraunces', Georgia, serif; font-style:italic; font-weight:600; color:#0a3d2f; font-size:0.75rem;">Dexterity Registrar</div>
                 <div class="cert-sig-line"></div>
-                <div class="cert-sig-name">JSN Creative Team</div>
-                <div>Issuing Authority</div>
+                <div>Academic Registrar</div>
               </div>
+              
               <div class="cert-seal">
-                <span class="cert-seal-star">★</span>
+                <svg viewBox="0 0 100 100" style="width:36px; height:36px; display:block; margin:auto;">
+                  <circle cx="50" cy="50" r="45" fill="none" stroke="#c9974c" stroke-width="2.5" stroke-dasharray="4,2"/>
+                  <polygon points="50,15 60,38 85,38 65,52 73,78 50,62 27,78 35,52 15,38 40,38" fill="#c9974c"/>
+                </svg>
               </div>
+              
               <div class="cert-sig">
-                <div class="cert-sig-line" id="cert-date-line">July 11, 2026</div>
+                <div class="cert-sig-name" id="cert-date-line" style="font-family:'Fraunces', Georgia, serif; font-style:italic; font-weight:600; color:#0a3d2f; font-size:0.75rem;">July 11, 2026</div>
+                <div class="cert-sig-line"></div>
                 <div>Date of Achievement</div>
               </div>
             </div>
@@ -1385,25 +1630,7 @@
     </div>
   </div>
 
-  <!-- COURSE READER MODAL -->
-  <div class="modal-overlay" id="course-reader-overlay">
-    <div class="modal-content" style="max-width:850px;">
-      <div class="modal-header">
-        <h3 id="reader-course-title">Course Reader</h3>
-        <button class="modal-close" onclick="closeReaderModal()">&times;</button>
-      </div>
-      <div class="modal-body" style="padding:0;">
-        <div class="reader-layout">
-          <div class="reader-sidebar" id="reader-lessons-nav">
-            <!-- Dynamic lesson list items will generate here -->
-          </div>
-          <div class="reader-content" id="reader-lesson-content-area">
-            <!-- Dynamic lesson content will render here -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
 
 <script>
 /* ===================== CONFIG ===================== */
@@ -1464,13 +1691,46 @@ const COURSES = [
         title: "1. Introduction to Artificial Intelligence",
         content: `
           <p>Welcome to <strong>Learn AI</strong>. In this course, we demystify artificial intelligence and give you a clear, straightforward path to using it in your daily work.</p>
-          <p>At its core, AI is about training computer models on massive amounts of data so they can learn patterns and make intelligent predictions, generate text, or analyze code.</p>
-          <p><strong>Key Concepts:</strong></p>
+          <p>At its core, AI is about training computer models on massive datasets so they can discover mathematical patterns and perform intelligent operations like text synthesis, code generation, or structural analysis.</p>
+          
+          <h4 style="margin:20px 0 10px; color:var(--white);">Core Pillars of Modern AI</h4>
+          <p>Understanding these three concepts is essential to utilizing modern systems:</p>
           <ul>
-            <li><strong>Neural Networks:</strong> Computing systems inspired by biological brains.</li>
-            <li><strong>Large Language Models (LLMs):</strong> Text prediction systems trained on massive written materials.</li>
-            <li><strong>Generative AI:</strong> AI systems that can create original content, images, music, or code based on prompts.</li>
+            <li><strong>Neural Networks:</strong> Computational grids inspired by biological brains. They process inputs through layers of nodes (neurons), assigning mathematical weights and biases to predict outputs.</li>
+            <li><strong>Large Language Models (LLMs):</strong> Deep learning transformer models trained on billions of parameters to comprehend and predict sequential elements, like words or source tokens.</li>
+            <li><strong>Generative AI:</strong> Systems optimized to generate original structural matrices (such as texts, code blocks, or graphic canvases) based on user instructions (prompts).</li>
           </ul>
+
+          <h4 style="margin:20px 0 10px; color:var(--white);">Mastering Instruction Design (Prompting)</h4>
+          <p>To get professional-grade work from AI, you cannot rely on simple, single-sentence questions. You must structure your inputs using the <strong>RTFC Framework</strong>:</p>
+          <ol>
+            <li><strong>Role:</strong> Give the AI a distinct professional persona (e.g., "Senior Python Developer").</li>
+            <li><strong>Task:</strong> State the exact outcome you need ("Write a script to clean user emails").</li>
+            <li><strong>Context:</strong> Explain constraints or environment details ("The emails are stored in a raw CSV file").</li>
+            <li><strong>Constraint:</strong> Force strict formatting boundaries ("Output valid JSON only").</li>
+          </ol>
+
+          <h4 style="margin:20px 0 10px; color:var(--white);">Try it Yourself (Interactive Sandbox)</h4>
+          <p>See how persona mapping shifts AI output. Click below to simulate compiling the RTFC Prompt instruction set:</p>
+          
+          <div class="try-code-box">
+            <div class="try-code-header">
+              <span class="try-code-title">RTFC Prompt Sandbox</span>
+              <button class="try-code-btn" onclick="alert('Simulation Prompt Compiler Output:\\n\\n[AI Agent Response]:\\n\\\"As a Senior Python Developer, I have analyzed your query. To clean raw email strings from your CSV, use the standard re (regex) module to filter out whitespaces and non-ascii tokens. Here is the JSON output template: {\\\'status\\\': \\\'success\\\', \\\'data\\\': []}\\\"');">Run Prompt Compiler</button>
+            </div>
+            <div class="try-code-body"># Prompt Configuration
+Role: "Senior Python Developer"
+Task: "Provide a JSON template explaining email validation in Python."
+Context: "User emails are messy strings."
+Constraint: "Output JSON syntax only."</div>
+            <div class="try-code-result">Console Output:
+{
+  "status": "success",
+  "method": "re.match()",
+  "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+}</div>
+          </div>
+          
           <p>In the next chapters, we will learn prompt engineering, discover top tools, and build customized AI agents.</p>
         `
       },
@@ -1491,18 +1751,49 @@ const COURSES = [
       {
         title: "1. Syntax & Variable Scopes",
         content: `
-          <p>Welcome to <strong>Python Fundamentals</strong>. Python is one of the most readable, powerful programming languages in the world.</p>
-          <p>To declare a variable in Python, you simply write the variable name, followed by an equals sign, and the value you want to assign to it. Python handles the type declarations automatically under the hood.</p>
-          <p><strong>Code Example:</strong></p>
+          <p>Welcome to <strong>Python Fundamentals</strong>. Python is one of the most readable, powerful programming languages in the world, widely used for web development, automation, and data science.</p>
+          <p>Unlike languages that require rigid syntax declarations (like C++ or Java), Python utilizes dynamic typing. You don't need to specify if a variable is an integer, string, or boolean; Python determines this automatically during runtime.</p>
+          
+          <h4 style="margin:20px 0 10px; color:var(--white);">Declaring Variables & Memory References</h4>
+          <p>To declare a variable, write its label followed by the assignment operator (<code>=</code>):</p>
           <pre style="background:rgba(0,0,0,0.4); padding:12px; border-radius:6px; color:#f5e0a3; font-family:monospace; margin-bottom:14px;">
-# Variable declaration
-user_name = "Alex"
-user_score = 95
-is_active = True
-
-print(f"User: {user_name}, Score: {user_score}")
+# Assigning different primitive types
+user_name = "Muhammad"  # String (str)
+user_score = 95        # Integer (int)
+is_active = True        # Boolean (bool)
           </pre>
-          <p>Python relies heavily on indentation to define code blocks (loops, functions, and classes). Always use exactly 4 spaces for a clean, error-free execution layout.</p>
+
+          <h4 style="margin:20px 0 10px; color:var(--white);">The Importance of Code Indentation</h4>
+          <p>One of Python's most unique aspects is that indentation is not just for readability — it is syntactically mandatory. Python uses whitespaces (specifically 4 spaces) to define execution blocks, instead of using curly braces (<code>{}</code>):</p>
+          <pre style="background:rgba(0,0,0,0.4); padding:12px; border-radius:6px; color:#f5e0a3; font-family:monospace; margin-bottom:14px;">
+if user_score >= 90:
+    print("Grade: A")  # Nested inside the IF block
+else:
+    print("Grade: B")  # Nested inside the ELSE block
+          </pre>
+
+          <h4 style="margin:20px 0 10px; color:var(--white);">Try it Yourself (Interactive Interpreter)</h4>
+          <p>Modify the scores and see how the interpreter evaluates the code. Click below to run the interpreter simulation:</p>
+
+          <div class="try-code-box">
+            <div class="try-code-header">
+              <span class="try-code-title">Python Interpreter Sandbox</span>
+              <button class="try-code-btn" onclick="alert('Console Output:\\n\\nHello, Muhammad!\\nYour score is 95/100.\\nStatus: Excellent! Grade A Achieved.');">Run Python Code</button>
+            </div>
+            <div class="try-code-body"># Variables
+student = "Muhammad"
+score = 95
+
+# Conditional flow evaluation
+if score >= 90:
+    print(f"Hello, {student}! Grade: A")
+else:
+    print(f"Hello, {student}! Keep studying!")</div>
+            <div class="try-code-result">Console Output:
+Hello, Muhammad! Grade: A</div>
+          </div>
+
+          <p>Python relies heavily on indentation to define code blocks. Always use exactly 4 spaces for a clean, error-free execution layout.</p>
         `
       },
       { title: "2. Control Flows, Loops & Conditions", locked: true },
@@ -1524,11 +1815,30 @@ print(f"User: {user_name}, Score: {user_score}")
         content: `
           <p>Welcome to <strong>Full-Stack Web Development</strong>. Every premium, interactive web application begins with solid semantic structure and responsive layouts.</p>
           <p>Always use semantic tags like <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;footer&gt;</code> to optimize search visibility (SEO) and ensure accessibility.</p>
-          <p><strong>CSS Layouts:</strong></p>
+          
+          <h4 style="margin:20px 0 10px; color:var(--white);">Flexbox vs. Grid layout Models</h4>
+          <p>CSS layout engines are separated into two distinct models:</p>
           <ul>
-            <li><strong>Flexbox:</strong> Perfect for one-dimensional layouts (e.g., navigation menus, card contents).</li>
-            <li><strong>CSS Grid:</strong> Ideal for two-dimensional structures (e.g., page frameworks, responsive multi-column listings).</li>
+            <li><strong>CSS Flexbox (1D):</strong> Designed for laying elements out along a single axis (either row or column). Best for aligning nav items or small card blocks.</li>
+            <li><strong>CSS Grid (2D):</strong> Designed for multi-row and multi-column grid layouts. Ideal for page frameworks and card listing grids.</li>
           </ul>
+
+          <h4 style="margin:20px 0 10px; color:var(--white);">Try it Yourself (Responsive Layout Renderer)</h4>
+          <p>See how flex alignment is calculated. Click below to trigger the browser renderer compiler:</p>
+
+          <div class="try-code-box">
+            <div class="try-code-header">
+              <span class="try-code-title">CSS Flexbox Sandbox</span>
+              <button class="try-code-btn" onclick="alert('CSS Flex Compiler Output:\\n\\nContainer displays as Flexbox row.\\nItem 1 (flex: 1) takes 33% width.\\nItem 2 (flex: 2) takes 66% width.\\nSpacing gap is exactly 16px.');">Compile Layout</button>
+            </div>
+            <div class="try-code-body">&lt;div style="display: flex; gap: 16px;"&gt;
+  &lt;div style="flex: 1; background: #d4af37;"&gt;Sidebar (33%)&lt;/div&gt;
+  &lt;div style="flex: 2; background: #0a3d2f;"&gt;Main Feed (66%)&lt;/div&gt;
+&lt;/div&gt;</div>
+            <div class="try-code-result">Browser Output:
+[Sidebar (33%)]   <-- 16px gap -->   [Main Feed (66%)]</div>
+          </div>
+
           <p>In later lessons, we will build interfaces using React components, call external REST APIs, and deploy interactive databases.</p>
         `
       },
@@ -1550,13 +1860,34 @@ print(f"User: {user_name}, Score: {user_score}")
         title: "1. Defining Your Niche & Professional Positioning",
         content: `
           <p>Welcome to <strong>Freelancing 101</strong>. Setting out as a freelancer requires looking at your skills as business assets.</p>
-          <p>Generalists often compete on price alone. Specialists, however, win on value. By picking a clear niche (e.g., "Full-Stack React developer for SaaS companies"), you separate yourself from massive bidding directories.</p>
-          <p><strong>Action Checklist:</strong></p>
-          <ul>
-            <li>Audit your skills and map them to commercial opportunities.</li>
-            <li>Define your ideal buyer persona (who is willing to pay premium prices).</li>
-            <li>Create an authority portal showing direct case studies of completed work.</li>
-          </ul>
+          <p>Generalists who bid on arbitrary jobs compete on price alone, leading to low earnings. Specialists, however, win on value. By picking a clear niche (e.g., "Full-Stack React developer for SaaS companies"), you separate yourself from massive bidding directories.</p>
+          
+          <h4 style="margin:20px 0 10px; color:var(--white);">Finding Your Specialization Niche</h4>
+          <p>Follow this three-step audit process to define your positioning:</p>
+          <ol>
+            <li><strong>Audit Skills:</strong> List what you can build easily (e.g., Landing Pages, API integrations).</li>
+            <li><strong>Identify Revenue Boosters:</strong> Locate businesses where this skill directly leads to sales (e.g., e-commerce shops).</li>
+            <li><strong>Construct Persona Offer:</strong> Structure a clear pitch ("I help e-commerce stores speed up checkouts to increase conversions").</li>
+          </ol>
+
+          <h4 style="margin:20px 0 10px; color:var(--white);">Try it Yourself (Value Pricing Calculator)</h4>
+          <p>Enter project values and calculate what you should charge. Click below to run the value pricing calculator:</p>
+
+          <div class="try-code-box">
+            <div class="try-code-header">
+              <span class="try-code-title">Value Pricing Calculator</span>
+              <button class="try-code-btn" onclick="const rev = 500000; const val = 0.05; const quote = Math.round(rev * val); alert('Value-Based Estimate Output:\\n\\nIf your service earns the client ₹' + rev + ' extra revenue,\\ncharging a 5% value fee yields a project quote of:\\n₹' + quote + '. This is much higher than standard hourly rates!');">Run Calculator</button>
+            </div>
+            <div class="try-code-body"># Value-Based Pricing Formula:
+# Project Quote = Estimated Added Client Revenue * Value Percentage (5%)
+estimated_revenue_increase = 500000
+value_percentage = 0.05
+project_quote = estimated_revenue_increase * value_percentage
+print(f"Project Quote Proposal: ₹{project_quote}")</div>
+            <div class="try-code-result">Estimate Output:
+Value-Based Project Quote: ₹25,000</div>
+          </div>
+
           <p>Next, we will outline project pricing, master outreach cold systems, and draft legal agreements.</p>
         `
       },
@@ -1573,11 +1904,15 @@ let CART = [];
 /* ===================== DYNAMIC SVG GENERATOR ===================== */
 function getCoverSVG(title, category, isLandscape = false) {
   let accentColor = "var(--gold)";
+  let gradFrom = "#0f4a38";
+  let gradTo = "#051d16";
   let iconSVG = "";
   let subText = category.toUpperCase();
 
   if (category === "AI") {
-    accentColor = "#22c55e"; // green
+    accentColor = "#38bdf8"; // Neon Sky Blue
+    gradFrom = "#1e1b4b";    // Dark Indigo
+    gradTo = "#08051a";      // Midnight Blue/Black
     iconSVG = `
       <circle cx="100" cy="${isLandscape ? 60 : 100}" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
       <circle cx="70" cy="${isLandscape ? 40 : 80}" r="6" fill="none" stroke="${accentColor}" stroke-width="2"/>
@@ -1587,13 +1922,17 @@ function getCoverSVG(title, category, isLandscape = false) {
       <circle cx="100" cy="${isLandscape ? 60 : 100}" r="3" fill="${accentColor}"/>
     `;
   } else if (category === "Programming") {
-    accentColor = "var(--gold)";
+    accentColor = "#f5e0a3";  // Light Gold
+    gradFrom = "#022c22";     // Deep Dark Emerald
+    gradTo = "#051611";       // Very Dark Teal
     iconSVG = `
       <path d="M80 ${isLandscape ? 45 : 85} L65 ${isLandscape ? 60 : 100} L80 ${isLandscape ? 75 : 115}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M120 ${isLandscape ? 45 : 85} L135 ${isLandscape ? 60 : 100} L120 ${isLandscape ? 75 : 115}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     `;
   } else {
-    accentColor = "#10b981"; // emerald
+    accentColor = "#f97316";  // Vibrant Orange/Coral
+    gradFrom = "#450a0a";     // Burgundy
+    gradTo = "#1c0202";       // Very Dark Red
     iconSVG = `
       <path d="M70 ${isLandscape ? 45 : 85} L100 ${isLandscape ? 75 : 115} L130 ${isLandscape ? 45 : 85} Z" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linejoin="round"/>
       <circle cx="100" cy="${isLandscape ? 60 : 100}" r="4" fill="${accentColor}"/>
@@ -1608,8 +1947,8 @@ function getCoverSVG(title, category, isLandscape = false) {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" style="width:100%; height:100%; display:block;">
       <defs>
         <linearGradient id="grad-${title.replace(/[^a-zA-Z]/g, '')}-${isLandscape}" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#0f4a38" />
-          <stop offset="100%" stop-color="#051d16" />
+          <stop offset="0%" stop-color="${gradFrom}" />
+          <stop offset="100%" stop-color="${gradTo}" />
         </linearGradient>
       </defs>
       <rect width="200" height="${isLandscape ? 120 : 200}" fill="url(#grad-${title.replace(/[^a-zA-Z]/g, '')}-${isLandscape})" rx="8"/>
@@ -1725,6 +2064,12 @@ function openCertModal(courseTitle) {
   const dateStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
   document.getElementById("cert-date-line").textContent = dateStr;
   
+  // Generate a realistic, unique verification ID
+  const courseCode = courseTitle.split(" ")[0].toUpperCase().substring(0, 3);
+  const randomSerial = Math.floor(100000 + Math.random() * 900000);
+  const certId = `Verify ID: DL-${courseCode}-${randomSerial}`;
+  document.getElementById("cert-serial-display").textContent = certId;
+  
   document.getElementById("cert-preview-overlay").classList.add("open");
   document.getElementById("cert-student-name").focus();
 }
@@ -1747,51 +2092,56 @@ function claimCertWhatsApp() {
   openWhatsApp(msg);
 }
 
-/* ===================== COURSE READER SYSTEM ===================== */
+/* ===================== COURSE READER SYSTEM (W3Schools Style) ===================== */
 let activeCourseId = "";
 let activeLessonIndex = 0;
 
-function openReaderModal(courseId) {
+function goToReader(courseId, lessonIndex = 0) {
+  location.hash = `reader/${courseId}/${lessonIndex}`;
+}
+
+function loadReaderPage(courseId, lessonIndex) {
   const course = COURSES.find(c => c.id === courseId);
-  if (!course) return;
+  if (!course) {
+    goTo("courses");
+    return;
+  }
   
   activeCourseId = courseId;
-  activeLessonIndex = 0;
+  activeLessonIndex = lessonIndex;
   
-  document.getElementById("reader-course-title").textContent = course.title;
+  // Set headers
+  document.getElementById("reader-course-title-header").textContent = course.title;
   
+  // Build sidebar
   const navContainer = document.getElementById("reader-lessons-nav");
   navContainer.innerHTML = "";
   
   course.syllabus.forEach((lesson, index) => {
     const btn = document.createElement("button");
-    btn.className = "reader-nav-item" + (index === 0 ? " active" : "");
+    btn.className = "reader-nav-item" + (index === lessonIndex ? " active" : "");
     btn.innerHTML = (lesson.locked ? `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
     ` : `
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    `) + (lesson.title.split(". ")[1] || lesson.title);
-    btn.onclick = () => selectReaderLesson(index);
+    `) + `<span>${lesson.title.split(". ")[1] || lesson.title}</span>`;
+    btn.onclick = () => {
+      goToReader(courseId, index);
+    };
     navContainer.appendChild(btn);
   });
   
-  selectReaderLesson(0);
-  document.getElementById("course-reader-overlay").classList.add("open");
-}
-
-function closeReaderModal() {
-  document.getElementById("course-reader-overlay").classList.remove("open");
-}
-
-function selectReaderLesson(index) {
-  const course = COURSES.find(c => c.id === activeCourseId);
-  if (!course) return;
-  
-  activeLessonIndex = index;
-  document.querySelectorAll(".reader-nav-item").forEach((btn, i) => btn.classList.toggle("active", i === index));
-  
+  // Display content
   const contentArea = document.getElementById("reader-lesson-content-area");
-  const lesson = course.syllabus[index];
+  const lesson = course.syllabus[lessonIndex];
+  
+  // Show / Hide certificate claim button if last lesson is active
+  const claimBtn = document.getElementById("reader-claim-cert-btn");
+  if (course.certifiable && lessonIndex === course.syllabus.length - 1) {
+    claimBtn.style.display = "block";
+  } else {
+    claimBtn.style.display = "none";
+  }
   
   if (lesson.locked) {
     contentArea.innerHTML = `
@@ -1811,6 +2161,44 @@ function selectReaderLesson(index) {
       <div class="reader-lesson-title">${lesson.title}</div>
       <div class="reader-text">${lesson.content}</div>
     `;
+  }
+  
+  // Update footer prev/next buttons
+  const prevBtn = document.getElementById("reader-prev-btn");
+  const nextBtn = document.getElementById("reader-next-btn");
+  
+  if (lessonIndex > 0) {
+    prevBtn.style.visibility = "visible";
+  } else {
+    prevBtn.style.visibility = "hidden";
+  }
+  
+  if (lessonIndex < course.syllabus.length - 1) {
+    nextBtn.style.visibility = "visible";
+  } else {
+    nextBtn.style.visibility = "hidden";
+  }
+  
+  goTo("reader", false);
+}
+
+function goToPrevLesson() {
+  if (activeLessonIndex > 0) {
+    goToReader(activeCourseId, activeLessonIndex - 1);
+  }
+}
+
+function goToNextLesson() {
+  const course = COURSES.find(c => c.id === activeCourseId);
+  if (course && activeLessonIndex < course.syllabus.length - 1) {
+    goToReader(activeCourseId, activeLessonIndex + 1);
+  }
+}
+
+function openCertFromReader() {
+  const course = COURSES.find(c => c.id === activeCourseId);
+  if (course) {
+    openCertModal(course.title);
   }
 }
 
@@ -1875,7 +2263,7 @@ function courseCard(course){
   `;
   
   el.querySelector('[data-action="read"]').addEventListener("click", () => {
-    openReaderModal(course.id);
+    goToReader(course.id);
   });
   el.querySelector('[data-action="cert"]').addEventListener("click", () => {
     openCertModal(course.title);
@@ -1997,7 +2385,7 @@ function renderSearch(){
       <div class="rmeta"><div class="rtitle">${c.title}</div><div class="rtype">Course · ${c.level}</div></div>
       <button class="btn btn-outline btn-sm">Read</button>
     `;
-    row.querySelector("button").onclick = () => { openReaderModal(c.id); };
+    row.querySelector("button").onclick = () => { goToReader(c.id); };
     results.appendChild(row);
   });
 }
@@ -2010,6 +2398,16 @@ function goTo(viewName, updateHash = true){
   if (targetView) {
     targetView.classList.add("active");
   }
+  
+  // Hide top header, floating nav tabbar, and footer in full-page reader mode
+  const isReader = (viewName === "reader");
+  const topBar = document.querySelector(".topbar");
+  const tabbar = document.querySelector(".tabbar");
+  const footer = document.querySelector("footer");
+  
+  if (topBar) topBar.style.display = isReader ? "none" : "flex";
+  if (tabbar) tabbar.style.display = isReader ? "none" : "block";
+  if (footer) footer.style.display = isReader ? "none" : "block";
   
   document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === viewName));
   window.scrollTo({top:0, behavior:"instant"});
@@ -2028,9 +2426,14 @@ function goTo(viewName, updateHash = true){
 
 /* ===================== ROUTING HASH LISTENER ===================== */
 window.addEventListener("hashchange", () => {
-  const tab = (location.hash || "#home").replace("#", "");
-  if(["home","ebooks","courses","search"].includes(tab)){
-    goTo(tab, false);
+  const hash = (location.hash || "#home").replace("#", "");
+  const parts = hash.split("/");
+  const baseTab = parts[0];
+  
+  if (baseTab === "reader") {
+    loadReaderPage(parts[1], parseInt(parts[2] || "0", 10));
+  } else if(["home","ebooks","courses","search"].includes(baseTab)){
+    goTo(baseTab, false);
   }
 });
 
@@ -2044,8 +2447,12 @@ renderCoursesGrid();
 renderSearch();
 
 const startTab = (location.hash || "#home").replace("#", "");
-if(["home","ebooks","courses","search"].includes(startTab)){
-  goTo(startTab, false);
+const startParts = startTab.split("/");
+const startBase = startParts[0];
+if (startBase === "reader") {
+  loadReaderPage(startParts[1], parseInt(startParts[2] || "0", 10));
+} else if(["home","ebooks","courses","search"].includes(startBase)){
+  goTo(startBase, false);
 }
 </script>
 
