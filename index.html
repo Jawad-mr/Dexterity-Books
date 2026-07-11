@@ -296,6 +296,7 @@
     box-shadow:var(--shadow);
     transition:transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
     backdrop-filter:blur(8px);
+    cursor:pointer;
   }
   .card:hover{
     transform:translateY(-6px);
@@ -939,6 +940,44 @@
     overflow-y: auto;
     flex-shrink: 0;
   }
+  .book-details-sidebar {
+    width: 280px;
+    background: rgba(4,22,17,0.98);
+    border-right: 1px solid rgba(253,243,225,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 20px;
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+  .book-sidebar-cover {
+    width: 130px;
+    height: 175px;
+    margin-bottom: 20px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+    border-radius: 4px 10px 10px 4px;
+    overflow: hidden;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .book-sidebar-meta {
+    width: 100%;
+    text-align: center;
+  }
+  .book-sidebar-meta h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+    font-family: 'Outfit', sans-serif;
+  }
+  .book-sidebar-meta .desc {
+    font-size: 0.82rem;
+    color: var(--cream-dim);
+    line-height: 1.5;
+    margin-top: 10px;
+  }
   .reader-nav-item {
     width: 100%;
     padding: 16px 20px;
@@ -1146,6 +1185,32 @@
     }
     .reader-footer-nav {
       padding: 16px 20px;
+    }
+    .book-details-sidebar {
+      width: 100%;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid rgba(253,243,225,0.08);
+      padding: 20px;
+      flex-direction: row;
+      gap: 20px;
+      align-items: flex-start;
+      overflow-y: visible;
+    }
+    .book-sidebar-cover {
+      width: 80px;
+      height: 110px;
+      margin-bottom: 0;
+    }
+    .book-sidebar-meta {
+      text-align: left;
+      flex: 1;
+    }
+    .book-sidebar-meta h3 {
+      font-size: 1.05rem;
+    }
+    .book-sidebar-meta .desc {
+      display: none; /* Hide long description on mobile header area to save vertical space */
     }
   }
 
@@ -1445,36 +1510,6 @@
       <div class="search-results" id="search-results"></div>
     </section>
 
-    <!-- ================= COURSE READER VIEW (W3Schools Style) ================= -->
-    <section class="view" id="view-reader">
-      <div class="reader-header">
-        <button class="reader-back-btn" onclick="goTo('courses')">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-          Back to Courses
-        </button>
-        <div class="reader-header-title" id="reader-course-title-header">Course Reader</div>
-        <div class="reader-header-actions">
-          <button class="btn btn-gold btn-sm" id="reader-claim-cert-btn" style="display:none;" onclick="openCertFromReader()">Claim Certificate</button>
-        </div>
-      </div>
-      
-      <div class="reader-layout">
-        <div class="reader-sidebar" id="reader-lessons-nav">
-          <!-- W3Schools-style sidebar list of chapters -->
-        </div>
-        <div class="reader-content">
-          <div class="reader-inner-wrap" id="reader-lesson-content-area">
-            <!-- Dynamic lesson content renders here -->
-          </div>
-          <!-- W3Schools next/prev navigation bar -->
-          <div class="reader-footer-nav">
-            <button class="btn btn-outline btn-sm" id="reader-prev-btn" onclick="goToPrevLesson()">« Previous</button>
-            <button class="btn btn-gold btn-sm" id="reader-next-btn" onclick="goToNextLesson()">Next »</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <!-- FOOTER -->
@@ -1646,7 +1681,14 @@ const EBOOKS = [
     price: 299,
     mrp: 499,
     category: "AI",
-    tag: "Bestseller"
+    tag: "Bestseller",
+    sampleChapter: `
+      <p>Welcome to the Free Preview of <strong>Learn AI: A Beginner's Roadmap</strong>.</p>
+      <p>In this initial segment, we explore the paradigm shift that Artificial Intelligence represents. Over the last decade, computer networks evolved from executing strict conditional instructions (if-then statements) to learning from representations (neural structures).</p>
+      <h4 style="margin:16px 0 8px; color:var(--white);">What is a Large Language Model?</h4>
+      <p>A Large Language Model (LLM) is a statistical text completion engine. It processes an input prompt by calculating probability tables across its trained billions of parameters to guess the next logical word or code symbol.</p>
+      <p>To use AI effectively, remember the golden rule of prompting: the quality of the feedback is directly proportional to the clarity and context of your instructions. By mapping professional constraints, you can automate up to 40% of manual writing and analysis work.</p>
+    `
   },
   {
     id: "ebk-python",
@@ -1655,7 +1697,20 @@ const EBOOKS = [
     price: 249,
     mrp: 399,
     category: "Programming",
-    tag: "Popular"
+    tag: "Popular",
+    sampleChapter: `
+      <p>Welcome to the Free Preview of <strong>Python for Everyone</strong>.</p>
+      <p>Programming is not about memorizing complex commands; it is about logical puzzle solving. Python is specifically engineered to be readable and clear, utilizing natural English words for control flows.</p>
+      <h4 style="margin:16px 0 8px; color:var(--white);">Setting Up Your First Variable</h4>
+      <p>In Python, a variable is simply a named tag that points to a specific object in memory. You assign values using the equals operator:</p>
+      <pre style="background:rgba(0,0,0,0.4); padding:12px; border-radius:6px; color:#facc15; font-family:monospace; margin:14px 0;">
+# Variable declaration
+title = "Python Learner"
+chapters = 10
+is_completed = False
+      </pre>
+      <p>Always verify your variable types. Python resolves scopes dynamically, allowing rapid scripting without verbose structures.</p>
+    `
   },
   {
     id: "ebk-freelance",
@@ -1664,7 +1719,14 @@ const EBOOKS = [
     price: 199,
     mrp: 349,
     category: "Career",
-    tag: "New"
+    tag: "New",
+    sampleChapter: `
+      <p>Welcome to the Free Preview of <strong>The Freelancer's Playbook</strong>.</p>
+      <p>Freelancing is running a micro-agency. The primary reason most talented developers and designers fail in the open market is not their technical capabilities, but their business positioning.</p>
+      <h4 style="margin:16px 0 8px; color:var(--white);">The Positioning Pivot</h4>
+      <p>If you advertise yourself as a generic "WordPress Developer," you are competing against thousands of bidders on low-cost freelancer directories. However, if you position yourself as a "Speed Optimization specialist for WooCommerce shops," you command high premium value pricing.</p>
+      <p>To win clients, shift the conversation from your labor costs to their potential business profits.</p>
+    `
   },
   {
     id: "ebk-webdev",
@@ -1673,7 +1735,22 @@ const EBOOKS = [
     price: 249,
     mrp: 399,
     category: "Programming",
-    tag: ""
+    tag: "",
+    sampleChapter: `
+      <p>Welcome to the Free Preview of <strong>Build Your First Website</strong>.</p>
+      <p>Every website you visit is delivered as HTML (structure), styled with CSS (presentation), and animated with JavaScript (interaction).</p>
+      <h4 style="margin:16px 0 8px; color:var(--white);">Writing Semantic markup</h4>
+      <p>HTML elements instruct web browsers how to display contents. In modern standards, always avoid generic div stacking in favor of semantic structures:</p>
+      <pre style="background:rgba(0,0,0,0.4); padding:12px; border-radius:6px; color:#38bdf8; font-family:monospace; margin:14px 0;">
+&lt;header&gt;
+  &lt;h1&gt;Welcome to My Portal&lt;/h1&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;article&gt;Core content details here...&lt;/article&gt;
+&lt;/main&gt;
+      </pre>
+      <p>This structure guarantees that web crawlers can index your pages, boosting your SEO footprint naturally.</p>
+    `
   }
 ];
 
@@ -1899,20 +1976,51 @@ Value-Based Project Quote: ₹25,000</div>
 ];
 
 /* ===================== GLOBAL STATE ===================== */
-let CART = [];
+let CART = JSON.parse(localStorage.getItem("dex_cart") || "[]");
 
 /* ===================== DYNAMIC SVG GENERATOR ===================== */
-function getCoverSVG(title, category, isLandscape = false) {
+function getCoverSVG(id, title, category, isLandscape = false) {
   let accentColor = "var(--gold)";
   let gradFrom = "#0f4a38";
   let gradTo = "#051d16";
   let iconSVG = "";
   let subText = category.toUpperCase();
 
-  if (category === "AI") {
+  if (id === "ebk-learn-ai") {
     accentColor = "#38bdf8"; // Neon Sky Blue
     gradFrom = "#1e1b4b";    // Dark Indigo
-    gradTo = "#08051a";      // Midnight Blue/Black
+    gradTo = "#08051a";
+  } else if (id === "ebk-python") {
+    accentColor = "#f5e0a3";  // Light Gold
+    gradFrom = "#022c22";     // Deep Dark Emerald
+    gradTo = "#051611";
+  } else if (id === "ebk-freelance") {
+    accentColor = "#f97316";  // Vibrant Orange/Coral
+    gradFrom = "#450a0a";     // Burgundy
+    gradTo = "#1c0202";
+  } else if (id === "ebk-webdev") {
+    accentColor = "#06b6d4";  // Cyan
+    gradFrom = "#0c4a6e";     // Sky-900
+    gradTo = "#021622";
+  } else if (id === "crs-learn-ai") {
+    accentColor = "#22c55e";  // Neon Green
+    gradFrom = "#3b0764";     // Dark Purple
+    gradTo = "#0f031b";
+  } else if (id === "crs-python") {
+    accentColor = "#facc15";  // Neon Yellow/Gold
+    gradFrom = "#2d1b09";     // Dark Brown
+    gradTo = "#100902";
+  } else if (id === "crs-webdev") {
+    accentColor = "#ec4899";  // Soft Pink/Magenta
+    gradFrom = "#1e3a8a";     // Royal Blue
+    gradTo = "#060b1e";
+  } else if (id === "crs-freelance") {
+    accentColor = "#14b8a6";  // Bright Turquoise
+    gradFrom = "#1f2937";     // Dark Slate
+    gradTo = "#0b0f19";
+  }
+
+  if (category === "AI") {
     iconSVG = `
       <circle cx="100" cy="${isLandscape ? 60 : 100}" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
       <circle cx="70" cy="${isLandscape ? 40 : 80}" r="6" fill="none" stroke="${accentColor}" stroke-width="2"/>
@@ -1922,17 +2030,11 @@ function getCoverSVG(title, category, isLandscape = false) {
       <circle cx="100" cy="${isLandscape ? 60 : 100}" r="3" fill="${accentColor}"/>
     `;
   } else if (category === "Programming") {
-    accentColor = "#f5e0a3";  // Light Gold
-    gradFrom = "#022c22";     // Deep Dark Emerald
-    gradTo = "#051611";       // Very Dark Teal
     iconSVG = `
       <path d="M80 ${isLandscape ? 45 : 85} L65 ${isLandscape ? 60 : 100} L80 ${isLandscape ? 75 : 115}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
       <path d="M120 ${isLandscape ? 45 : 85} L135 ${isLandscape ? 60 : 100} L120 ${isLandscape ? 75 : 115}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     `;
   } else {
-    accentColor = "#f97316";  // Vibrant Orange/Coral
-    gradFrom = "#450a0a";     // Burgundy
-    gradTo = "#1c0202";       // Very Dark Red
     iconSVG = `
       <path d="M70 ${isLandscape ? 45 : 85} L100 ${isLandscape ? 75 : 115} L130 ${isLandscape ? 45 : 85} Z" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linejoin="round"/>
       <circle cx="100" cy="${isLandscape ? 60 : 100}" r="4" fill="${accentColor}"/>
@@ -1946,12 +2048,12 @@ function getCoverSVG(title, category, isLandscape = false) {
   return `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" style="width:100%; height:100%; display:block;">
       <defs>
-        <linearGradient id="grad-${title.replace(/[^a-zA-Z]/g, '')}-${isLandscape}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="grad-${id}-${isLandscape}" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="${gradFrom}" />
           <stop offset="100%" stop-color="${gradTo}" />
         </linearGradient>
       </defs>
-      <rect width="200" height="${isLandscape ? 120 : 200}" fill="url(#grad-${title.replace(/[^a-zA-Z]/g, '')}-${isLandscape})" rx="8"/>
+      <rect width="200" height="${isLandscape ? 120 : 200}" fill="url(#grad-${id}-${isLandscape})" rx="8"/>
       <g opacity="0.12">
         <circle cx="100" cy="${isLandscape ? 60 : 100}" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
       </g>
@@ -2000,7 +2102,7 @@ function updateCartUI() {
     
     div.innerHTML = `
       <div class="cart-item-thumb">
-        ${getCoverSVG(item.title, item.category, false)}
+        ${getCoverSVG(item.id, item.title, item.category, false)}
       </div>
       <div class="cart-item-info">
         <div class="cart-item-title">${item.title}</div>
@@ -2024,12 +2126,14 @@ function addToCart(itemId) {
   }
   
   CART.push(item);
+  localStorage.setItem("dex_cart", JSON.stringify(CART));
   updateCartUI();
   document.getElementById("cart-panel").classList.add("open");
 }
 
 function removeFromCart(itemId) {
   CART = CART.filter(item => item.id !== itemId);
+  localStorage.setItem("dex_cart", JSON.stringify(CART));
   updateCartUI();
 }
 
@@ -2092,114 +2196,13 @@ function claimCertWhatsApp() {
   openWhatsApp(msg);
 }
 
-/* ===================== COURSE READER SYSTEM (W3Schools Style) ===================== */
-let activeCourseId = "";
-let activeLessonIndex = 0;
-
-function goToReader(courseId, lessonIndex = 0) {
-  location.hash = `reader/${courseId}/${lessonIndex}`;
+/* ===================== E-BOOK READER SYSTEM (W3Schools Style) ===================== */
+function goToBookReader(bookId) {
+  window.location.href = `book.html?id=${bookId}`;
 }
 
-function loadReaderPage(courseId, lessonIndex) {
-  const course = COURSES.find(c => c.id === courseId);
-  if (!course) {
-    goTo("courses");
-    return;
-  }
-  
-  activeCourseId = courseId;
-  activeLessonIndex = lessonIndex;
-  
-  // Set headers
-  document.getElementById("reader-course-title-header").textContent = course.title;
-  
-  // Build sidebar
-  const navContainer = document.getElementById("reader-lessons-nav");
-  navContainer.innerHTML = "";
-  
-  course.syllabus.forEach((lesson, index) => {
-    const btn = document.createElement("button");
-    btn.className = "reader-nav-item" + (index === lessonIndex ? " active" : "");
-    btn.innerHTML = (lesson.locked ? `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-    ` : `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    `) + `<span>${lesson.title.split(". ")[1] || lesson.title}</span>`;
-    btn.onclick = () => {
-      goToReader(courseId, index);
-    };
-    navContainer.appendChild(btn);
-  });
-  
-  // Display content
-  const contentArea = document.getElementById("reader-lesson-content-area");
-  const lesson = course.syllabus[lessonIndex];
-  
-  // Show / Hide certificate claim button if last lesson is active
-  const claimBtn = document.getElementById("reader-claim-cert-btn");
-  if (course.certifiable && lessonIndex === course.syllabus.length - 1) {
-    claimBtn.style.display = "block";
-  } else {
-    claimBtn.style.display = "none";
-  }
-  
-  if (lesson.locked) {
-    contentArea.innerHTML = `
-      <div class="reader-locked-overlay">
-        <div class="reader-locked-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <h4>Lesson is Locked</h4>
-        <p>Purchase access to the full course on WhatsApp to unlock this chapter, complete review projects, and get certified.</p>
-        <button class="btn btn-gold" onclick="openWhatsApp('Hi! I\\'d like to purchase access to the complete course: ${course.title}.')">
-          Unlock Course on WhatsApp
-        </button>
-      </div>
-    `;
-  } else {
-    contentArea.innerHTML = `
-      <div class="reader-lesson-title">${lesson.title}</div>
-      <div class="reader-text">${lesson.content}</div>
-    `;
-  }
-  
-  // Update footer prev/next buttons
-  const prevBtn = document.getElementById("reader-prev-btn");
-  const nextBtn = document.getElementById("reader-next-btn");
-  
-  if (lessonIndex > 0) {
-    prevBtn.style.visibility = "visible";
-  } else {
-    prevBtn.style.visibility = "hidden";
-  }
-  
-  if (lessonIndex < course.syllabus.length - 1) {
-    nextBtn.style.visibility = "visible";
-  } else {
-    nextBtn.style.visibility = "hidden";
-  }
-  
-  goTo("reader", false);
-}
-
-function goToPrevLesson() {
-  if (activeLessonIndex > 0) {
-    goToReader(activeCourseId, activeLessonIndex - 1);
-  }
-}
-
-function goToNextLesson() {
-  const course = COURSES.find(c => c.id === activeCourseId);
-  if (course && activeLessonIndex < course.syllabus.length - 1) {
-    goToReader(activeCourseId, activeLessonIndex + 1);
-  }
-}
-
-function openCertFromReader() {
-  const course = COURSES.find(c => c.id === activeCourseId);
-  if (course) {
-    openCertModal(course.title);
-  }
+function goToReader(courseId) {
+  window.location.href = `course.html?id=${courseId}`;
 }
 
 /* ===================== RENDER: E-BOOK CARD ===================== */
@@ -2209,13 +2212,13 @@ function ebookCard(book){
   
   el.innerHTML = `
     <div class="cover">
-      ${getCoverSVG(book.title, book.category, false)}
+      ${getCoverSVG(book.id, book.title, book.category, false)}
       <div class="featured-spine" style="position: absolute; top:0; left:0; bottom:0; width:8px; background:linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0) 80%);"></div>
     </div>
     <h3>${book.title}</h3>
     <p class="desc">${book.desc}</p>
     <div class="price-row">
-      <span class="price"><s>${fmtPrice(book.mrp)}</s>${fmtPrice(book.price)}</span>
+      <span class="price"><s>${fmtPrice(book.mrp)}</s> ${fmtPrice(book.price)}</span>
       ${book.tag ? `<span class="badge">${book.tag}</span>` : ""}
     </div>
     <div style="display:flex; flex-direction:column; gap:8px;">
@@ -2224,11 +2227,19 @@ function ebookCard(book){
     </div>
   `;
   
-  el.querySelector('[data-action="buy"]').addEventListener("click", () => {
+  el.querySelector('[data-action="buy"]').addEventListener("click", (e) => {
+    e.stopPropagation();
     openWhatsApp(`Hi! I'd like to buy the e-book "${book.title}" (${fmtPrice(book.price)}).`);
   });
-  el.querySelector('[data-action="add-cart"]').addEventListener("click", () => {
+  el.querySelector('[data-action="add-cart"]').addEventListener("click", (e) => {
+    e.stopPropagation();
     addToCart(book.id);
+  });
+  
+  el.addEventListener("click", (e) => {
+    if (!e.target.closest('button')) {
+      goToBookReader(book.id);
+    }
   });
   
   return el;
@@ -2241,7 +2252,7 @@ function courseCard(course){
   
   el.innerHTML = `
     <div class="cover" style="aspect-ratio: 16/9; margin-bottom: 16px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
-      ${getCoverSVG(course.title, course.category, true)}
+      ${getCoverSVG(course.id, course.title, course.category, true)}
     </div>
     <div class="course-top">
       <h3>${course.title}</h3>
@@ -2262,11 +2273,19 @@ function courseCard(course){
     </div>
   `;
   
-  el.querySelector('[data-action="read"]').addEventListener("click", () => {
+  el.querySelector('[data-action="read"]').addEventListener("click", (e) => {
+    e.stopPropagation();
     goToReader(course.id);
   });
-  el.querySelector('[data-action="cert"]').addEventListener("click", () => {
+  el.querySelector('[data-action="cert"]').addEventListener("click", (e) => {
+    e.stopPropagation();
     openCertModal(course.title);
+  });
+  
+  el.addEventListener("click", (e) => {
+    if (!e.target.closest('button')) {
+      goToReader(course.id);
+    }
   });
   
   return el;
@@ -2361,7 +2380,7 @@ function renderSearch(){
     
     row.innerHTML = `
       <div class="result-thumb" style="width:36px; height:46px; border-radius:4px; overflow:hidden;">
-        ${getCoverSVG(b.title, b.category, false)}
+        ${getCoverSVG(b.id, b.title, b.category, false)}
       </div>
       <div class="rmeta"><div class="rtitle">${b.title}</div><div class="rtype">E-book · ${fmtPrice(b.price)}</div></div>
       <div style="display:flex; gap:6px;">
@@ -2380,7 +2399,7 @@ function renderSearch(){
     
     row.innerHTML = `
       <div class="result-thumb" style="width:36px; height:46px; border-radius:4px; overflow:hidden;">
-        ${getCoverSVG(c.title, c.category, false)}
+        ${getCoverSVG(c.id, c.title, c.category, false)}
       </div>
       <div class="rmeta"><div class="rtitle">${c.title}</div><div class="rtype">Course · ${c.level}</div></div>
       <button class="btn btn-outline btn-sm">Read</button>
@@ -2400,7 +2419,7 @@ function goTo(viewName, updateHash = true){
   }
   
   // Hide top header, floating nav tabbar, and footer in full-page reader mode
-  const isReader = (viewName === "reader");
+  const isReader = (viewName === "reader" || viewName === "book-reader");
   const topBar = document.querySelector(".topbar");
   const tabbar = document.querySelector(".tabbar");
   const footer = document.querySelector("footer");
@@ -2431,7 +2450,9 @@ window.addEventListener("hashchange", () => {
   const baseTab = parts[0];
   
   if (baseTab === "reader") {
-    loadReaderPage(parts[1], parseInt(parts[2] || "0", 10));
+    window.location.href = `course.html?id=${parts[1] || 'crs-python'}`;
+  } else if (baseTab === "book-reader") {
+    window.location.href = `book.html?id=${parts[1] || 'ebk-learn-ai'}`;
   } else if(["home","ebooks","courses","search"].includes(baseTab)){
     goTo(baseTab, false);
   }
@@ -2450,7 +2471,9 @@ const startTab = (location.hash || "#home").replace("#", "");
 const startParts = startTab.split("/");
 const startBase = startParts[0];
 if (startBase === "reader") {
-  loadReaderPage(startParts[1], parseInt(startParts[2] || "0", 10));
+  window.location.href = `course.html?id=${startParts[1] || 'crs-python'}`;
+} else if (startBase === "book-reader") {
+  window.location.href = `book.html?id=${startParts[1] || 'ebk-learn-ai'}`;
 } else if(["home","ebooks","courses","search"].includes(startBase)){
   goTo(startBase, false);
 }

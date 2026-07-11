@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Book Reader - Dexterity Learn</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Styling copied from index.html to guarantee visual unity */
+    :root {
+      --green-deep: #053526;
+      --green-mid: #0a3d2f;
+      --green-light: #155d49;
+      --gold: #d4af37;
+      --gold-bright: #f5e0a3;
+      --white: #ffffff;
+      --cream: #fdf3e1;
+      --cream-dim: rgba(253,243,225,0.72);
+      --font-heading: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--green-deep);
+      color: var(--cream);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    /* W3Schools style player layout */
+    .reader-header {
+      height: 60px;
+      background: rgba(5,29,22,0.95);
+      border-bottom: 1px solid rgba(253,243,225,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      z-index: 10;
+    }
+
+    .reader-back-btn {
+      background: none;
+      border: none;
+      color: var(--cream-dim);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .reader-back-btn:hover {
+      color: var(--gold-bright);
+    }
+
+    .reader-header-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold-bright);
+      text-align: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      width: 100%;
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: var(--green-deep);
+      border: 1px solid var(--gold);
+      box-shadow: 0 4px 15px rgba(212,175,55,0.25);
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-bright);
+      border-color: var(--gold-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212,175,55,0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(253,243,225,0.3);
+    }
+
+    .btn-outline:hover {
+      background: rgba(253,243,225,0.06);
+      border-color: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    .btn-sm {
+      padding: 10px 18px;
+      font-size: 0.85rem;
+      border-radius: 20px;
+    }
+
+    .reader-layout {
+      display: flex;
+      height: calc(100vh - 60px);
+      overflow: hidden;
+      flex-direction: row;
+    }
+
+    /* Left Sidebar: Book Details and Covers */
+    .book-details-sidebar {
+      width: 290px;
+      background: rgba(4,22,17,0.98);
+      border-right: 1px solid rgba(253,243,225,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .book-sidebar-cover {
+      width: 140px;
+      height: 190px;
+      margin-bottom: 20px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+      border-radius: 4px 10px 10px 4px;
+      overflow: hidden;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .book-sidebar-meta {
+      width: 100%;
+      text-align: center;
+    }
+
+    .book-sidebar-meta h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+      font-family: var(--font-heading);
+    }
+
+    .badge {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(212,175,55,0.14);
+      color: var(--gold-bright);
+      white-space: nowrap;
+      border: 1px solid rgba(212,175,55,0.18);
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .book-sidebar-meta .desc {
+      font-size: 0.82rem;
+      color: var(--cream-dim);
+      line-height: 1.5;
+      margin-top: 6px;
+      text-align: left;
+    }
+
+    .price-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 14px 0;
+    }
+
+    .price b {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      color: var(--gold-bright);
+      font-weight: 700;
+    }
+
+    .price s {
+      color: var(--cream-dim);
+      font-size: 0.88rem;
+    }
+
+    /* Content Area */
+    .reader-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      background: rgba(10,61,47,0.06);
+    }
+
+    .reader-inner-wrap {
+      flex: 1;
+      padding: 40px 48px;
+      max-width: 820px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .reader-lesson-title {
+      font-family: var(--font-heading);
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: var(--white);
+      border-bottom: 2px solid rgba(253,243,225,0.08);
+      padding-bottom: 12px;
+    }
+
+    .reader-text {
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: var(--cream-dim);
+    }
+
+    .reader-text p {
+      margin-bottom: 18px;
+    }
+
+    .reader-text strong {
+      color: var(--white);
+    }
+
+    .reader-text pre {
+      background: rgba(0,0,0,0.3);
+      padding: 12px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      overflow-x: auto;
+      margin: 14px 0;
+      border: 1px solid rgba(253,243,225,0.06);
+    }
+
+    /* Locked state lock screen styling */
+    .reader-locked-overlay {
+      background: rgba(4,22,17,0.9);
+      border: 1px solid rgba(253,243,225,0.12);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 30px;
+      text-align: center;
+      margin-top: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .reader-locked-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: rgba(212,175,55,0.1);
+      border: 1px solid rgba(212,175,55,0.25);
+      color: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .reader-locked-overlay h4 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--white);
+      font-family: var(--font-heading);
+    }
+
+    .reader-locked-overlay p {
+      font-size: 0.9rem;
+      color: var(--cream-dim);
+      max-width: 360px;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+
+    /* Unlock inputs styling */
+    .lock-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 16px;
+    }
+
+    .lock-input {
+      background: rgba(253,243,225,0.05);
+      border: 1px solid rgba(253,243,225,0.2);
+      border-radius: 20px;
+      padding: 10px 18px;
+      color: var(--white);
+      font-size: 1rem;
+      text-align: center;
+      outline: none;
+      letter-spacing: 0.15em;
+      font-weight: 700;
+      transition: border-color 0.2s;
+    }
+
+    .lock-input:focus {
+      border-color: var(--gold);
+    }
+
+    .lock-input-group .btn {
+      width: 100%;
+    }
+
+    /* Responsive E-book Reader */
+    @media (max-width: 759px) {
+      .reader-layout {
+        flex-direction: column;
+        height: calc(100vh - 60px);
+        overflow-y: auto;
+      }
+      .book-details-sidebar {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid rgba(253,243,225,0.08);
+        padding: 20px;
+        flex-direction: row;
+        gap: 20px;
+        align-items: flex-start;
+        overflow-y: visible;
+      }
+      .book-sidebar-cover {
+        width: 90px;
+        height: 125px;
+        margin-bottom: 0;
+      }
+      .book-sidebar-meta {
+        text-align: left;
+        flex: 1;
+      }
+      .book-sidebar-meta h3 {
+        font-size: 1.05rem;
+      }
+      .book-sidebar-meta .desc {
+        display: none; /* Hide description on mobile details sidebar */
+      }
+      .reader-content {
+        overflow-y: visible;
+      }
+      .reader-inner-wrap {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="reader-header">
+    <button class="reader-back-btn" onclick="window.location.href='index.html'">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Home Dashboard
+    </button>
+    <div class="reader-header-title" id="book-reader-title-header">E-book Player</div>
+    <div style="width:130px; display:flex; justify-content:flex-end;">
+      <button class="btn btn-gold btn-sm" id="book-reader-buy-btn" style="width:auto;">Buy Full Book</button>
+    </div>
+  </header>
+
+  <!-- READER SYSTEM LAYOUT -->
+  <div class="reader-layout">
+    <!-- Left Details Sidebar -->
+    <div class="book-details-sidebar">
+      <div class="book-sidebar-cover" id="book-reader-cover-area">
+        <!-- cover dynamically drawn here -->
+      </div>
+      <div class="book-sidebar-meta">
+        <h3 id="book-sidebar-title">Book Title</h3>
+        <span class="badge" id="book-sidebar-badge">Bestseller</span>
+        <p class="desc" id="book-sidebar-desc">Book description</p>
+        <div class="price-row">
+          <span class="price"><s id="book-sidebar-mrp">₹499</s> <b id="book-sidebar-price">₹299</b></span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; width: 100%;">
+          <button class="btn btn-gold btn-sm" id="book-sidebar-buy-action">Buy on WhatsApp</button>
+          <button class="btn btn-outline btn-sm" id="book-sidebar-cart-action">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Right Reader Content -->
+    <div class="reader-content">
+      <div class="reader-inner-wrap">
+        <div class="reader-lesson-title" id="book-reader-chapter-title">Chapter 1: Free Preview</div>
+        <div class="reader-text" id="book-reader-content-area">
+          <!-- Text dynamically loaded -->
+        </div>
+        
+        <!-- Passcode Lock Panel -->
+        <div class="reader-locked-overlay" id="book-reader-locked-section">
+          <div class="reader-locked-icon">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h4>Remaining Chapters are Locked</h4>
+          <p>Please enter the 6-digit passcode to unlock the complete e-book text. You can receive your passcode immediately by claiming your purchase on WhatsApp.</p>
+          
+          <div class="lock-input-group">
+            <input type="text" id="book-passcode-field" class="lock-input" placeholder="••••••" maxlength="6">
+            <button class="btn btn-gold" onclick="verifyBookCode()">Verify &amp; Unlock</button>
+          </div>
+          
+          <button class="btn btn-outline btn-sm" onclick="inquireBookUnlockWhatsApp()" style="width:auto;">
+            Get Passcode on WhatsApp
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const WHATSAPP_NUMBER = "917204351696";
+
+    // Ebooks dataset
+    const EBOOKS = [
+      {
+        id: "ebk-learn-ai",
+        title: "Learn AI: A Beginner's Roadmap",
+        desc: "A plain-language walkthrough of AI concepts, tools, and how to actually start using them.",
+        price: 299,
+        mrp: 499,
+        category: "AI",
+        tag: "Bestseller",
+        unlockCode: "827104", // 6-digit WhatsApp unlock code
+        sampleChapter: `
+          <p>Welcome to the Free Preview of <strong>Learn AI: A Beginner's Roadmap</strong>.</p>
+          <p>In this initial segment, we explore the paradigm shift that Artificial Intelligence represents. Over the last decade, computer networks evolved from executing strict conditional instructions (if-then statements) to learning from representations (neural structures).</p>
+          <h4 style="margin:16px 0 8px; color:var(--white);">What is a Large Language Model?</h4>
+          <p>A Large Language Model (LLM) is a statistical text completion engine. It processes an input prompt by calculating probability tables across its trained billions of parameters to guess the next logical word or code symbol.</p>
+          <p>To use AI effectively, remember the golden rule of prompting: the quality of the feedback is directly proportional to the clarity and context of your instructions. By mapping professional constraints, you can automate up to 40% of manual writing and analysis work.</p>
+        `
+      },
+      {
+        id: "ebk-python",
+        title: "Python for Everyone",
+        desc: "Core Python fundamentals explained through short, practical examples — no fluff.",
+        price: 249,
+        mrp: 399,
+        category: "Programming",
+        tag: "Popular",
+        unlockCode: "392841", // 6-digit WhatsApp unlock code
+        sampleChapter: `
+          <p>Welcome to the Free Preview of <strong>Python for Everyone</strong>.</p>
+          <p>Programming is not about memorizing complex commands; it is about logical puzzle solving. Python is specifically engineered to be readable and clear, utilizing natural English words for control flows.</p>
+          <h4 style="margin:16px 0 8px; color:var(--white);">Setting Up Your First Variable</h4>
+          <p>In Python, a variable is simply a named tag that points to a specific object in memory. You assign values using the equals operator:</p>
+          <pre>
+# Variable declaration
+title = "Python Learner"
+chapters = 10
+is_completed = False
+          </pre>
+          <p>Always verify your variable types. Python resolves scopes dynamically, allowing rapid scripting without verbose structures.</p>
+        `
+      },
+      {
+        id: "ebk-freelance",
+        title: "The Freelancer's Playbook",
+        desc: "Finding clients, pricing your work, and building income that doesn't depend on one employer.",
+        price: 199,
+        mrp: 349,
+        category: "Career",
+        tag: "New",
+        unlockCode: "948205", // 6-digit WhatsApp unlock code
+        sampleChapter: `
+          <p>Welcome to the Free Preview of <strong>The Freelancer's Playbook</strong>.</p>
+          <p>Freelancing is running a micro-agency. The primary reason most talented developers and designers fail in the open market is not their technical capabilities, but their business positioning.</p>
+          <h4 style="margin:16px 0 8px; color:var(--white);">The Positioning Pivot</h4>
+          <p>If you advertise yourself as a generic "WordPress Developer," you are competing against thousands of bidders on low-cost freelancer directories. However, if you position yourself as a "Speed Optimization specialist for WooCommerce shops," you command high premium value pricing.</p>
+          <p>To win clients, shift the conversation from your labor costs to their potential business profits.</p>
+        `
+      },
+      {
+        id: "ebk-webdev",
+        title: "Build Your First Website",
+        desc: "HTML, CSS and JavaScript basics, taught by building one real project start to finish.",
+        price: 249,
+        mrp: 399,
+        category: "Programming",
+        tag: "",
+        unlockCode: "104829", // 6-digit WhatsApp unlock code
+        sampleChapter: `
+          <p>Welcome to the Free Preview of <strong>Build Your First Website</strong>.</p>
+          <p>Every website you visit is delivered as HTML (structure), styled with CSS (presentation), and animated with JavaScript (interaction).</p>
+          <h4 style="margin:16px 0 8px; color:var(--white);">Writing Semantic markup</h4>
+          <p>HTML elements instruct web browsers how to display contents. In modern standards, always avoid generic div stacking in favor of semantic structures:</p>
+          <pre>
+&lt;header&gt;
+  &lt;h1&gt;Welcome to My Portal&lt;/h1&gt;
+&lt;/header&gt;
+&lt;main&gt;
+  &lt;article&gt;Core content details here...&lt;/article&gt;
+&lt;/main&gt;
+          </pre>
+          <p>This structure guarantees that web crawlers can index your pages, boosting your SEO footprint naturally.</p>
+        `
+      }
+    ];
+
+    /* ===================== DYNAMIC COVER GENERATOR ===================== */
+    function getCoverSVG(id, title, category, isLandscape = false) {
+      let accentColor = "var(--gold)";
+      let gradFrom = "#0f4a38";
+      let gradTo = "#051d16";
+      let iconSVG = "";
+      let subText = category.toUpperCase();
+
+      if (id === "ebk-learn-ai") {
+        accentColor = "#38bdf8"; // Neon Sky Blue
+        gradFrom = "#1e1b4b";    // Dark Indigo
+        gradTo = "#08051a";
+      } else if (id === "ebk-python") {
+        accentColor = "#f5e0a3";  // Light Gold
+        gradFrom = "#022c22";     // Deep Dark Emerald
+        gradTo = "#051611";
+      } else if (id === "ebk-freelance") {
+        accentColor = "#f97316";  // Vibrant Orange/Coral
+        gradFrom = "#450a0a";     // Burgundy
+        gradTo = "#1c0202";
+      } else if (id === "ebk-webdev") {
+        accentColor = "#06b6d4";  // Cyan
+        gradFrom = "#0c4a6e";     // Sky-900
+        gradTo = "#021622";
+      }
+
+      if (category === "AI") {
+        iconSVG = `
+          <circle cx="100" cy="${isLandscape ? 60 : 100}" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
+          <circle cx="70" cy="${isLandscape ? 40 : 80}" r="6" fill="none" stroke="${accentColor}" stroke-width="2"/>
+          <circle cx="130" cy="${isLandscape ? 40 : 80}" r="6" fill="none" stroke="${accentColor}" stroke-width="2"/>
+          <line x1="100" y1="${isLandscape ? 60 : 100}" x2="70" y2="${isLandscape ? 40 : 80}" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <line x1="100" y1="${isLandscape ? 60 : 100}" x2="130" y2="${isLandscape ? 40 : 80}" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
+          <circle cx="100" cy="${isLandscape ? 60 : 100}" r="3" fill="${accentColor}"/>
+        `;
+      } else if (category === "Programming") {
+        iconSVG = `
+          <path d="M80 ${isLandscape ? 45 : 85} L65 ${isLandscape ? 60 : 100} L80 ${isLandscape ? 75 : 115}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M120 ${isLandscape ? 45 : 85} L135 ${isLandscape ? 60 : 100} L120 ${isLandscape ? 75 : 115}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        `;
+      } else {
+        iconSVG = `
+          <path d="M70 ${isLandscape ? 45 : 85} L100 ${isLandscape ? 75 : 115} L130 ${isLandscape ? 45 : 85} Z" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="100" cy="${isLandscape ? 60 : 100}" r="4" fill="${accentColor}"/>
+        `;
+      }
+
+      const viewBox = isLandscape ? "0 0 200 120" : "0 0 200 200";
+      const overlayY = isLandscape ? 85 : 150;
+      const overlayHeight = isLandscape ? 35 : 50;
+
+      return `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" style="width:100%; height:100%; display:block;">
+          <defs>
+            <linearGradient id="grad-${id}-${isLandscape}" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="${gradFrom}" />
+              <stop offset="100%" stop-color="${gradTo}" />
+            </linearGradient>
+          </defs>
+          <rect width="200" height="${isLandscape ? 120 : 200}" fill="url(#grad-${id}-${isLandscape})" rx="8"/>
+          <g opacity="0.12">
+            <circle cx="100" cy="${isLandscape ? 60 : 100}" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
+          </g>
+          <g opacity="0.9">
+            ${iconSVG}
+          </g>
+          <rect x="0" y="${overlayY}" width="200" height="${overlayHeight}" fill="rgba(5,29,22,0.85)" />
+          <line x1="0" y1="${overlayY}" x2="200" y2="${overlayY}" stroke="${accentColor}" stroke-width="1.5" opacity="0.6"/>
+          <text x="15" y="${overlayY + 12}" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="7.5" font-weight="800" letter-spacing="1.2" opacity="0.9">${subText}</text>
+          <text x="15" y="${overlayY + 24}" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="9" font-weight="700" letter-spacing="0.2">${title.length > 24 ? title.substring(0, 22) + '...' : title}</text>
+        </svg>
+      `;
+    }
+
+    function openWhatsApp(message){
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(url, "_blank");
+    }
+
+    function fmtPrice(n){
+      return "₹" + n;
+    }
+
+    /* ===================== E-BOOK LOADING ===================== */
+    let activeBookId = "";
+
+    function loadBookPage(bookId) {
+      const book = EBOOKS.find(b => b.id === bookId);
+      if (!book) {
+        window.location.href = "index.html";
+        return;
+      }
+      
+      activeBookId = bookId;
+      
+      // Set Header Title
+      document.getElementById("book-reader-title-header").textContent = book.title;
+      
+      // Cover area rendering
+      const coverArea = document.getElementById("book-reader-cover-area");
+      coverArea.innerHTML = getCoverSVG(book.id, book.title, book.category, false);
+      
+      // Bind info metadata
+      document.getElementById("book-sidebar-title").textContent = book.title;
+      document.getElementById("book-sidebar-badge").textContent = book.tag || book.category;
+      document.getElementById("book-sidebar-badge").style.display = book.tag ? "inline-block" : "none";
+      document.getElementById("book-sidebar-desc").textContent = book.desc;
+      document.getElementById("book-sidebar-mrp").textContent = fmtPrice(book.mrp);
+      document.getElementById("book-sidebar-price").textContent = fmtPrice(book.price);
+      
+      // Bind actions
+      document.getElementById("book-sidebar-buy-action").onclick = () => {
+        openWhatsApp(`Hi! I'd like to buy the e-book "${book.title}" (${fmtPrice(book.price)}).`);
+      };
+      
+      // Add to cart helper utilizing localStorage sync
+      document.getElementById("book-sidebar-cart-action").onclick = () => {
+        let cart = JSON.parse(localStorage.getItem("dex_cart") || "[]");
+        if (!cart.some(item => item.id === bookId)) {
+          cart.push(book);
+          localStorage.setItem("dex_cart", JSON.stringify(cart));
+          alert(`"${book.title}" has been added to your interest list!`);
+        } else {
+          alert(`"${book.title}" is already in your interest list.`);
+        }
+      };
+      
+      document.getElementById("book-reader-buy-btn").onclick = () => {
+        openWhatsApp(`Hi! I'd like to buy the e-book "${book.title}" (${fmtPrice(book.price)}).`);
+      };
+      
+      // Content area chapter 1 loading
+      document.getElementById("book-reader-content-area").innerHTML = book.sampleChapter;
+      
+      // Verify locked state
+      const isUnlocked = localStorage.getItem("unlock_" + bookId) === "true";
+      const lockPanel = document.getElementById("book-reader-locked-section");
+      
+      if (isUnlocked) {
+        // Book is fully unlocked, show standard confirmation message instead of input block
+        lockPanel.className = "reader-locked-overlay";
+        lockPanel.style.borderColor = "var(--gold)";
+        lockPanel.style.background = "rgba(212,175,55,0.05)";
+        lockPanel.innerHTML = `
+          <div class="reader-locked-icon" style="color:#34d399; background:rgba(52,211,153,0.1); border-color:rgba(52,211,153,0.25);">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <h4 style="color:#34d399;">E-Book Unlocked Successfully!</h4>
+          <p>Thank you for your purchase. All remaining chapters of "${book.title}" are now unlocked for viewing inside this reader tab.</p>
+        `;
+      } else {
+        // Show passcode verify overlay inputs
+        lockPanel.style.display = "flex";
+      }
+    }
+
+    /* ===================== PASSCODE CHECK ===================== */
+    function verifyBookCode() {
+      const inputVal = document.getElementById("book-passcode-field").value.trim();
+      const book = EBOOKS.find(b => b.id === activeBookId);
+      if (!book) return;
+      
+      if (inputVal === book.unlockCode) {
+        localStorage.setItem("unlock_" + activeBookId, "true");
+        alert("Success! The e-book has been fully unlocked.");
+        loadBookPage(activeBookId);
+      } else {
+        alert("Incorrect passcode! Please verify the code or check with support on WhatsApp.");
+      }
+    }
+
+    function inquireBookUnlockWhatsApp() {
+      const book = EBOOKS.find(b => b.id === activeBookId);
+      if (!book) return;
+      
+      const msg = `Hi Dexterity Learn! I would like to get the 6-digit unlock code for my e-book purchase: "${book.title}".`;
+      openWhatsApp(msg);
+    }
+
+    // Read ID from Query Param
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialBookId = urlParams.get('id') || "ebk-learn-ai";
+    loadBookPage(initialBookId);
+
+  </script>
+</body>
+</html>
