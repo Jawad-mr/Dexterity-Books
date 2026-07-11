@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dexterity Learn — by JSN CREATIVE</title>
+<meta name="description" content="Dexterity Learn — e-books and text-based courses. Get certified. A JSN CREATIVE product.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23053526'/%3E%3Cpath fill='%23fdf3e1' fill-rule='evenodd' d='M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z'/%3E%3Crect x='54' y='32' width='18' height='6' fill='%23ffffff'/%3E%3Crect x='54' y='42' width='18' height='6' fill='%23ffffff'/%3E%3Crect x='28' y='52' width='44' height='6' fill='%23ffffff'/%3E%3Crect x='28' y='62' width='44' height='6' fill='%23ffffff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#051d16;
+    --green:#0a3d2f;
+    --green-mid:#0e4e3c;
+    --green-soft:#145c47;
+    --cream:#fdf3e1;
+    --cream-dim:#c3b59b;
+    --white:#ffffff;
+    --gold:#d4af37;
+    --gold-bright:#f5e0a3;
+    --shadow:0 16px 36px rgba(0,0,0,0.45);
+    --radius:16px;
+    --tab-h:76px;
+    --top-h:68px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--green-deep);
+    color:var(--cream);
+    font-family:'Plus Jakarta Sans', sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Outfit', sans-serif;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    color:var(--cream);
+  }
+
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer; border:none;}
+
+  ::selection{background:var(--gold); color:var(--green-deep);}
+
+  /* App shell */
+  .app{
+    max-width:1180px;
+    margin:0 auto;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar{
+    position:sticky;
+    top:0;
+    z-index:40;
+    height:var(--top-h);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    background:rgba(5,29,22,0.92);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(253,243,225,0.08);
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .brand svg{
+    width:34px;
+    height:34px;
+    border-radius:8px;
+    display:block;
+  }
+  .brand-name{
+    font-family:'Outfit', sans-serif;
+    font-weight:700;
+    font-size:1.15rem;
+    letter-spacing:-0.01em;
+  }
+  .brand-tag{
+    display:block;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:0.62rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:700;
+    margin-top:-2px;
+  }
+  .topbar-actions{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .topbar-search-btn{
+    width:38px; height:38px;
+    border-radius:50%;
+    background:rgba(253,243,225,0.06);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--cream);
+    transition:background 0.2s;
+  }
+  .topbar-search-btn:hover{
+    background:rgba(253,243,225,0.12);
+  }
+  .topbar-search-btn svg{width:17px; height:17px;}
+
+  /* ---------- FLAG STRIPE DIVIDER ---------- */
+  .stripes{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    width:100%;
+  }
+  .stripes span{
+    display:block;
+    height:6px;
+    background:var(--white);
+    border-radius:2px;
+  }
+  .stripes span:nth-child(1){width:100%;}
+  .stripes span:nth-child(2){width:78%;}
+  .stripes span:nth-child(3){width:100%;}
+  .stripe-divider{
+    display:flex;
+    gap:6px;
+    margin:34px 0 26px;
+    padding:0 20px;
+  }
+  .stripe-divider i{
+    height:4px;
+    flex:1;
+    background:linear-gradient(90deg, transparent, rgba(253,243,225,0.3), transparent);
+    border-radius:2px;
+  }
+  .stripe-divider i.gold{background:var(--gold); flex:0 0 46px; opacity:1;}
+
+  /* ---------- MAIN ---------- */
+  main{
+    flex:1;
+    padding-bottom:calc(var(--tab-h) + 24px);
+  }
+  .view{display:none; animation:fadein .35s cubic-bezier(0.16, 1, 0.3, 1);}
+  .view.active{display:block;}
+  @keyframes fadein{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+
+  .section{padding:0 20px; margin-bottom:40px;}
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:18px;
+  }
+  .section-head h2{font-size:1.4rem; font-weight:700;}
+  .see-all{
+    font-size:0.8rem;
+    color:var(--gold);
+    font-weight:700;
+    letter-spacing:0.02em;
+    transition:color 0.2s;
+  }
+  .see-all:hover{
+    color:var(--gold-bright);
+  }
+  .eyebrow{
+    font-size:0.68rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-weight:800;
+    margin-bottom:10px;
+    display:block;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:36px 20px 8px;
+    position:relative;
+  }
+  .hero-logo-svg{
+    width:64px; height:64px;
+    margin-bottom:22px;
+    box-shadow:var(--shadow);
+    border-radius:14px;
+    display:block;
+  }
+  .hero h1{
+    font-size:2.6rem;
+    line-height:1.1;
+    max-width:14ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--gold-bright);
+    font-weight:800;
+  }
+  .hero p{
+    color:var(--cream-dim);
+    font-size:1rem;
+    line-height:1.6;
+    max-width:42ch;
+    margin-top:16px;
+  }
+  .hero-ctas{
+    display:flex;
+    gap:12px;
+    margin-top:26px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:13px 24px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:0.88rem;
+    transition:transform .15s ease, background .2s ease, border-color .2s;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-gold{background:var(--gold); color:var(--green-deep);}
+  .btn-gold:hover{background:var(--gold-bright); transform:translateY(-1px);}
+  .btn-outline{background:transparent; border:1px solid rgba(253,243,225,0.24); color:var(--cream);}
+  .btn-outline:hover{border-color:var(--gold); color:var(--gold-bright); background:rgba(253,243,225,0.03);}
+  .btn-full{width:100%;}
+  .btn-sm{padding:10px 16px; font-size:0.78rem;}
+
+  /* stat row */
+  .stat-row{
+    display:flex;
+    gap:28px;
+    padding:26px 20px 0;
+    flex-wrap:wrap;
+  }
+  .stat b{
+    font-family:'Outfit', sans-serif;
+    font-weight:700;
+    font-size:1.6rem;
+    display:block;
+    color:var(--gold-bright);
+  }
+  .stat span{
+    font-size:0.72rem;
+    color:var(--cream-dim);
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    font-weight:600;
+  }
+
+  /* ---------- HORIZONTAL SCROLL ROW ---------- */
+  .hscroll{
+    display:flex;
+    gap:16px;
+    overflow-x:auto;
+    padding-bottom:12px;
+    scroll-snap-type:x mandatory;
+  }
+  .hscroll::-webkit-scrollbar{
+    height:6px;
+  }
+  .hscroll::-webkit-scrollbar-track{
+    background:rgba(253,243,225,0.02);
+    border-radius:3px;
+  }
+  .hscroll::-webkit-scrollbar-thumb{
+    background:rgba(253,243,225,0.1);
+    border-radius:3px;
+  }
+  .hscroll::-webkit-scrollbar-thumb:hover{
+    background:rgba(253,243,225,0.2);
+  }
+
+  /* ---------- CARDS ---------- */
+  .card{
+    background:linear-gradient(165deg, rgba(14,78,60,0.6), rgba(10,61,47,0.85));
+    border:1px solid rgba(253,243,225,0.08);
+    border-radius:var(--radius);
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    box-shadow:var(--shadow);
+    transition:transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
+    backdrop-filter:blur(8px);
+  }
+  .card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(212,175,55,0.35);
+    box-shadow:0 20px 45px rgba(0,0,0,0.5), 0 0 15px rgba(212,175,55,0.1);
+  }
+  .ebook-card{
+    min-width:210px;
+    max-width:210px;
+    scroll-snap-align:start;
+  }
+  .cover{
+    width:100%;
+    aspect-ratio:3/4;
+    border-radius:12px;
+    background:var(--green-deep);
+    position:relative;
+    overflow:hidden;
+    display:block;
+    padding:0;
+    margin-bottom:16px;
+    border:1px solid rgba(253,243,225,0.06);
+  }
+  .card h3{font-size:1.05rem; line-height:1.35; margin-bottom:8px; font-weight:700;}
+  .card p.desc{
+    font-size:0.8rem;
+    color:var(--cream-dim);
+    line-height:1.5;
+    margin-bottom:14px;
+    flex:1;
+  }
+  .price-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:14px;
+  }
+  .price{
+    font-family:'Outfit', sans-serif;
+    font-size:1.25rem;
+    color:var(--gold-bright);
+    font-weight:700;
+  }
+  .price s{
+    color:var(--cream-dim);
+    font-size:0.8rem;
+    font-weight:400;
+    margin-right:8px;
+    opacity:0.75;
+  }
+  .badge{
+    font-size:0.62rem;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    font-weight:800;
+    padding:4px 9px;
+    border-radius:999px;
+    background:rgba(212,175,55,0.14);
+    color:var(--gold-bright);
+    white-space:nowrap;
+    border:1px solid rgba(212,175,55,0.18);
+  }
+
+  /* course card */
+  .course-card{padding:22px;}
+  .course-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:12px;}
+  .chips{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;}
+  .chip{
+    font-size:0.68rem;
+    padding:5px 10px;
+    border-radius:999px;
+    background:rgba(253,243,225,0.05);
+    border:1px solid rgba(253,243,225,0.08);
+    color:var(--cream-dim);
+    font-weight:500;
+  }
+  .cert-note{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:0.75rem;
+    color:var(--cream-dim);
+    margin-bottom:16px;
+  }
+  .cert-note svg{width:14px; height:14px; color:var(--gold); flex-shrink:0;}
+
+  /* ---------- GRID VIEWS ---------- */
+  .page-head{
+    padding:28px 20px 6px;
+  }
+  .page-head h1{font-size:2rem;}
+  .page-head p{color:var(--cream-dim); font-size:0.92rem; margin-top:8px; max-width:48ch; line-height:1.55;}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(170px,1fr));
+    gap:16px;
+  }
+  .grid.courses-grid{grid-template-columns:repeat(auto-fill, minmax(280px,1fr));}
+  .grid .ebook-card{min-width:0; max-width:none;}
+
+  .filter-row{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding:18px 20px 22px;
+  }
+  .filter-row::-webkit-scrollbar{display:none;}
+  .pill{
+    padding:9px 16px;
+    border-radius:999px;
+    font-size:0.78rem;
+    font-weight:700;
+    white-space:nowrap;
+    background:rgba(253,243,225,0.05);
+    border:1px solid rgba(253,243,225,0.08);
+    color:var(--cream-dim);
+    transition:all 0.2s;
+  }
+  .pill:hover{
+    background:rgba(253,243,225,0.1);
+    color:var(--cream);
+  }
+  .pill.active{background:var(--gold); color:var(--green-deep); border-color:var(--gold);}
+
+  /* ---------- SEARCH VIEW ---------- */
+  .search-wrap{padding:24px 20px 4px;}
+  .search-box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    background:rgba(10,61,47,0.5);
+    border:1px solid rgba(253,243,225,0.1);
+    border-radius:14px;
+    padding:14px 18px;
+    backdrop-filter:blur(6px);
+  }
+  .search-box svg{width:18px; height:18px; color:var(--cream-dim); flex-shrink:0;}
+  .search-box input{
+    background:transparent;
+    border:none;
+    outline:none;
+    color:var(--cream);
+    font-size:0.95rem;
+    width:100%;
+    font-family:'Plus Jakarta Sans', sans-serif;
+  }
+  .search-box input::placeholder{color:var(--cream-dim); opacity:0.7;}
+  .search-results{padding:20px 20px 0;}
+  .result-row{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 0;
+    border-bottom:1px solid rgba(253,243,225,0.08);
+  }
+  .result-thumb{
+    width:48px; height:58px;
+    border-radius:8px;
+    background:var(--green-mid);
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    overflow:hidden;
+  }
+  .result-row .rtitle{font-size:0.92rem; font-weight:700;}
+  .result-row .rtype{font-size:0.72rem; color:var(--gold); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-top:2px;}
+  .result-row .rmeta{flex:1;}
+  .empty-state{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--cream-dim);
+  }
+  .empty-state svg{width:40px; height:40px; margin-bottom:14px; opacity:0.4; color:var(--gold);}
+  .empty-state p{font-size:0.88rem;}
+
+  /* ---------- WHATSAPP BANNER ---------- */
+  .wa-banner{
+    margin:0 20px 40px;
+    border-radius:var(--radius);
+    padding:28px 24px;
+    background:linear-gradient(135deg, rgba(15,74,56,0.8), rgba(6,35,26,0.95));
+    border:1px solid rgba(253,243,225,0.1);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    box-shadow:var(--shadow);
+    backdrop-filter:blur(8px);
+  }
+  .wa-banner h3{font-size:1.25rem; font-weight:700;}
+  .wa-banner p{color:var(--cream-dim); font-size:0.88rem; line-height:1.6;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:40px 20px 24px;
+    border-top:1px solid rgba(253,243,225,0.08);
+    background:rgba(5,29,22,0.5);
+  }
+  footer .foot-brand{display:flex; align-items:center; gap:10px; margin-bottom:18px;}
+  footer .foot-brand svg{width:30px; height:30px; border-radius:7px;}
+  footer p{font-size:0.8rem; color:var(--cream-dim); line-height:1.65; margin-bottom:8px;}
+  footer a.email{color:var(--gold-bright); font-weight:700;}
+  footer .credit{
+    margin-top:24px;
+    font-size:0.72rem;
+    color:var(--cream-dim);
+    letter-spacing:0.03em;
+    opacity:0.85;
+  }
+  footer .credit b{color:var(--gold);}
+
+  /* ---------- BOTTOM TAB BAR ---------- */
+  .tabbar{
+    position:fixed;
+    bottom:0; left:0; right:0;
+    z-index:50;
+    background:rgba(5,29,22,0.94);
+    backdrop-filter:blur(16px);
+    border-top:1px solid rgba(253,243,225,0.08);
+  }
+  .tabbar-inner{
+    max-width:1180px;
+    margin:0 auto;
+    height:var(--tab-h);
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .tab{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+    color:var(--cream-dim);
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.02em;
+    padding:8px 14px;
+    position:relative;
+    background:transparent;
+    transition:color 0.2s;
+  }
+  .tab svg{width:21px; height:21px; transition:transform 0.2s;}
+  .tab:hover svg{transform:translateY(-1px);}
+  .tab .tab-indicator{
+    position:absolute;
+    top:-1px;
+    width:22px;
+    height:3px;
+    border-radius:2px;
+    background:var(--gold);
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  .tab.active{color:var(--gold-bright);}
+  .tab.active .tab-indicator{opacity:1;}
+
+  /* ---------- SHOPPING CART PANEL ---------- */
+  .cart-toggle-btn{
+    position:fixed;
+    bottom:calc(var(--tab-h) + 16px);
+    right:16px;
+    width:56px; height:56px;
+    border-radius:50%;
+    background:var(--gold);
+    color:var(--green-deep);
+    display:none; align-items:center; justify-content:center;
+    box-shadow:0 12px 32px rgba(0,0,0,0.5), 0 0 15px rgba(212,175,55,0.3);
+    z-index:90;
+    cursor:pointer;
+    transition:transform 0.2s, background 0.2s;
+  }
+  .cart-toggle-btn:hover{
+    background:var(--gold-bright);
+    transform:scale(1.05);
+  }
+  .cart-toggle-btn:active{transform:scale(0.95);}
+  .cart-badge{
+    position:absolute;
+    top:-4px; right:-4px;
+    background:#ef4444;
+    color:white;
+    font-size:0.75rem;
+    font-weight:800;
+    width:22px; height:22px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--green-deep);
+  }
+  
+  .cart-panel{
+    position:fixed;
+    top:0; right:-100%;
+    width:100%; max-width:400px;
+    height:100vh;
+    background:rgba(5,29,22,0.98);
+    backdrop-filter:blur(18px);
+    border-left:1px solid rgba(253,243,225,0.08);
+    box-shadow:-10px 0 40px rgba(0,0,0,0.6);
+    z-index:100;
+    display:flex; flex-direction:column;
+    transition:right 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .cart-panel.open{right:0;}
+  .cart-header{
+    padding:24px 20px;
+    border-bottom:1px solid rgba(253,243,225,0.08);
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .cart-close-btn{
+    background:transparent;
+    color:var(--cream);
+    font-size:1.5rem;
+    display:flex; align-items:center; justify-content:center;
+    width:36px; height:36px;
+    border-radius:50%;
+    transition:background 0.2s;
+  }
+  .cart-close-btn:hover{background:rgba(253,243,225,0.06);}
+  .cart-items{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+  }
+  .cart-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 0;
+    border-bottom:1px solid rgba(253,243,225,0.06);
+  }
+  .cart-item-thumb{
+    width:48px; height:58px;
+    border-radius:6px;
+    background:var(--green-mid);
+    overflow:hidden;
+    border:1px solid rgba(253,243,225,0.05);
+  }
+  .cart-item-info{flex:1;}
+  .cart-item-title{font-size:0.88rem; font-weight:700;}
+  .cart-item-price{font-size:0.8rem; color:var(--gold-bright); margin-top:2px; font-weight:600;}
+  .cart-item-remove{
+    background:transparent;
+    color:#f87171;
+    font-size:0.75rem;
+    font-weight:700;
+    padding:6px 8px;
+    border-radius:6px;
+    transition:background 0.2s;
+  }
+  .cart-item-remove:hover{
+    background:rgba(248,113,113,0.1);
+  }
+  .cart-footer{
+    padding:24px 20px;
+    background:rgba(6,35,26,0.96);
+    border-top:1px solid rgba(253,243,225,0.08);
+  }
+  .cart-total-row{
+    display:flex; justify-content:space-between;
+    margin-bottom:18px; font-size:1.1rem; font-weight:700;
+  }
+
+  /* ---------- INTERACTIVE MODAL OVERLAYS ---------- */
+  .modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.85);
+    backdrop-filter:blur(6px);
+    z-index:110;
+    display:none; align-items:center; justify-content:center;
+    padding:20px;
+    overflow-y:auto;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-content{
+    background:var(--green-deep);
+    border:1px solid rgba(253,243,225,0.1);
+    border-radius:var(--radius);
+    width:100%; max-width:640px;
+    box-shadow:var(--shadow);
+    display:flex; flex-direction:column;
+    max-height:90vh;
+    animation:modalzoom 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow:hidden;
+  }
+  @keyframes modalzoom{from{opacity:0; transform:scale(0.96);} to{opacity:1; transform:scale(1);}}
+  .modal-header{
+    padding:18px 24px;
+    border-bottom:1px solid rgba(253,243,225,0.08);
+    display:flex; align-items:center; justify-content:space-between;
+    background:rgba(6,35,26,0.5);
+  }
+  .modal-header h3{font-size:1.2rem; font-weight:700;}
+  .modal-close{
+    background:transparent;
+    color:var(--cream-dim);
+    font-size:1.5rem;
+    display:flex; align-items:center; justify-content:center;
+    width:36px; height:36px;
+    border-radius:50%;
+    transition:background 0.2s, color 0.2s;
+  }
+  .modal-close:hover{
+    background:rgba(253,243,225,0.06);
+    color:var(--cream);
+  }
+  .modal-body{
+    padding:24px;
+    overflow-y:auto;
+    flex:1;
+  }
+
+  /* Certificate Preview styles */
+  .cert-input-wrap{
+    margin-bottom:20px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .cert-input-wrap label{
+    font-size:0.78rem; font-weight:700; color:var(--gold-bright); text-transform:uppercase; letter-spacing:0.04em;
+  }
+  .cert-input-wrap input{
+    background:rgba(253,243,225,0.05);
+    border:1px solid rgba(253,243,225,0.15);
+    padding:12px 16px;
+    border-radius:10px;
+    color:var(--cream);
+    outline:none;
+    font-family:'Plus Jakarta Sans', sans-serif;
+    font-size:0.95rem;
+    transition:border-color 0.2s;
+  }
+  .cert-input-wrap input:focus{
+    border-color:var(--gold);
+  }
+  .cert-canvas-container {
+    width: 100%;
+    overflow-x: auto;
+    background: #090e0c;
+    padding: 24px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    border: 1px solid rgba(253,243,225,0.05);
+  }
+  .cert-canvas{
+    width: 540px;
+    height: 380px;
+    background: #fbf9f4;
+    border: 12px double #c9974c;
+    padding: 24px;
+    box-sizing: border-box;
+    position: relative;
+    color: #1e293b;
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+    flex-shrink:0;
+  }
+  .cert-watermark {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px; height: 180px;
+    opacity: 0.035;
+    pointer-events: none;
+  }
+  .cert-top-text{
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #475569;
+    font-weight: 600;
+  }
+  .cert-title{
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #0a3d2f;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+  }
+  .cert-subtitle {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #64748b;
+    margin-top: -6px;
+  }
+  .cert-recipient-name {
+    font-size: 1.8rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: #b8860b;
+    border-bottom: 2px solid #cbd5e1;
+    padding: 0 16px 4px;
+    min-width: 260px;
+    text-align: center;
+    margin: 8px 0;
+  }
+  .cert-text {
+    font-size: 0.78rem;
+    text-align: center;
+    max-width: 380px;
+    line-height: 1.55;
+    color: #475569;
+  }
+  .cert-course-name {
+    font-weight: 700;
+    color: #0a3d2f;
+  }
+  .cert-footer-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 0 12px;
+    margin-top: 8px;
+  }
+  .cert-sig {
+    text-align: center;
+    font-size: 0.65rem;
+    color: #64748b;
+  }
+  .cert-sig-line {
+    border-top: 1px solid #94a3b8;
+    width: 95px;
+    margin-bottom: 3px;
+    padding-top: 3px;
+  }
+  .cert-sig-name {
+    font-weight: 700;
+    color: #1e293b;
+  }
+  .cert-seal {
+    width: 52px; height: 52px;
+    background: radial-gradient(circle, #e0b46e 60%, #b8860b 100%);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border: 2px dashed rgba(255,255,255,0.4);
+  }
+  .cert-seal-star{
+    color: white; font-size: 1.25rem; font-weight: bold;
+  }
+  .cert-actions-row{
+    display:flex; gap:12px; margin-top:20px;
+  }
+
+  /* Printable overrides */
+  @media print {
+    body * { visibility: hidden; }
+    #cert-preview-overlay, #cert-preview-overlay * { visibility: visible; }
+    #cert-preview-overlay { position: fixed; inset: 0; background: white !important; z-index: 9999; display: flex !important; align-items: center; justify-content: center; }
+    .modal-content { border: none !important; box-shadow: none !important; width: 100% !important; max-width: none !important; max-height: none !important; background: white !important; }
+    .modal-header, .cert-input-wrap, .cert-actions-row, .modal-close { display: none !important; }
+    .cert-canvas-container { background: transparent !important; border: none !important; padding: 0 !important; width: 100% !important; }
+    .cert-canvas { border: 15px double #c9974c !important; width: 640px !important; height: 450px !important; box-shadow: none !important; margin: 0 auto !important; }
+  }
+
+  /* ---------- COURSE READER SYSTEM ---------- */
+  .reader-layout {
+    display: flex;
+    flex-direction: column;
+    height: 68vh;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(253,243,225,0.08);
+  }
+  .reader-sidebar {
+    background: rgba(6,35,26,0.9);
+    border-bottom: 1px solid rgba(253,243,225,0.08);
+    display: flex;
+    overflow-x: auto;
+    flex-shrink: 0;
+  }
+  .reader-sidebar::-webkit-scrollbar{display:none;}
+  .reader-nav-item {
+    padding: 14px 20px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--cream-dim);
+    white-space: nowrap;
+    display:flex; align-items:center; gap:8px;
+    border-bottom: 2px solid transparent;
+    background:transparent;
+  }
+  .reader-nav-item.active {
+    color: var(--gold-bright);
+    border-bottom-color: var(--gold);
+    background: rgba(253,243,225,0.03);
+  }
+  .reader-nav-item svg { width: 14px; height: 14px; }
+  .reader-nav-item.locked { opacity: 0.6; }
+  
+  .reader-content {
+    flex: 1;
+    background: rgba(10,61,47,0.3);
+    padding: 24px;
+    overflow-y: auto;
+    position: relative;
+  }
+  .reader-lesson-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    color: var(--white);
+    border-bottom: 1px solid rgba(253,243,225,0.06);
+    padding-bottom: 10px;
+  }
+  .reader-text {
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--cream-dim);
+  }
+  .reader-text p {
+    margin-bottom: 14px;
+  }
+  .reader-text ul {
+    margin: 12px 0 16px 20px;
+  }
+  .reader-text li {
+    margin-bottom: 8px;
+  }
+  
+  /* Locked Lesson state overlay */
+  .reader-locked-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(5,29,22,0.85);
+    backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    text-align: center;
+  }
+  .reader-locked-icon {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.1);
+    border: 1px solid rgba(212,175,55,0.25);
+    color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 16px;
+  }
+  .reader-locked-overlay h4 {
+    font-size: 1.15rem; font-weight: 700; margin-bottom: 8px; color: var(--cream);
+  }
+  .reader-locked-overlay p {
+    font-size: 0.85rem; color: var(--cream-dim); max-width: 320px; margin-bottom: 18px; line-height: 1.5;
+  }
+
+  /* ---------- RESPONSIVE / DESKTOP ---------- */
+  @media (min-width:760px){
+    :root{--top-h:72px;}
+    .app{border-left:1px solid rgba(253,243,225,0.06); border-right:1px solid rgba(253,243,225,0.06);}
+    .hero h1{font-size:3.5rem; max-width:14ch;}
+    .hero p{font-size:1.05rem;}
+    .grid{grid-template-columns:repeat(auto-fill, minmax(200px,1fr));}
+    .hscroll{overflow-x:visible; flex-wrap:wrap;}
+    .ebook-card{min-width:200px; max-width:none; flex:1 1 200px;}
+    .tab{flex-direction:row; gap:8px; padding:10px 20px;}
+    .tab .tab-indicator{display:none;}
+    .tab.active{background:rgba(212,175,55,0.12); border-radius:999px;}
+    .tabbar-inner{justify-content:center; gap:8px;}
+    
+    /* Desktop Reader Split Layout */
+    .reader-layout {
+      flex-direction: row;
+      height: 70vh;
+    }
+    .reader-sidebar {
+      width: 220px;
+      flex-direction: column;
+      border-bottom: none;
+      border-right: 1px solid rgba(253,243,225,0.08);
+      overflow-y: auto;
+      overflow-x: visible;
+    }
+    .reader-nav-item {
+      border-bottom: none;
+      border-left: 3px solid transparent;
+      padding: 16px 20px;
+      text-align: left;
+      justify-content: flex-start;
+    }
+    .reader-nav-item.active {
+      border-left-color: var(--gold);
+      border-bottom-color: transparent;
+    }
+  }
+  @media (min-width:1000px){
+    .page-head h1{font-size:2.3rem;}
+    .hero{padding-top:52px;}
+  }
+</style>
+</head>
+<body><div class="app">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:34px; height:34px; border-radius:8px; flex-shrink:0; display:block;">
+        <rect width="100" height="100" fill="#053526"/>
+        <path fill="#fdf3e1" fill-rule="evenodd" d="M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z"/>
+        <rect x="54" y="32" width="18" height="6" fill="#ffffff"/>
+        <rect x="54" y="42" width="18" height="6" fill="#ffffff"/>
+        <rect x="28" y="52" width="44" height="6" fill="#ffffff"/>
+        <rect x="28" y="62" width="44" height="6" fill="#ffffff"/>
+      </svg>
+      <div>
+        <span class="brand-name">Dexterity Learn</span>
+        <span class="brand-tag">By JSN Creative</span>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <button class="topbar-search-btn" onclick="goTo('search')" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ================= HOME ================= -->
+    <section class="view active" id="view-home">
+
+      <div class="hero">
+        <svg class="hero-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:64px; height:64px; border-radius:14px; margin-bottom:22px; box-shadow:var(--shadow); display:block;">
+          <rect width="100" height="100" fill="#053526"/>
+          <path fill="#fdf3e1" fill-rule="evenodd" d="M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z"/>
+          <rect x="54" y="32" width="18" height="6" fill="#ffffff"/>
+          <rect x="54" y="42" width="18" height="6" fill="#ffffff"/>
+          <rect x="28" y="52" width="44" height="6" fill="#ffffff"/>
+          <rect x="28" y="62" width="44" height="6" fill="#ffffff"/>
+        </svg>
+        <span class="eyebrow">E-books &amp; Courses</span>
+        <h1>Learn skills that <em>actually</em> pay off</h1>
+        <p>Straightforward, text-based courses and e-books on AI, code, and building things that matter — with certification when you're ready to prove it.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-gold" onclick="goTo('courses')">Explore courses</button>
+          <button class="btn btn-outline" onclick="goTo('ebooks')">Browse e-books</button>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><b id="stat-ebooks">–</b><span>E-books</span></div>
+        <div class="stat"><b id="stat-courses">–</b><span>Courses</span></div>
+        <div class="stat"><b>Certified</b><span>On completion</span></div>
+      </div>
+
+      <div class="stripe-divider"><i class="gold"></i><i></i></div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>Featured e-books</h2>
+          <a class="see-all" href="javascript:void(0)" onclick="goTo('ebooks')">See all →</a>
+        </div>
+        <div class="hscroll" id="home-ebooks"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-head">
+          <h2>Featured courses</h2>
+          <a class="see-all" href="javascript:void(0)" onclick="goTo('courses')">See all →</a>
+        </div>
+        <div id="home-courses" style="display:flex; flex-direction:column; gap:16px;"></div>
+      </div>
+
+      <div class="wa-banner">
+        <h3>Join the Dexterity Learn community</h3>
+        <p>Questions, updates, and direct support — all on WhatsApp. No sign-up, no app to install.</p>
+        <button class="btn btn-gold btn-full" onclick="openWhatsApp('Hi! I\'d like to join the Dexterity Learn WhatsApp community.')">
+          Join on WhatsApp
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ================= EBOOKS ================= -->
+    <section class="view" id="view-ebooks">
+      <div class="page-head">
+        <span class="eyebrow">Library</span>
+        <h1>E-books</h1>
+        <p>Purchase directly on WhatsApp or build a cart below — send a message and we'll confirm payment and share your download link immediately.</p>
+      </div>
+      <div class="filter-row" id="ebook-filters"></div>
+      <div class="section" style="margin-bottom:8px;">
+        <div class="grid" id="ebooks-grid"></div>
+      </div>
+    </section>
+
+    <!-- ================= COURSES ================= -->
+    <section class="view" id="view-courses">
+      <div class="page-head">
+        <span class="eyebrow">Text-based, self-paced</span>
+        <h1>Courses</h1>
+        <p>Read through each course at your own pace. Want proof you finished? Get certified — just preview your certificate and claim it on WhatsApp.</p>
+      </div>
+      <div class="filter-row" id="course-filters"></div>
+      <div class="section" style="margin-bottom:8px;">
+        <div class="grid courses-grid" id="courses-grid"></div>
+      </div>
+    </section>
+
+    <!-- ================= SEARCH ================= -->
+    <section class="view" id="view-search">
+      <div class="search-wrap">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="search-input" placeholder="Search e-books and courses…" oninput="renderSearch()" autocomplete="off">
+        </div>
+      </div>
+      <div class="search-results" id="search-results"></div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-brand">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:30px; height:30px; border-radius:7px; flex-shrink:0; display:block;">
+        <rect width="100" height="100" fill="#053526"/>
+        <path fill="#fdf3e1" fill-rule="evenodd" d="M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z"/>
+        <rect x="54" y="32" width="18" height="6" fill="#ffffff"/>
+        <rect x="54" y="42" width="18" height="6" fill="#ffffff"/>
+        <rect x="28" y="52" width="44" height="6" fill="#ffffff"/>
+        <rect x="28" y="62" width="44" height="6" fill="#ffffff"/>
+      </svg>
+      <span class="brand-name">Dexterity Learn</span>
+    </div>
+    <p>
+      Email us at <a class="email" href="mailto:jsn.creators@gmail.com">jsn.creators@gmail.com</a><br>
+      Or message us directly on WhatsApp for purchases, certification, and support.
+    </p>
+    <p class="credit">A product by <b>JSN CREATIVE</b> — © <span id="year"></span> All rights reserved.</p>
+  </footer>
+
+  <!-- BOTTOM TAB BAR -->
+  <nav class="tabbar">
+    <div class="tabbar-inner">
+      <button class="tab active" data-tab="home" onclick="goTo('home')">
+        <span class="tab-indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>
+        Home
+      </button>
+      <button class="tab" data-tab="ebooks" onclick="goTo('ebooks')">
+        <span class="tab-indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        E-books
+      </button>
+      <button class="tab" data-tab="courses" onclick="goTo('courses')">
+        <span class="tab-indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c0 1.5 2.5 3 6 3s6-1.5 6-3v-5"/></svg>
+        Courses
+      </button>
+      <button class="tab" data-tab="search" onclick="goTo('search')">
+        <span class="tab-indicator"></span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Search
+      </button>
+    </div>
+  </nav>
+
+  <!-- FLOATING CART BUTTON -->
+  <div class="cart-toggle-btn" id="cart-toggle-btn" onclick="toggleCart()">
+    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="9" cy="21" r="1"/>
+      <circle cx="20" cy="21" r="1"/>
+      <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+    </svg>
+    <span class="cart-badge" id="cart-badge-count">0</span>
+  </div>
+
+  <!-- SHOPPING CART PANEL -->
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-header">
+      <h3 style="font-family:'Outfit', sans-serif; font-weight:700;">Your Interest List</h3>
+      <button class="cart-close-btn" onclick="toggleCart()">&times;</button>
+    </div>
+    <div class="cart-items" id="cart-items-container">
+      <!-- Dynamic cart items will render here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total:</span>
+        <span id="cart-total-price">₹0</span>
+      </div>
+      <button class="btn btn-gold btn-full" onclick="checkoutCart()">Inquire on WhatsApp</button>
+    </div>
+  </div>
+
+  <!-- CERTIFICATE PREVIEW MODAL -->
+  <div class="modal-overlay" id="cert-preview-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Certificate Preview</h3>
+        <button class="modal-close" onclick="closeCertModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="cert-input-wrap">
+          <label for="cert-student-name">Your Full Name</label>
+          <input type="text" id="cert-student-name" placeholder="Enter name for certificate..." oninput="updateCertName(this.value)">
+        </div>
+        <div class="cert-canvas-container">
+          <div class="cert-canvas" id="cert-print-area">
+            <!-- Gold watermark SVG -->
+            <svg class="cert-watermark" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:180px; height:180px; opacity:0.045; pointer-events:none;">
+              <path fill="#c9974c" fill-rule="evenodd" d="M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z"/>
+              <rect x="54" y="32" width="18" height="6" fill="#c9974c"/>
+              <rect x="54" y="42" width="18" height="6" fill="#c9974c"/>
+              <rect x="28" y="52" width="44" height="6" fill="#c9974c"/>
+              <rect x="28" y="62" width="44" height="6" fill="#c9974c"/>
+            </svg>
+            <div class="cert-top-text">Certificate of Completion</div>
+            <div class="cert-title">Dexterity Learn</div>
+            <div class="cert-subtitle">by JSN Creative</div>
+            <div style="font-size:0.68rem; color:#64748b; text-transform:uppercase; margin-top:10px; font-weight:600; letter-spacing:0.05em;">This is proudly presented to</div>
+            <div class="cert-recipient-name" id="cert-name-display">Your Name</div>
+            <div class="cert-text">
+              for successfully completing the curriculum and proving competence in the area of
+              <div class="cert-course-name" id="cert-course-display">Python Fundamentals</div>
+            </div>
+            <div class="cert-footer-row">
+              <div class="cert-sig">
+                <div class="cert-sig-line"></div>
+                <div class="cert-sig-name">JSN Creative Team</div>
+                <div>Issuing Authority</div>
+              </div>
+              <div class="cert-seal">
+                <span class="cert-seal-star">★</span>
+              </div>
+              <div class="cert-sig">
+                <div class="cert-sig-line" id="cert-date-line">July 11, 2026</div>
+                <div>Date of Achievement</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cert-actions-row">
+          <button class="btn btn-gold" style="flex:1;" onclick="printCertificate()">Print / Save PDF</button>
+          <button class="btn btn-outline" style="flex:1;" onclick="claimCertWhatsApp()">Claim Official Certificate</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COURSE READER MODAL -->
+  <div class="modal-overlay" id="course-reader-overlay">
+    <div class="modal-content" style="max-width:850px;">
+      <div class="modal-header">
+        <h3 id="reader-course-title">Course Reader</h3>
+        <button class="modal-close" onclick="closeReaderModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding:0;">
+        <div class="reader-layout">
+          <div class="reader-sidebar" id="reader-lessons-nav">
+            <!-- Dynamic lesson list items will generate here -->
+          </div>
+          <div class="reader-content" id="reader-lesson-content-area">
+            <!-- Dynamic lesson content will render here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ===================== CONFIG ===================== */
+const WHATSAPP_NUMBER = "91724351696";
+const CONTACT_EMAIL = "jsn.creators@gmail.com";
+
+/* ===================== CONTENT ===================== */
+const EBOOKS = [
+  {
+    id: "ebk-learn-ai",
+    title: "Learn AI: A Beginner's Roadmap",
+    desc: "A plain-language walkthrough of AI concepts, tools, and how to actually start using them.",
+    price: 299,
+    mrp: 499,
+    category: "AI",
+    tag: "Bestseller"
+  },
+  {
+    id: "ebk-python",
+    title: "Python for Everyone",
+    desc: "Core Python fundamentals explained through short, practical examples — no fluff.",
+    price: 249,
+    mrp: 399,
+    category: "Programming",
+    tag: "Popular"
+  },
+  {
+    id: "ebk-freelance",
+    title: "The Freelancer's Playbook",
+    desc: "Finding clients, pricing your work, and building income that doesn't depend on one employer.",
+    price: 199,
+    mrp: 349,
+    category: "Career",
+    tag: "New"
+  },
+  {
+    id: "ebk-webdev",
+    title: "Build Your First Website",
+    desc: "HTML, CSS and JavaScript basics, taught by building one real project start to finish.",
+    price: 249,
+    mrp: 399,
+    category: "Programming",
+    tag: ""
+  }
+];
+
+const COURSES = [
+  {
+    id: "crs-learn-ai",
+    title: "Learn AI",
+    desc: "From what AI actually is to using it well — prompting, tools, and real workflows.",
+    level: "Beginner",
+    topics: ["AI Basics", "Prompting", "AI Tools", "Use Cases"],
+    category: "AI",
+    certifiable: true,
+    syllabus: [
+      {
+        title: "1. Introduction to Artificial Intelligence",
+        content: `
+          <p>Welcome to <strong>Learn AI</strong>. In this course, we demystify artificial intelligence and give you a clear, straightforward path to using it in your daily work.</p>
+          <p>At its core, AI is about training computer models on massive amounts of data so they can learn patterns and make intelligent predictions, generate text, or analyze code.</p>
+          <p><strong>Key Concepts:</strong></p>
+          <ul>
+            <li><strong>Neural Networks:</strong> Computing systems inspired by biological brains.</li>
+            <li><strong>Large Language Models (LLMs):</strong> Text prediction systems trained on massive written materials.</li>
+            <li><strong>Generative AI:</strong> AI systems that can create original content, images, music, or code based on prompts.</li>
+          </ul>
+          <p>In the next chapters, we will learn prompt engineering, discover top tools, and build customized AI agents.</p>
+        `
+      },
+      { title: "2. Prompt Engineering & Instruction Design", locked: true },
+      { title: "3. Top AI Productivity Tools in Action", locked: true },
+      { title: "4. Building Automated AI Agent Workflows", locked: true }
+    ]
+  },
+  {
+    id: "crs-python",
+    title: "Python Fundamentals",
+    desc: "Variables to functions to small projects — a clean path into programming.",
+    level: "Beginner",
+    topics: ["Syntax", "Data Types", "Loops", "Functions"],
+    category: "Programming",
+    certifiable: true,
+    syllabus: [
+      {
+        title: "1. Syntax & Variable Scopes",
+        content: `
+          <p>Welcome to <strong>Python Fundamentals</strong>. Python is one of the most readable, powerful programming languages in the world.</p>
+          <p>To declare a variable in Python, you simply write the variable name, followed by an equals sign, and the value you want to assign to it. Python handles the type declarations automatically under the hood.</p>
+          <p><strong>Code Example:</strong></p>
+          <pre style="background:rgba(0,0,0,0.4); padding:12px; border-radius:6px; color:#f5e0a3; font-family:monospace; margin-bottom:14px;">
+# Variable declaration
+user_name = "Alex"
+user_score = 95
+is_active = True
+
+print(f"User: {user_name}, Score: {user_score}")
+          </pre>
+          <p>Python relies heavily on indentation to define code blocks (loops, functions, and classes). Always use exactly 4 spaces for a clean, error-free execution layout.</p>
+        `
+      },
+      { title: "2. Control Flows, Loops & Conditions", locked: true },
+      { title: "3. Modular Functions & Error Handling", locked: true },
+      { title: "4. Building Your First CLI Application", locked: true }
+    ]
+  },
+  {
+    id: "crs-webdev",
+    title: "Full-Stack Web Development",
+    desc: "HTML, CSS, JavaScript, and the basics of building complete web apps.",
+    level: "Intermediate",
+    topics: ["HTML/CSS", "JavaScript", "React", "APIs"],
+    category: "Programming",
+    certifiable: true,
+    syllabus: [
+      {
+        title: "1. Modern Semantic HTML5 & Flexbox/Grid CSS",
+        content: `
+          <p>Welcome to <strong>Full-Stack Web Development</strong>. Every premium, interactive web application begins with solid semantic structure and responsive layouts.</p>
+          <p>Always use semantic tags like <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, and <code>&lt;footer&gt;</code> to optimize search visibility (SEO) and ensure accessibility.</p>
+          <p><strong>CSS Layouts:</strong></p>
+          <ul>
+            <li><strong>Flexbox:</strong> Perfect for one-dimensional layouts (e.g., navigation menus, card contents).</li>
+            <li><strong>CSS Grid:</strong> Ideal for two-dimensional structures (e.g., page frameworks, responsive multi-column listings).</li>
+          </ul>
+          <p>In later lessons, we will build interfaces using React components, call external REST APIs, and deploy interactive databases.</p>
+        `
+      },
+      { title: "2. JavaScript Event Engine & Asynchronous Calls", locked: true },
+      { title: "3. Building Components with React & State Hooks", locked: true },
+      { title: "4. Creating Node.js Backends & Database Syncing", locked: true }
+    ]
+  },
+  {
+    id: "crs-freelance",
+    title: "Freelancing 101",
+    desc: "How to find your first clients and price your work with confidence.",
+    level: "Beginner",
+    topics: ["Positioning", "Pricing", "Outreach", "Contracts"],
+    category: "Career",
+    certifiable: true,
+    syllabus: [
+      {
+        title: "1. Defining Your Niche & Professional Positioning",
+        content: `
+          <p>Welcome to <strong>Freelancing 101</strong>. Setting out as a freelancer requires looking at your skills as business assets.</p>
+          <p>Generalists often compete on price alone. Specialists, however, win on value. By picking a clear niche (e.g., "Full-Stack React developer for SaaS companies"), you separate yourself from massive bidding directories.</p>
+          <p><strong>Action Checklist:</strong></p>
+          <ul>
+            <li>Audit your skills and map them to commercial opportunities.</li>
+            <li>Define your ideal buyer persona (who is willing to pay premium prices).</li>
+            <li>Create an authority portal showing direct case studies of completed work.</li>
+          </ul>
+          <p>Next, we will outline project pricing, master outreach cold systems, and draft legal agreements.</p>
+        `
+      },
+      { title: "2. Value-Based Pricing Models", locked: true },
+      { title: "3. Cold Outreach & Conversion Pitching", locked: true },
+      { title: "4. Scope Agreements & Client Retention", locked: true }
+    ]
+  }
+];
+
+/* ===================== GLOBAL STATE ===================== */
+let CART = [];
+
+/* ===================== DYNAMIC SVG GENERATOR ===================== */
+function getCoverSVG(title, category) {
+  let accentColor = "var(--gold)";
+  let iconSVG = "";
+  let subText = category.toUpperCase();
+
+  if (category === "AI") {
+    accentColor = "#22c55e"; // bright green for AI
+    iconSVG = `
+      <circle cx="100" cy="100" r="10" fill="none" stroke="${accentColor}" stroke-width="2"/>
+      <circle cx="60" cy="70" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
+      <circle cx="140" cy="70" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
+      <circle cx="60" cy="130" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
+      <circle cx="140" cy="130" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
+      <line x1="100" y1="100" x2="60" y2="70" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <line x1="100" y1="100" x2="140" y2="70" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <line x1="100" y1="100" x2="60" y2="130" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <line x1="100" y1="100" x2="140" y2="130" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <circle cx="100" cy="100" r="4" fill="${accentColor}"/>
+    `;
+  } else if (category === "Programming") {
+    accentColor = "var(--gold)";
+    iconSVG = `
+      <path d="M75 80 L55 100 L75 120" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M125 80 L145 100 L125 120" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="108" y1="75" x2="92" y2="125" stroke="${accentColor}" stroke-width="2" stroke-linecap="round"/>
+    `;
+  } else {
+    accentColor = "#10b981"; // emerald green
+    iconSVG = `
+      <path d="M60 120 L100 70 L140 120 Z" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linejoin="round"/>
+      <line x1="50" y1="120" x2="150" y2="120" stroke="${accentColor}" stroke-width="2"/>
+      <circle cx="100" cy="60" r="5" fill="${accentColor}"/>
+      <line x1="80" y1="100" x2="120" y2="100" stroke="${accentColor}" stroke-width="1.5"/>
+    `;
+  }
+
+  return `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" style="width:100%; height:100%; display:block;">
+      <defs>
+        <linearGradient id="grad-${title.replace(/[^a-zA-Z]/g, '')}" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#0f4a38" />
+          <stop offset="100%" stop-color="#051d16" />
+        </linearGradient>
+      </defs>
+      <rect width="200" height="200" fill="url(#grad-${title.replace(/[^a-zA-Z]/g, '')})" />
+      
+      <!-- Background pattern line grids -->
+      <g opacity="0.12">
+        <circle cx="100" cy="100" r="80" fill="none" stroke="var(--cream)" stroke-width="1"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="var(--cream)" stroke-width="1" stroke-dasharray="3,3"/>
+        <line x1="0" y1="100" x2="200" y2="100" stroke="var(--cream)" stroke-width="0.5"/>
+        <line x1="100" y1="0" x2="100" y2="200" stroke="var(--cream)" stroke-width="0.5"/>
+      </g>
+
+      <!-- Center Icon Graphic -->
+      <g opacity="0.9">
+        ${iconSVG}
+      </g>
+
+      <!-- Bottom overlay bar -->
+      <rect x="0" y="150" width="200" height="50" fill="rgba(5,29,22,0.85)" />
+      <line x1="0" y1="150" x2="200" y2="150" stroke="${accentColor}" stroke-width="1.5" opacity="0.6"/>
+      
+      <text x="15" y="170" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="9" font-weight="800" letter-spacing="1.2" opacity="0.9">${subText}</text>
+      <text x="15" y="186" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="11" font-weight="700" letter-spacing="0.2">${title.length > 24 ? title.substring(0, 22) + '...' : title}</text>
+    </svg>
+  `;
+}
+
+/* ===================== HELPERS ===================== */
+function openWhatsApp(message){
+  const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+  window.open(url, "_blank");
+}
+
+function initials(title){
+  return title.trim().charAt(0).toUpperCase();
+}
+
+function fmtPrice(n){
+  return "₹" + n;
+}
+
+/* ===================== SHOPPING CART SYSTEM ===================== */
+function toggleCart() {
+  const panel = document.getElementById("cart-panel");
+  panel.classList.toggle("open");
+}
+
+function updateCartUI() {
+  const badge = document.getElementById("cart-badge-count");
+  const floatingBtn = document.getElementById("cart-toggle-btn");
+  const container = document.getElementById("cart-items-container");
+  const totalDisplay = document.getElementById("cart-total-price");
+  
+  badge.textContent = CART.length;
+  
+  if (CART.length > 0) {
+    floatingBtn.style.display = "flex";
+  } else {
+    floatingBtn.style.display = "none";
+    document.getElementById("cart-panel").classList.remove("open");
+  }
+  
+  container.innerHTML = "";
+  let total = 0;
+  
+  CART.forEach(item => {
+    total += item.price;
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <div class="cart-item-thumb">
+        ${getCoverSVG(item.title, item.category)}
+      </div>
+      <div class="cart-item-info">
+        <div class="cart-item-title">${item.title}</div>
+        <div class="cart-item-price">${fmtPrice(item.price)}</div>
+      </div>
+      <button class="cart-item-remove" onclick="removeFromCart('${item.id}')">Remove</button>
+    `;
+    container.appendChild(div);
+  });
+  
+  totalDisplay.textContent = fmtPrice(total);
+}
+
+function addToCart(itemId) {
+  const item = EBOOKS.find(b => b.id === itemId);
+  if (!item) return;
+  
+  if (CART.some(cartItem => cartItem.id === itemId)) {
+    // Already in cart, just open cart panel
+    toggleCart();
+    return;
+  }
+  
+  CART.push(item);
+  updateCartUI();
+  
+  // Slide open the cart panel on addition
+  document.getElementById("cart-panel").classList.add("open");
+}
+
+function removeFromCart(itemId) {
+  CART = CART.filter(item => item.id !== itemId);
+  updateCartUI();
+}
+
+function isInCart(itemId) {
+  return CART.some(item => item.id === itemId);
+}
+
+function checkoutCart() {
+  if (CART.length === 0) return;
+  
+  let total = 0;
+  let itemsList = "";
+  
+  CART.forEach((item, index) => {
+    total += item.price;
+    itemsList += `\n${index + 1}. ${item.title} (${fmtPrice(item.price)})`;
+  });
+  
+  let discountNote = "";
+  let finalPrice = total;
+  
+  // Simple feature: offer a 10% discount on bundle purchases of 2 or more e-books!
+  if (CART.length >= 2) {
+    const discount = Math.round(total * 0.1);
+    finalPrice = total - discount;
+    discountNote = `\nBundle discount (10%): -${fmtPrice(discount)}\nFinal Price: ${fmtPrice(finalPrice)}`;
+  }
+  
+  const msg = `Hi Dexterity Learn! I would like to purchase the following items:${itemsList}\n\nTotal Price: ${fmtPrice(total)}${discountNote}\n\nPlease share payment details and download links.`;
+  openWhatsApp(msg);
+}
+
+/* ===================== CERTIFICATE PREVIEWER SYSTEM ===================== */
+let activeCertCourse = "";
+
+function openCertModal(courseTitle) {
+  activeCertCourse = courseTitle;
+  document.getElementById("cert-course-display").textContent = courseTitle;
+  
+  // Set date
+  const dateStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+  document.getElementById("cert-date-line").textContent = dateStr;
+  
+  const modal = document.getElementById("cert-preview-overlay");
+  modal.classList.add("open");
+  
+  // Pre-fill name input
+  const nameInput = document.getElementById("cert-student-name");
+  nameInput.focus();
+}
+
+function closeCertModal() {
+  document.getElementById("cert-preview-overlay").classList.remove("open");
+}
+
+function updateCertName(name) {
+  document.getElementById("cert-name-display").textContent = name.trim() || "Your Name";
+}
+
+function printCertificate() {
+  window.print();
+}
+
+function claimCertWhatsApp() {
+  const name = document.getElementById("cert-student-name").value.trim() || "Your Name";
+  const msg = `Hi Dexterity Learn! I have completed the course "${activeCertCourse}" and would like to claim my official certificate.\n\nStudent Name: ${name}\n\nPlease verify and issue my certification.`;
+  openWhatsApp(msg);
+}
+
+/* ===================== COURSE READER SYSTEM ===================== */
+let activeCourseId = "";
+let activeLessonIndex = 0;
+
+function openReaderModal(courseId) {
+  const course = COURSES.find(c => c.id === courseId);
+  if (!course) return;
+  
+  activeCourseId = courseId;
+  activeLessonIndex = 0;
+  
+  document.getElementById("reader-course-title").textContent = course.title;
+  
+  // Build sidebar syllabus navigation
+  const navContainer = document.getElementById("reader-lessons-nav");
+  navContainer.innerHTML = "";
+  
+  course.syllabus.forEach((lesson, index) => {
+    const btn = document.createElement("button");
+    btn.className = "reader-nav-item" + (index === 0 ? " active" : "");
+    if (lesson.locked) {
+      btn.classList.add("locked");
+    }
+    btn.innerHTML = `
+      ${lesson.locked ? `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      ` : `
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      `}
+      ${lesson.title.split(". ")[1] || lesson.title}
+    `;
+    btn.onclick = () => selectReaderLesson(index);
+    navContainer.appendChild(btn);
+  });
+  
+  selectReaderLesson(0);
+  
+  document.getElementById("course-reader-overlay").classList.add("open");
+}
+
+function closeReaderModal() {
+  document.getElementById("course-reader-overlay").classList.remove("open");
+}
+
+function selectReaderLesson(index) {
+  const course = COURSES.find(c => c.id === activeCourseId);
+  if (!course) return;
+  
+  activeLessonIndex = index;
+  
+  // Update sidebar active buttons
+  const buttons = document.querySelectorAll(".reader-nav-item");
+  buttons.forEach((btn, i) => {
+    btn.classList.toggle("active", i === index);
+  });
+  
+  const contentArea = document.getElementById("reader-lesson-content-area");
+  contentArea.innerHTML = "";
+  
+  const lesson = course.syllabus[index];
+  
+  if (lesson.locked) {
+    contentArea.innerHTML = `
+      <div class="reader-locked-overlay">
+        <div class="reader-locked-icon">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <h4>Lesson is Locked</h4>
+        <p>Purchase access to the full course on WhatsApp to unlock this chapter, complete review projects, and get certified.</p>
+        <button class="btn btn-gold" onclick="openWhatsApp('Hi! I\\'d like to purchase access to the complete course: ${course.title}.')">
+          Unlock Course on WhatsApp
+        </button>
+      </div>
+    `;
+  } else {
+    contentArea.innerHTML = `
+      <div class="reader-lesson-title">${lesson.title}</div>
+      <div class="reader-text">${lesson.content}</div>
+    `;
+  }
+}
+
+/* ===================== RENDER: E-BOOK CARD ===================== */
+function ebookCard(book){
+  const el = document.createElement("div");
+  el.className = "card ebook-card";
+  el.innerHTML = `
+    <div class="cover">
+      ${getCoverSVG(book.title, book.category)}
+    </div>
+    <h3>${book.title}</h3>
+    <p class="desc">${book.desc}</p>
+    <div class="price-row">
+      <span class="price"><s>${fmtPrice(book.mrp)}</s>${fmtPrice(book.price)}</span>
+      ${book.tag ? `<span class="badge">${book.tag}</span>` : ""}
+    </div>
+    <div style="display:flex; flex-direction:column; gap:8px;">
+      <button class="btn btn-gold btn-sm btn-full" data-action="buy">Buy on WhatsApp</button>
+      <button class="btn btn-outline btn-sm btn-full" data-action="add-cart">Add to Cart</button>
+    </div>
+  `;
+  
+  el.querySelector('[data-action="buy"]').addEventListener("click", () => {
+    openWhatsApp(`Hi! I'd like to buy the e-book "${book.title}" (${fmtPrice(book.price)}).`);
+  });
+  el.querySelector('[data-action="add-cart"]').addEventListener("click", () => {
+    addToCart(book.id);
+  });
+  
+  return el;
+}
+
+/* ===================== RENDER: COURSE CARD ===================== */
+function courseCard(course){
+  const el = document.createElement("div");
+  el.className = "card course-card";
+  el.innerHTML = `
+    <div class="cover" style="aspect-ratio: 16/9; margin-bottom: 16px;">
+      ${getCoverSVG(course.title, course.category)}
+    </div>
+    <div class="course-top">
+      <h3>${course.title}</h3>
+      <span class="badge">${course.level}</span>
+    </div>
+    <p class="desc">${course.desc}</p>
+    <div class="chips">
+      ${course.topics.map(t => `<span class="chip">${t}</span>`).join("")}
+    </div>
+    ${course.certifiable ? `
+    <div class="cert-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9 13.5V21l3-1.5L15 21v-7.5"/></svg>
+      Certification available on completion
+    </div>` : ""}
+    <div style="display:flex; gap:8px; margin-top:auto;">
+      <button class="btn btn-outline btn-sm" style="flex:1;" data-action="read">Start reading</button>
+      <button class="btn btn-gold btn-sm" style="flex:1;" data-action="cert">Preview Certificate</button>
+    </div>
+  `;
+  
+  el.querySelector('[data-action="read"]').addEventListener("click", () => {
+    openReaderModal(course.id);
+  });
+  el.querySelector('[data-action="cert"]').addEventListener("click", () => {
+    openCertModal(course.title);
+  });
+  
+  return el;
+}
+
+/* ===================== RENDER: HOME ===================== */
+function renderHome(){
+  document.getElementById("stat-ebooks").textContent = EBOOKS.length;
+  document.getElementById("stat-courses").textContent = COURSES.length;
+
+  const ebooksRow = document.getElementById("home-ebooks");
+  ebooksRow.innerHTML = "";
+  EBOOKS.slice(0, 4).forEach(b => ebooksRow.appendChild(ebookCard(b)));
+
+  const coursesRow = document.getElementById("home-courses");
+  coursesRow.innerHTML = "";
+  COURSES.slice(0, 2).forEach(c => coursesRow.appendChild(courseCard(c)));
+}
+
+/* ===================== RENDER: EBOOKS PAGE ===================== */
+let activeEbookFilter = "All";
+function renderEbookFilters(){
+  const cats = ["All", ...new Set(EBOOKS.map(b => b.category))];
+  const row = document.getElementById("ebook-filters");
+  row.innerHTML = "";
+  cats.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "pill" + (cat === activeEbookFilter ? " active" : "");
+    btn.textContent = cat;
+    btn.onclick = () => { activeEbookFilter = cat; renderEbookFilters(); renderEbooksGrid(); };
+    row.appendChild(btn);
+  });
+}
+function renderEbooksGrid(){
+  const grid = document.getElementById("ebooks-grid");
+  grid.innerHTML = "";
+  const list = activeEbookFilter === "All" ? EBOOKS : EBOOKS.filter(b => b.category === activeEbookFilter);
+  list.forEach(b => grid.appendChild(ebookCard(b)));
+}
+
+/* ===================== RENDER: COURSES PAGE ===================== */
+let activeCourseFilter = "All";
+function renderCourseFilters(){
+  const cats = ["All", ...new Set(COURSES.map(c => c.category))];
+  const row = document.getElementById("course-filters");
+  row.innerHTML = "";
+  cats.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "pill" + (cat === activeCourseFilter ? " active" : "");
+    btn.textContent = cat;
+    btn.onclick = () => { activeCourseFilter = cat; renderCourseFilters(); renderCoursesGrid(); };
+    row.appendChild(btn);
+  });
+}
+function renderCoursesGrid(){
+  const grid = document.getElementById("courses-grid");
+  grid.innerHTML = "";
+  const list = activeCourseFilter === "All" ? COURSES : COURSES.filter(c => c.category === activeCourseFilter);
+  list.forEach(c => grid.appendChild(courseCard(c)));
+}
+
+/* ===================== RENDER: SEARCH ===================== */
+function renderSearch(){
+  const q = document.getElementById("search-input").value.trim().toLowerCase();
+  const results = document.getElementById("search-results");
+  results.innerHTML = "";
+
+  if(!q){
+    results.innerHTML = `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <p>Search across all e-books and courses.</p>
+      </div>`;
+    return;
+  }
+
+  const bookMatches = EBOOKS.filter(b => (b.title + b.desc + b.category).toLowerCase().includes(q));
+  const courseMatches = COURSES.filter(c => (c.title + c.desc + c.category + c.topics.join(" ")).toLowerCase().includes(q));
+
+  if(bookMatches.length === 0 && courseMatches.length === 0){
+    results.innerHTML = `
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p>No matches for "${q}". Try a different word.</p>
+      </div>`;
+    return;
+  }
+
+  bookMatches.forEach(b => {
+    const row = document.createElement("div");
+    row.className = "result-row";
+    row.innerHTML = `
+      <div class="result-thumb" style="width:36px; height:46px;">${getCoverSVG(b.title, b.category)}</div>
+      <div class="rmeta"><div class="rtitle">${b.title}</div><div class="rtype">E-book · ${fmtPrice(b.price)}</div></div>
+      <div style="display:flex; gap:6px;">
+        <button class="btn btn-gold btn-sm" data-action="buy">Buy</button>
+        <button class="btn btn-outline btn-sm" data-action="cart" style="padding: 10px;">+</button>
+      </div>
+    `;
+    row.querySelector('[data-action="buy"]').onclick = () => openWhatsApp(`Hi! I'd like to buy the e-book "${b.title}" (${fmtPrice(b.price)}).`);
+    row.querySelector('[data-action="cart"]').onclick = () => addToCart(b.id);
+    results.appendChild(row);
+  });
+
+  courseMatches.forEach(c => {
+    const row = document.createElement("div");
+    row.className = "result-row";
+    row.innerHTML = `
+      <div class="result-thumb" style="width:36px; height:46px;">${getCoverSVG(c.title, c.category)}</div>
+      <div class="rmeta"><div class="rtitle">${c.title}</div><div class="rtype">Course · ${c.level}</div></div>
+      <button class="btn btn-outline btn-sm">Read</button>
+    `;
+    row.querySelector("button").onclick = () => { openReaderModal(c.id); };
+    results.appendChild(row);
+  });
+}
+
+/* ===================== NAVIGATION ===================== */
+function goTo(viewName, updateHash = true){
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  
+  const targetView = document.getElementById("view-" + viewName);
+  if (targetView) {
+    targetView.classList.add("active");
+  }
+  
+  document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t.dataset.tab === viewName));
+  window.scrollTo({top:0, behavior:"instant"});
+  
+  if (updateHash) {
+    location.hash = viewName;
+  }
+  
+  if(viewName === "search"){
+    setTimeout(() => {
+      const input = document.getElementById("search-input");
+      if (input) input.focus();
+    }, 200);
+  }
+}
+
+/* ===================== ROUTING HASH LISTENER ===================== */
+window.addEventListener("hashchange", () => {
+  const tab = (location.hash || "#home").replace("#", "");
+  if(["home","ebooks","courses","search"].includes(tab)){
+    goTo(tab, false);
+  }
+});
+
+/* ===================== INIT ===================== */
+document.getElementById("year").textContent = new Date().getFullYear();
+renderHome();
+renderEbookFilters();
+renderEbooksGrid();
+renderCourseFilters();
+renderCoursesGrid();
+renderSearch();
+
+const startTab = (location.hash || "#home").replace("#", "");
+if(["home","ebooks","courses","search"].includes(startTab)){
+  goTo(startTab, false);
+}
+</script>
+
+</body>
+</html>
