@@ -309,7 +309,7 @@
   .cover{
     width:100%;
     aspect-ratio:3/4;
-    border-radius:12px;
+    border-radius:6px 14px 14px 6px;
     background:var(--green-deep);
     position:relative;
     overflow:hidden;
@@ -317,6 +317,12 @@
     padding:0;
     margin-bottom:16px;
     border:1px solid rgba(253,243,225,0.06);
+    box-shadow: 4px 6px 15px rgba(0,0,0,0.35), inset 4px 0 8px rgba(0,0,0,0.4);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease;
+  }
+  .card:hover .cover{
+    transform: perspective(800px) rotateY(-12deg) translateX(-4px);
+    box-shadow: 12px 16px 28px rgba(0,0,0,0.45), inset 3px 0 6px rgba(0,0,0,0.25);
   }
   .card h3{font-size:1.05rem; line-height:1.35; margin-bottom:8px; font-weight:700;}
   .card p.desc{
@@ -952,18 +958,114 @@
   }
 
   /* ---------- RESPONSIVE / DESKTOP ---------- */
+  .hero-content-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .hero-right {
+    display: none;
+  }
+
   @media (min-width:760px){
     :root{--top-h:72px;}
-    .app{border-left:1px solid rgba(253,243,225,0.06); border-right:1px solid rgba(253,243,225,0.06);}
-    .hero h1{font-size:3.5rem; max-width:14ch;}
+    .app{border-left:1px solid rgba(253,243,225,0.06); border-right:1px solid rgba(253,243,225,0.06); max-width: 1200px;}
+    
+    /* Split Hero on Computer */
+    .hero-content-wrap {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 50px;
+      padding: 20px 0;
+    }
+    .hero-left {
+      flex: 1;
+      max-width: 55%;
+    }
+    .hero-right {
+      display: flex;
+      flex: 1;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-featured-book {
+      perspective: 1000px;
+    }
+    .featured-book-3d {
+      width: 200px;
+      height: 270px;
+      position: relative;
+      border-radius: 6px 14px 14px 6px;
+      box-shadow: 15px 20px 40px rgba(0,0,0,0.65);
+      transform: rotateY(-18deg) rotateX(8deg);
+      transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease;
+      overflow: hidden;
+      border: 1px solid rgba(253,243,225,0.08);
+      background: var(--green-deep);
+    }
+    .featured-book-3d:hover {
+      transform: rotateY(-8deg) rotateX(4deg) translateY(-8px);
+      box-shadow: 20px 28px 48px rgba(0,0,0,0.75);
+    }
+    .featured-book-3d img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .featured-spine {
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 10px;
+      background: linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0) 80%);
+    }
+
+    .hero h1{font-size:3.2rem; max-width:14ch;}
     .hero p{font-size:1.05rem;}
-    .grid{grid-template-columns:repeat(auto-fill, minmax(200px,1fr));}
-    .hscroll{overflow-x:visible; flex-wrap:wrap;}
-    .ebook-card{min-width:200px; max-width:none; flex:1 1 200px;}
+    
+    /* 4-column books, 2-column courses grids */
+    .grid {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .grid.courses-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .hscroll {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      overflow-x: visible;
+    }
+    .ebook-card {
+      min-width: 0;
+      max-width: none;
+    }
+    
+    /* Dock-style centered tabbar on desktop */
+    .tabbar {
+      bottom: 20px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: fit-content;
+      max-width: 90%;
+      border-radius: 999px;
+      border: 1px solid rgba(253,243,225,0.12);
+      box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+      background: rgba(5,29,22,0.85);
+      backdrop-filter: blur(20px);
+    }
+    .tabbar-inner {
+      padding: 6px 12px;
+      height: 58px;
+      justify-content: center;
+      gap: 8px;
+    }
     .tab{flex-direction:row; gap:8px; padding:10px 20px;}
     .tab .tab-indicator{display:none;}
     .tab.active{background:rgba(212,175,55,0.12); border-radius:999px;}
-    .tabbar-inner{justify-content:center; gap:8px;}
     
     /* Desktop Reader Split Layout */
     .reader-layout {
@@ -1027,20 +1129,32 @@
     <section class="view active" id="view-home">
 
       <div class="hero">
-        <svg class="hero-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:64px; height:64px; border-radius:14px; margin-bottom:22px; box-shadow:var(--shadow); display:block;">
-          <rect width="100" height="100" fill="#053526"/>
-          <path fill="#fdf3e1" fill-rule="evenodd" d="M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z"/>
-          <rect x="54" y="32" width="18" height="6" fill="#ffffff"/>
-          <rect x="54" y="42" width="18" height="6" fill="#ffffff"/>
-          <rect x="28" y="52" width="44" height="6" fill="#ffffff"/>
-          <rect x="28" y="62" width="44" height="6" fill="#ffffff"/>
-        </svg>
-        <span class="eyebrow">E-books &amp; Courses</span>
-        <h1>Learn skills that <em>actually</em> pay off</h1>
-        <p>Straightforward, text-based courses and e-books on AI, code, and building things that matter — with certification when you're ready to prove it.</p>
-        <div class="hero-ctas">
-          <button class="btn btn-gold" onclick="goTo('courses')">Explore courses</button>
-          <button class="btn btn-outline" onclick="goTo('ebooks')">Browse e-books</button>
+        <div class="hero-content-wrap">
+          <div class="hero-left">
+            <svg class="hero-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width:64px; height:64px; border-radius:14px; margin-bottom:22px; box-shadow:var(--shadow); display:block;">
+              <rect width="100" height="100" fill="#053526"/>
+              <path fill="#fdf3e1" fill-rule="evenodd" d="M28 32 H42 A8 8 0 0 1 42 48 H28 Z M34 36 H42 A4 4 0 0 1 42 44 H34 Z"/>
+              <rect x="54" y="32" width="18" height="6" fill="#ffffff"/>
+              <rect x="54" y="42" width="18" height="6" fill="#ffffff"/>
+              <rect x="28" y="52" width="44" height="6" fill="#ffffff"/>
+              <rect x="28" y="62" width="44" height="6" fill="#ffffff"/>
+            </svg>
+            <span class="eyebrow">E-books &amp; Courses</span>
+            <h1>Learn skills that <em>actually</em> pay off</h1>
+            <p>Straightforward, text-based courses and e-books on AI, code, and building things that matter — with certification when you're ready to prove it.</p>
+            <div class="hero-ctas">
+              <button class="btn btn-gold" onclick="goTo('courses')">Explore courses</button>
+              <button class="btn btn-outline" onclick="goTo('ebooks')">Browse e-books</button>
+            </div>
+          </div>
+          <div class="hero-right">
+            <div class="hero-featured-book">
+              <div class="featured-book-3d">
+                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=400&q=80" alt="Featured AI E-book">
+                <div class="featured-spine"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1266,11 +1380,9 @@
     </div>
   </div>
 
-</div>
-
 <script>
 /* ===================== CONFIG ===================== */
-const WHATSAPP_NUMBER = "91724351696";
+const WHATSAPP_NUMBER = "917204351696";
 const CONTACT_EMAIL = "jsn.creators@gmail.com";
 
 /* ===================== CONTENT ===================== */
@@ -1282,7 +1394,8 @@ const EBOOKS = [
     price: 299,
     mrp: 499,
     category: "AI",
-    tag: "Bestseller"
+    tag: "Bestseller",
+    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=400&q=80"
   },
   {
     id: "ebk-python",
@@ -1291,7 +1404,8 @@ const EBOOKS = [
     price: 249,
     mrp: 399,
     category: "Programming",
-    tag: "Popular"
+    tag: "Popular",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=400&q=80"
   },
   {
     id: "ebk-freelance",
@@ -1300,7 +1414,8 @@ const EBOOKS = [
     price: 199,
     mrp: 349,
     category: "Career",
-    tag: "New"
+    tag: "New",
+    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80"
   },
   {
     id: "ebk-webdev",
@@ -1309,7 +1424,8 @@ const EBOOKS = [
     price: 249,
     mrp: 399,
     category: "Programming",
-    tag: ""
+    tag: "",
+    image: "https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=400&q=80"
   }
 ];
 
@@ -1322,6 +1438,7 @@ const COURSES = [
     topics: ["AI Basics", "Prompting", "AI Tools", "Use Cases"],
     category: "AI",
     certifiable: true,
+    image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=400&q=80",
     syllabus: [
       {
         title: "1. Introduction to Artificial Intelligence",
@@ -1350,6 +1467,7 @@ const COURSES = [
     topics: ["Syntax", "Data Types", "Loops", "Functions"],
     category: "Programming",
     certifiable: true,
+    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=80",
     syllabus: [
       {
         title: "1. Syntax & Variable Scopes",
@@ -1381,6 +1499,7 @@ print(f"User: {user_name}, Score: {user_score}")
     topics: ["HTML/CSS", "JavaScript", "React", "APIs"],
     category: "Programming",
     certifiable: true,
+    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=400&q=80",
     syllabus: [
       {
         title: "1. Modern Semantic HTML5 & Flexbox/Grid CSS",
@@ -1408,6 +1527,7 @@ print(f"User: {user_name}, Score: {user_score}")
     topics: ["Positioning", "Pricing", "Outreach", "Contracts"],
     category: "Career",
     certifiable: true,
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80",
     syllabus: [
       {
         title: "1. Defining Your Niche & Professional Positioning",
@@ -1440,7 +1560,7 @@ function getCoverSVG(title, category) {
   let subText = category.toUpperCase();
 
   if (category === "AI") {
-    accentColor = "#22c55e"; // bright green for AI
+    accentColor = "#22c55e"; // green
     iconSVG = `
       <circle cx="100" cy="100" r="10" fill="none" stroke="${accentColor}" stroke-width="2"/>
       <circle cx="60" cy="70" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
@@ -1461,12 +1581,11 @@ function getCoverSVG(title, category) {
       <line x1="108" y1="75" x2="92" y2="125" stroke="${accentColor}" stroke-width="2" stroke-linecap="round"/>
     `;
   } else {
-    accentColor = "#10b981"; // emerald green
+    accentColor = "#10b981"; // emerald
     iconSVG = `
       <path d="M60 120 L100 70 L140 120 Z" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linejoin="round"/>
       <line x1="50" y1="120" x2="150" y2="120" stroke="${accentColor}" stroke-width="2"/>
       <circle cx="100" cy="60" r="5" fill="${accentColor}"/>
-      <line x1="80" y1="100" x2="120" y2="100" stroke="${accentColor}" stroke-width="1.5"/>
     `;
   }
 
@@ -1479,24 +1598,15 @@ function getCoverSVG(title, category) {
         </linearGradient>
       </defs>
       <rect width="200" height="200" fill="url(#grad-${title.replace(/[^a-zA-Z]/g, '')})" />
-      
-      <!-- Background pattern line grids -->
       <g opacity="0.12">
         <circle cx="100" cy="100" r="80" fill="none" stroke="var(--cream)" stroke-width="1"/>
         <circle cx="100" cy="100" r="60" fill="none" stroke="var(--cream)" stroke-width="1" stroke-dasharray="3,3"/>
-        <line x1="0" y1="100" x2="200" y2="100" stroke="var(--cream)" stroke-width="0.5"/>
-        <line x1="100" y1="0" x2="100" y2="200" stroke="var(--cream)" stroke-width="0.5"/>
       </g>
-
-      <!-- Center Icon Graphic -->
       <g opacity="0.9">
         ${iconSVG}
       </g>
-
-      <!-- Bottom overlay bar -->
       <rect x="0" y="150" width="200" height="50" fill="rgba(5,29,22,0.85)" />
       <line x1="0" y1="150" x2="200" y2="150" stroke="${accentColor}" stroke-width="1.5" opacity="0.6"/>
-      
       <text x="15" y="170" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="9" font-weight="800" letter-spacing="1.2" opacity="0.9">${subText}</text>
       <text x="15" y="186" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="11" font-weight="700" letter-spacing="0.2">${title.length > 24 ? title.substring(0, 22) + '...' : title}</text>
     </svg>
@@ -1509,18 +1619,13 @@ function openWhatsApp(message){
   window.open(url, "_blank");
 }
 
-function initials(title){
-  return title.trim().charAt(0).toUpperCase();
-}
-
 function fmtPrice(n){
   return "₹" + n;
 }
 
 /* ===================== SHOPPING CART SYSTEM ===================== */
 function toggleCart() {
-  const panel = document.getElementById("cart-panel");
-  panel.classList.toggle("open");
+  document.getElementById("cart-panel").classList.toggle("open");
 }
 
 function updateCartUI() {
@@ -1530,13 +1635,7 @@ function updateCartUI() {
   const totalDisplay = document.getElementById("cart-total-price");
   
   badge.textContent = CART.length;
-  
-  if (CART.length > 0) {
-    floatingBtn.style.display = "flex";
-  } else {
-    floatingBtn.style.display = "none";
-    document.getElementById("cart-panel").classList.remove("open");
-  }
+  floatingBtn.style.display = CART.length > 0 ? "flex" : "none";
   
   container.innerHTML = "";
   let total = 0;
@@ -1545,9 +1644,11 @@ function updateCartUI() {
     total += item.price;
     const div = document.createElement("div");
     div.className = "cart-item";
+    
+    const fallbackSVG = getCoverSVG(item.title, item.category).replace(/'/g, "\\'");
     div.innerHTML = `
       <div class="cart-item-thumb">
-        ${getCoverSVG(item.title, item.category)}
+        <img src="${item.image}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
       </div>
       <div class="cart-item-info">
         <div class="cart-item-title">${item.title}</div>
@@ -1566,25 +1667,18 @@ function addToCart(itemId) {
   if (!item) return;
   
   if (CART.some(cartItem => cartItem.id === itemId)) {
-    // Already in cart, just open cart panel
     toggleCart();
     return;
   }
   
   CART.push(item);
   updateCartUI();
-  
-  // Slide open the cart panel on addition
   document.getElementById("cart-panel").classList.add("open");
 }
 
 function removeFromCart(itemId) {
   CART = CART.filter(item => item.id !== itemId);
   updateCartUI();
-}
-
-function isInCart(itemId) {
-  return CART.some(item => item.id === itemId);
 }
 
 function checkoutCart() {
@@ -1599,13 +1693,9 @@ function checkoutCart() {
   });
   
   let discountNote = "";
-  let finalPrice = total;
-  
-  // Simple feature: offer a 10% discount on bundle purchases of 2 or more e-books!
   if (CART.length >= 2) {
     const discount = Math.round(total * 0.1);
-    finalPrice = total - discount;
-    discountNote = `\nBundle discount (10%): -${fmtPrice(discount)}\nFinal Price: ${fmtPrice(finalPrice)}`;
+    discountNote = `\nBundle discount (10%): -${fmtPrice(discount)}\nFinal Price: ${fmtPrice(total - discount)}`;
   }
   
   const msg = `Hi Dexterity Learn! I would like to purchase the following items:${itemsList}\n\nTotal Price: ${fmtPrice(total)}${discountNote}\n\nPlease share payment details and download links.`;
@@ -1619,16 +1709,11 @@ function openCertModal(courseTitle) {
   activeCertCourse = courseTitle;
   document.getElementById("cert-course-display").textContent = courseTitle;
   
-  // Set date
   const dateStr = new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
   document.getElementById("cert-date-line").textContent = dateStr;
   
-  const modal = document.getElementById("cert-preview-overlay");
-  modal.classList.add("open");
-  
-  // Pre-fill name input
-  const nameInput = document.getElementById("cert-student-name");
-  nameInput.focus();
+  document.getElementById("cert-preview-overlay").classList.add("open");
+  document.getElementById("cert-student-name").focus();
 }
 
 function closeCertModal() {
@@ -1662,30 +1747,22 @@ function openReaderModal(courseId) {
   
   document.getElementById("reader-course-title").textContent = course.title;
   
-  // Build sidebar syllabus navigation
   const navContainer = document.getElementById("reader-lessons-nav");
   navContainer.innerHTML = "";
   
   course.syllabus.forEach((lesson, index) => {
     const btn = document.createElement("button");
     btn.className = "reader-nav-item" + (index === 0 ? " active" : "");
-    if (lesson.locked) {
-      btn.classList.add("locked");
-    }
-    btn.innerHTML = `
-      ${lesson.locked ? `
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      ` : `
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      `}
-      ${lesson.title.split(". ")[1] || lesson.title}
-    `;
+    btn.innerHTML = (lesson.locked ? `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    ` : `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    `) + (lesson.title.split(". ")[1] || lesson.title);
     btn.onclick = () => selectReaderLesson(index);
     navContainer.appendChild(btn);
   });
   
   selectReaderLesson(0);
-  
   document.getElementById("course-reader-overlay").classList.add("open");
 }
 
@@ -1698,16 +1775,9 @@ function selectReaderLesson(index) {
   if (!course) return;
   
   activeLessonIndex = index;
-  
-  // Update sidebar active buttons
-  const buttons = document.querySelectorAll(".reader-nav-item");
-  buttons.forEach((btn, i) => {
-    btn.classList.toggle("active", i === index);
-  });
+  document.querySelectorAll(".reader-nav-item").forEach((btn, i) => btn.classList.toggle("active", i === index));
   
   const contentArea = document.getElementById("reader-lesson-content-area");
-  contentArea.innerHTML = "";
-  
   const lesson = course.syllabus[index];
   
   if (lesson.locked) {
@@ -1735,9 +1805,12 @@ function selectReaderLesson(index) {
 function ebookCard(book){
   const el = document.createElement("div");
   el.className = "card ebook-card";
+  
+  const fallbackSVG = getCoverSVG(book.title, book.category).replace(/'/g, "\\'");
   el.innerHTML = `
     <div class="cover">
-      ${getCoverSVG(book.title, book.category)}
+      <img src="${book.image}" alt="${book.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
+      <div class="featured-spine" style="position: absolute; top:0; left:0; bottom:0; width:8px; background:linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0) 80%);"></div>
     </div>
     <h3>${book.title}</h3>
     <p class="desc">${book.desc}</p>
@@ -1765,9 +1838,11 @@ function ebookCard(book){
 function courseCard(course){
   const el = document.createElement("div");
   el.className = "card course-card";
+  
+  const fallbackSVG = getCoverSVG(course.title, course.category).replace(/'/g, "\\'");
   el.innerHTML = `
-    <div class="cover" style="aspect-ratio: 16/9; margin-bottom: 16px;">
-      ${getCoverSVG(course.title, course.category)}
+    <div class="cover" style="aspect-ratio: 16/9; margin-bottom: 16px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
+      <img src="${course.image}" alt="${course.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
     </div>
     <div class="course-top">
       <h3>${course.title}</h3>
@@ -1884,8 +1959,12 @@ function renderSearch(){
   bookMatches.forEach(b => {
     const row = document.createElement("div");
     row.className = "result-row";
+    
+    const fallbackSVG = getCoverSVG(b.title, b.category).replace(/'/g, "\\'");
     row.innerHTML = `
-      <div class="result-thumb" style="width:36px; height:46px;">${getCoverSVG(b.title, b.category)}</div>
+      <div class="result-thumb" style="width:36px; height:46px; border-radius:4px; overflow:hidden;">
+        <img src="${b.image}" alt="${b.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
+      </div>
       <div class="rmeta"><div class="rtitle">${b.title}</div><div class="rtype">E-book · ${fmtPrice(b.price)}</div></div>
       <div style="display:flex; gap:6px;">
         <button class="btn btn-gold btn-sm" data-action="buy">Buy</button>
@@ -1900,8 +1979,12 @@ function renderSearch(){
   courseMatches.forEach(c => {
     const row = document.createElement("div");
     row.className = "result-row";
+    
+    const fallbackSVG = getCoverSVG(c.title, c.category).replace(/'/g, "\\'");
     row.innerHTML = `
-      <div class="result-thumb" style="width:36px; height:46px;">${getCoverSVG(c.title, c.category)}</div>
+      <div class="result-thumb" style="width:36px; height:46px; border-radius:4px; overflow:hidden;">
+        <img src="${c.image}" alt="${c.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
+      </div>
       <div class="rmeta"><div class="rtitle">${c.title}</div><div class="rtype">Course · ${c.level}</div></div>
       <button class="btn btn-outline btn-sm">Read</button>
     `;
