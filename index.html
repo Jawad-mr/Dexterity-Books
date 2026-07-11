@@ -1151,7 +1151,31 @@
           <div class="hero-right">
             <div class="hero-featured-book">
               <div class="featured-book-3d">
-                <img src="https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=400&q=80" alt="Featured AI E-book">
+                <svg viewBox="0 0 200 200" style="width:100%; height:100%; display:block;">
+                  <defs>
+                    <linearGradient id="grad-hero" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#0f4a38" />
+                      <stop offset="100%" stop-color="#051d16" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="200" height="200" fill="url(#grad-hero)" />
+                  <g opacity="0.12">
+                    <circle cx="100" cy="100" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
+                  </g>
+                  <g opacity="0.9">
+                    <circle cx="100" cy="100" r="8" fill="none" stroke="#22c55e" stroke-width="2"/>
+                    <circle cx="70" cy="80" r="6" fill="none" stroke="#22c55e" stroke-width="2"/>
+                    <circle cx="130" cy="80" r="6" fill="none" stroke="#22c55e" stroke-width="2"/>
+                    <line x1="100" y1="100" x2="70" y2="80" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <line x1="100" y1="100" x2="140" y2="80" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="3,3"/>
+                    <circle cx="100" cy="100" r="3" fill="#22c55e"/>
+                  </g>
+                  <rect x="0" y="150" width="200" height="50" fill="rgba(5,29,22,0.85)" />
+                  <line x1="0" y1="150" x2="200" y2="150" stroke="#22c55e" stroke-width="1.5" opacity="0.6"/>
+                  <text x="15" y="162" fill="#22c55e" font-family="'Outfit', sans-serif" font-size="7.5" font-weight="800" letter-spacing="1.2" opacity="0.9">AI</text>
+                  <text x="15" y="174" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="9" font-weight="700" letter-spacing="0.2">Learn AI: A Beginner's</text>
+                  <text x="15" y="186" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="9" font-weight="700" letter-spacing="0.2">Roadmap</text>
+                </svg>
                 <div class="featured-spine"></div>
               </div>
             </div>
@@ -1395,8 +1419,7 @@ const EBOOKS = [
     price: 299,
     mrp: 499,
     category: "AI",
-    tag: "Bestseller",
-    image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=400&q=80"
+    tag: "Bestseller"
   },
   {
     id: "ebk-python",
@@ -1405,8 +1428,7 @@ const EBOOKS = [
     price: 249,
     mrp: 399,
     category: "Programming",
-    tag: "Popular",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=400&q=80"
+    tag: "Popular"
   },
   {
     id: "ebk-freelance",
@@ -1415,8 +1437,7 @@ const EBOOKS = [
     price: 199,
     mrp: 349,
     category: "Career",
-    tag: "New",
-    image: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=400&q=80"
+    tag: "New"
   },
   {
     id: "ebk-webdev",
@@ -1425,8 +1446,7 @@ const EBOOKS = [
     price: 249,
     mrp: 399,
     category: "Programming",
-    tag: "",
-    image: "https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=400&q=80"
+    tag: ""
   }
 ];
 
@@ -1439,7 +1459,6 @@ const COURSES = [
     topics: ["AI Basics", "Prompting", "AI Tools", "Use Cases"],
     category: "AI",
     certifiable: true,
-    image: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=400&q=80",
     syllabus: [
       {
         title: "1. Introduction to Artificial Intelligence",
@@ -1468,7 +1487,6 @@ const COURSES = [
     topics: ["Syntax", "Data Types", "Loops", "Functions"],
     category: "Programming",
     certifiable: true,
-    image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=400&q=80",
     syllabus: [
       {
         title: "1. Syntax & Variable Scopes",
@@ -1500,7 +1518,6 @@ print(f"User: {user_name}, Score: {user_score}")
     topics: ["HTML/CSS", "JavaScript", "React", "APIs"],
     category: "Programming",
     certifiable: true,
-    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=400&q=80",
     syllabus: [
       {
         title: "1. Modern Semantic HTML5 & Flexbox/Grid CSS",
@@ -1528,7 +1545,6 @@ print(f"User: {user_name}, Score: {user_score}")
     topics: ["Positioning", "Pricing", "Outreach", "Contracts"],
     category: "Career",
     certifiable: true,
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80",
     syllabus: [
       {
         title: "1. Defining Your Niche & Professional Positioning",
@@ -1555,7 +1571,7 @@ print(f"User: {user_name}, Score: {user_score}")
 let CART = [];
 
 /* ===================== DYNAMIC SVG GENERATOR ===================== */
-function getCoverSVG(title, category) {
+function getCoverSVG(title, category, isLandscape = false) {
   let accentColor = "var(--gold)";
   let iconSVG = "";
   let subText = category.toUpperCase();
@@ -1563,53 +1579,50 @@ function getCoverSVG(title, category) {
   if (category === "AI") {
     accentColor = "#22c55e"; // green
     iconSVG = `
-      <circle cx="100" cy="100" r="10" fill="none" stroke="${accentColor}" stroke-width="2"/>
-      <circle cx="60" cy="70" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
-      <circle cx="140" cy="70" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
-      <circle cx="60" cy="130" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
-      <circle cx="140" cy="130" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
-      <line x1="100" y1="100" x2="60" y2="70" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
-      <line x1="100" y1="100" x2="140" y2="70" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
-      <line x1="100" y1="100" x2="60" y2="130" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
-      <line x1="100" y1="100" x2="140" y2="130" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
-      <circle cx="100" cy="100" r="4" fill="${accentColor}"/>
+      <circle cx="100" cy="${isLandscape ? 60 : 100}" r="8" fill="none" stroke="${accentColor}" stroke-width="2"/>
+      <circle cx="70" cy="${isLandscape ? 40 : 80}" r="6" fill="none" stroke="${accentColor}" stroke-width="2"/>
+      <circle cx="130" cy="${isLandscape ? 40 : 80}" r="6" fill="none" stroke="${accentColor}" stroke-width="2"/>
+      <line x1="100" y1="${isLandscape ? 60 : 100}" x2="70" y2="${isLandscape ? 40 : 80}" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <line x1="100" y1="${isLandscape ? 60 : 100}" x2="130" y2="${isLandscape ? 40 : 80}" stroke="${accentColor}" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <circle cx="100" cy="${isLandscape ? 60 : 100}" r="3" fill="${accentColor}"/>
     `;
   } else if (category === "Programming") {
     accentColor = "var(--gold)";
     iconSVG = `
-      <path d="M75 80 L55 100 L75 120" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M125 80 L145 100 L125 120" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="108" y1="75" x2="92" y2="125" stroke="${accentColor}" stroke-width="2" stroke-linecap="round"/>
+      <path d="M80 ${isLandscape ? 45 : 85} L65 ${isLandscape ? 60 : 100} L80 ${isLandscape ? 75 : 115}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M120 ${isLandscape ? 45 : 85} L135 ${isLandscape ? 60 : 100} L120 ${isLandscape ? 75 : 115}" fill="none" stroke="${accentColor}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
     `;
   } else {
     accentColor = "#10b981"; // emerald
     iconSVG = `
-      <path d="M60 120 L100 70 L140 120 Z" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linejoin="round"/>
-      <line x1="50" y1="120" x2="150" y2="120" stroke="${accentColor}" stroke-width="2"/>
-      <circle cx="100" cy="60" r="5" fill="${accentColor}"/>
+      <path d="M70 ${isLandscape ? 45 : 85} L100 ${isLandscape ? 75 : 115} L130 ${isLandscape ? 45 : 85} Z" fill="none" stroke="${accentColor}" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="100" cy="${isLandscape ? 60 : 100}" r="4" fill="${accentColor}"/>
     `;
   }
 
+  const viewBox = isLandscape ? "0 0 200 120" : "0 0 200 200";
+  const overlayY = isLandscape ? 85 : 150;
+  const overlayHeight = isLandscape ? 35 : 50;
+
   return `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" style="width:100%; height:100%; display:block;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="${viewBox}" style="width:100%; height:100%; display:block;">
       <defs>
-        <linearGradient id="grad-${title.replace(/[^a-zA-Z]/g, '')}" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="grad-${title.replace(/[^a-zA-Z]/g, '')}-${isLandscape}" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stop-color="#0f4a38" />
           <stop offset="100%" stop-color="#051d16" />
         </linearGradient>
       </defs>
-      <rect width="200" height="200" fill="url(#grad-${title.replace(/[^a-zA-Z]/g, '')})" />
+      <rect width="200" height="${isLandscape ? 120 : 200}" fill="url(#grad-${title.replace(/[^a-zA-Z]/g, '')}-${isLandscape})" rx="8"/>
       <g opacity="0.12">
-        <circle cx="100" cy="100" r="80" fill="none" stroke="var(--cream)" stroke-width="1"/>
-        <circle cx="100" cy="100" r="60" fill="none" stroke="var(--cream)" stroke-width="1" stroke-dasharray="3,3"/>
+        <circle cx="100" cy="${isLandscape ? 60 : 100}" r="50" fill="none" stroke="var(--cream)" stroke-width="1"/>
       </g>
       <g opacity="0.9">
         ${iconSVG}
       </g>
-      <rect x="0" y="150" width="200" height="50" fill="rgba(5,29,22,0.85)" />
-      <line x1="0" y1="150" x2="200" y2="150" stroke="${accentColor}" stroke-width="1.5" opacity="0.6"/>
-      <text x="15" y="170" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="9" font-weight="800" letter-spacing="1.2" opacity="0.9">${subText}</text>
-      <text x="15" y="186" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="11" font-weight="700" letter-spacing="0.2">${title.length > 24 ? title.substring(0, 22) + '...' : title}</text>
+      <rect x="0" y="${overlayY}" width="200" height="${overlayHeight}" fill="rgba(5,29,22,0.85)" />
+      <line x1="0" y1="${overlayY}" x2="200" y2="${overlayY}" stroke="${accentColor}" stroke-width="1.5" opacity="0.6"/>
+      <text x="15" y="${overlayY + 12}" fill="${accentColor}" font-family="'Outfit', sans-serif" font-size="7.5" font-weight="800" letter-spacing="1.2" opacity="0.9">${subText}</text>
+      <text x="15" y="${overlayY + 24}" fill="var(--white)" font-family="'Outfit', sans-serif" font-size="9" font-weight="700" letter-spacing="0.2">${title.length > 24 ? title.substring(0, 22) + '...' : title}</text>
     </svg>
   `;
 }
@@ -1646,10 +1659,9 @@ function updateCartUI() {
     const div = document.createElement("div");
     div.className = "cart-item";
     
-    const fallbackSVG = getCoverSVG(item.title, item.category).replace(/'/g, "\\'");
     div.innerHTML = `
       <div class="cart-item-thumb">
-        <img src="${item.image}" alt="${item.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
+        ${getCoverSVG(item.title, item.category, false)}
       </div>
       <div class="cart-item-info">
         <div class="cart-item-title">${item.title}</div>
@@ -1807,10 +1819,9 @@ function ebookCard(book){
   const el = document.createElement("div");
   el.className = "card ebook-card";
   
-  const fallbackSVG = getCoverSVG(book.title, book.category).replace(/'/g, "\\'");
   el.innerHTML = `
     <div class="cover">
-      <img src="${book.image}" alt="${book.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
+      ${getCoverSVG(book.title, book.category, false)}
       <div class="featured-spine" style="position: absolute; top:0; left:0; bottom:0; width:8px; background:linear-gradient(90deg, rgba(0,0,0,0.35), rgba(0,0,0,0) 80%);"></div>
     </div>
     <h3>${book.title}</h3>
@@ -1840,10 +1851,9 @@ function courseCard(course){
   const el = document.createElement("div");
   el.className = "card course-card";
   
-  const fallbackSVG = getCoverSVG(course.title, course.category).replace(/'/g, "\\'");
   el.innerHTML = `
     <div class="cover" style="aspect-ratio: 16/9; margin-bottom: 16px; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.3);">
-      <img src="${course.image}" alt="${course.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
+      ${getCoverSVG(course.title, course.category, true)}
     </div>
     <div class="course-top">
       <h3>${course.title}</h3>
@@ -1961,10 +1971,9 @@ function renderSearch(){
     const row = document.createElement("div");
     row.className = "result-row";
     
-    const fallbackSVG = getCoverSVG(b.title, b.category).replace(/'/g, "\\'");
     row.innerHTML = `
       <div class="result-thumb" style="width:36px; height:46px; border-radius:4px; overflow:hidden;">
-        <img src="${b.image}" alt="${b.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
+        ${getCoverSVG(b.title, b.category, false)}
       </div>
       <div class="rmeta"><div class="rtitle">${b.title}</div><div class="rtype">E-book · ${fmtPrice(b.price)}</div></div>
       <div style="display:flex; gap:6px;">
@@ -1981,10 +1990,9 @@ function renderSearch(){
     const row = document.createElement("div");
     row.className = "result-row";
     
-    const fallbackSVG = getCoverSVG(c.title, c.category).replace(/'/g, "\\'");
     row.innerHTML = `
       <div class="result-thumb" style="width:36px; height:46px; border-radius:4px; overflow:hidden;">
-        <img src="${c.image}" alt="${c.title}" style="width:100%; height:100%; object-fit:cover; display:block;" onerror="this.outerHTML='${fallbackSVG}'">
+        ${getCoverSVG(c.title, c.category, false)}
       </div>
       <div class="rmeta"><div class="rtitle">${c.title}</div><div class="rtype">Course · ${c.level}</div></div>
       <button class="btn btn-outline btn-sm">Read</button>
